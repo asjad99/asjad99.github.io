@@ -6,7 +6,7 @@ subtitle: Data scientist, researcher, and builder
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: my_photo.png
   image_circular: false
   more_info: >
     <p>Australia</p>
