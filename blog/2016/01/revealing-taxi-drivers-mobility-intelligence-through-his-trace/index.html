@@ -1,0 +1,969 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Geospatial and Temporal Mobility Analysis on the Rome Taxi data | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Geospatial and Temporal Mobility Analysis on the Rome Taxi data</h1> <p class="post-meta"> Created on January 01, 2016 </p> <p class="post-tags"> <a href="/blog/2016"> <i class="fa-solid fa-calendar fa-sm"></i> 2016 </a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>Trajectory data, which records locations of moving objects at certain moments is an interesting means of studying mobility behaviour. Trajectory data analysis is of significant practical value and there are numerous applications and services of trajectory data for the government, commercial organizations, and individuals[3]. Public transport services like busses and taxis are vital for general public commuting and are often equipped with GPS location devices. These GPS devices record data providing us with a digital footprint of individual mobility patterns. Such historical data, if analysed, contains potentially valuable insights for the identification, addressing and optimization of urban road network related problems. </p> <p>In this Project, we analyse the CRAWDAD roma taxi driver dataset for possible cases of fraud. A taxi driver sometimes tries to maximize his income using unethical ways(taking longer route where a shorter one exists).  Our goal is to find cases in which taxi drivers drive from one location to another location that is neither the shortest distance route and nor the fastest route(exception is the traffic jams where one is allowed to take an acceptable slightly longer alternative if available). We call such cases “fraud”. The problem of picking good routes is studied well in literature and is known as Taxi Driver's Mobility intelligence[1]. </p> <p><strong>Trajectory data:</strong> </p> <p>This dataset contains mobility traces of taxi cabs operating in metropolitan city of Rome, Italy. It contains GPS coordinates of approximately 320 taxis collected over 30 days. Data was collected during the period from 01/Feb/2014 until 02/March/2014 and it represents drivers who work in the centre of Rome. The data can be downloaded from this <a href="http://crawdad.org/roma/taxi/20140717/" rel="external nofollow noopener" target="_blank">website</a>, and comes in CSV format. </p> <p>The question we seek to answer is:  </p> <p> - Can fraudulent behaviour be inferred from the trajectories implicitly given in the dataset(described below). i.e Are some drivers more likely to commit fraud than others? If yes how can we count the suspect cases? </p> <p> - How common is fraud among the various drivers?</p> <p>This problem is challenging because the dataset has limitations. For starters, since start and end points of the journey's are not provided, we will have to figure out a way by which we can identify the starting point and the end point of a journey. Secondly, we will have identify some of the the sensible routes (ones that are optimal in the sense of being shortest or fastest) and then compare a typical route taken by taxi drivers to those optimal routes. Lastly, this is a big dataset and at the time of analysis currently popular libraries don't support loading the full dataset into the memory so we will have to look for alternate methods. </p> <h3 id="loading-the-data">Loading the data </h3> <p>Upon doing a bit of trial and testing, it was found that <em>fread</em> is the fastest method to load large datasets(especially on machines with limited memory): </p> <pre><code>#load data install.packages("data.table")
+library(data.table)
+taxi_data = fread(file.choose(), header = T, sep = ',',data.table=FALSE)</code></pre> <h3 id="exploring-the-data-">Exploring the data: </h3> <p>After loading the dataset, we perform a general exploratory analysis of this dataset to understand the data at hand. </p> <p>Here is a quick peek:</p> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1280/1*jdd2t5zWiz9TgyTs46RtAQ.png" class="kg-image" alt="" loading="lazy"><figcaption>Dataset Screenshot</figcaption></figure> <p>The dataset contains 4 attributes:</p> <ul> <li>ID of a taxi driver. This is a unique numeric ID.</li> <li>Date and time in the format Y<img class="emoji" title=":m:" alt=":m:" src="https://github.githubassets.com/images/icons/emoji/unicode/24c2.png" height="20" width="20">d H<img class="emoji" title=":m:" alt=":m:" src="https://github.githubassets.com/images/icons/emoji/unicode/24c2.png" height="20" width="20">s.msec+tz, where msec is micro-seconds, and tz is a time-zone adjustment.</li> <li>Longitude, Latitude: These provide explicit trajectory information and if analysed properly contains rich spatiotemporal information. </li> </ul> <p>Since they are a a series of chronologically ordered points, they represent taxi movement traces. i.e spatial trajectory generated by moving taxis in Rome. </p> <p>In exploratory phase, a good way to start is to get a high level overview of the data using the summary method, which shows the relevant stats such as the total number of samples, possible missing values and the data type for each column. Let's get compute some quick stats(minimum, maximum, and mean location values)</p> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-3.41.57-pm.png" class="kg-image" alt="" loading="lazy" width="1512" height="516" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2021/01/Screen-Shot-2021-01-31-at-3.41.57-pm.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2021/01/Screen-Shot-2021-01-31-at-3.41.57-pm.png 1000w, https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-3.41.57-pm.png 1512w" sizes="(min-width: 720px) 720px"><figcaption>Getting a high level overview of a DataFrame with the `describe` method.</figcaption></figure> <h3 id="visualisation-">Visualisation:</h3> <p>Visualisation is an effective way to understand the data at hand and get a sense of common routes taken by the taxi drivers. Since we are plotting 27 million rows of data, the basic plot will get us nothing but a splash of circles on the screen. We experimeted with ggplot and its size parameter to obtain a sensible. (this also saves compute time). </p> <pre><code>#Plot the location points (2D plot)
+#create a dataframe
+
+taxi_pickup_data &lt;- data.frame(taxi_data[,.(Longitude)], taxi_data[,.(Latitude)])
+taxi_pickup_data &lt;- data.frame(taxi_data[,.(DriveNo)], taxi_data[,.(DateandTime)])
+
+#basic plot gives a big blob (uncomment if needed)
+#plot(taxi_pickup_data)
+
+
+install.packages("ggplot2") 
+library(ggplot2)
+
+ggplot(taxi_data, aes(x= Longitude, y= Latitude)) + geom_point(size=0.02)
+
+</code></pre> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-3.40.02-pm.png" class="kg-image" alt="" loading="lazy" width="1256" height="1150" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2021/01/Screen-Shot-2021-01-31-at-3.40.02-pm.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2021/01/Screen-Shot-2021-01-31-at-3.40.02-pm.png 1000w, https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-3.40.02-pm.png 1256w" sizes="(min-width: 720px) 720px"><figcaption>We Plot the location points (2D plot) </figcaption></figure> <p>This doesn't make a lot of sense but we can clearly see some points are not part of the trips(outliers).  Let's proceed to pre-processing and come back to improving the plot later. </p> <h3 id="pre-processing-">Pre-Processing: </h3> <p>In this step we identify missing values, erroneous entries and remove a few outliers(noise or data that is not relevant to our analysis) </p> <p><strong>remove duplicates: </strong></p> <pre><code>taxi_data_subset = taxi_data_subset[!duplicated(taxi_data_subset[1:3]), ]</code></pre> <p><strong>Detecting outliers: </strong></p> <p>Easiest way to remove outliers is to simply plot the longitude and latitude and visually define the area of Rome on which we want to focus our analysis. </p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-5.09.20-pm-1.png" class="kg-image" alt="" loading="lazy" width="1692" height="758" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2021/01/Screen-Shot-2021-01-31-at-5.09.20-pm-1.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2021/01/Screen-Shot-2021-01-31-at-5.09.20-pm-1.png 1000w, https://asjadkhan.ghost.io/content/images/size/w1600/2021/01/Screen-Shot-2021-01-31-at-5.09.20-pm-1.png 1600w, https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-31-at-5.09.20-pm-1.png 1692w" sizes="(min-width: 720px) 720px"></figure> <p>A bounding box was created(as shown in Figure 1) with the below values. The bounding box is based on rome city coordinates from google maps. </p> <p>Any point outside this bounding box was considered an outlier as it was too far from the heart of the city.  </p> <pre><code>Min_lat= 41.793710
+Max_lat = 41.991390
+Min_lon = 12.372598
+Max_lon = 12.622537</code></pre> <p>we will create a Tranformation Function for preprocessing and applying Tranformation to raw data.</p> <pre><code>nw &lt;- list(lat = 40.5, lon = 13)
+se &lt;- list(lat = 43, lon = 11)
+
+
+trans &lt;- function(x) {
+    # set coordinates outside of NYC bounding box to NA 
+   ind &lt;- which(x$Longitude &lt; nw$lon &amp; x$Longitude &gt; se$lon) 
+   x$dropoff_longitude[ind] &lt;- NA
+   ind &lt;- which(x$Longitude &lt; nw$lon &amp; x$Longitude &gt; se$lon)
+   x$Longitude[ind] &lt;- NA
+ 
+ }
+ 
+#Apply the Tranformation
+taxi_data_subset = trans(taxi_data_subset)</code></pre> <p>The result of applying the bounding box was that 1,563,893 points were removed as outliers. </p> <p>Now with the relatively clean dataset, we can give visualisation and EDA another shot. For dataset to make more sense,  we can visualize the dataset on top of the rome's actual map. We can confirm from the figure below that city centre are the frequently visited regions of rome. We can also see how timings effect the routes as many of the trips early in the day and late afternoon could be part of the daily commute for taxi customers. </p> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1280/1*P_YRggxPYL4B5WOJw7-dJQ.png" class="kg-image" alt="" loading="lazy"><figcaption>Route Traces at various times of the day</figcaption></figure> <h3 id="analysis-of-travel-behaviour-">Analysis of Travel Behaviour: </h3> <p>We can Obtain the most active, least active, and average activity of the taxi drivers (most time driven, least time driven, and mean time driven)</p> <p><strong>Identify the most Active drivers: </strong></p> <p>Most active drivers earn the most revenue and chances are they will be following the most optimal routes instead of engaging in fraudulent behaviour. Let's calculate taxi activity is to compute total time driven by each taxi driver</p> <pre><code>compute_timedriven_2 &lt;- function(DriverID,mytaxi_data) {
+print("calculating total_time for driver no.") 
+print(DriverID)
+
+
+#create a dataframe containing only the rows of that taxi driver and selecting DriveNo and Data and Time Columns only
+
+temp_dataf &lt;- mytaxi_data[mytaxi_data$DriveNo == DriverID,2]
+print(summary(temp_dataf))
+
+if(length(temp_dataf) == 0){ return(0)
+}
+
+#iterate over the rows total_time &lt;- as.numeric(1.0000)
+len = length(temp_dataf) -1 for(i in 1:len){
+
+total_time = total_time + as.numeric(difftime(strptime(temp_dataf[i+1],"%Y-%m-%d %H:%M:%OS"),strptime(temp_dataf[i],"%Y-%m-%d %H:%M:%OS"),units="min"))
+}
+
+print(total_time) #return(as.numeric(total_time), digits=15)
+}
+total_time_driven &lt;- 0.0000 time_driven_list &lt;- list()
+
+for (i in 1:320){
+time_driven_list[i] &lt;- compute_timedriven_2(as.double(i),taxi_data_subset) total_time_driven &lt;- total_time_driven + as.numeric(time_driven_list[i])
+}
+print(which.max(time_driven_list)) print(which.min(time_driven_list))
+#average time driven print(as.numeric(total_time_driven/320),digits = 5)</code></pre> <p>we can repurpose this to compute to the time for any given driver. </p> <pre><code>compute_timedriven_2 &lt;- function(DriverID,mytaxi_data) {
+print("calculating total_time for driver no.") 
+print(DriverID)
+
+#create a dataframe containing only the rows of that taxi driver and selecting DriveNo and Data and Time Columns only
+
+temp_dataf &lt;- mytaxi_data[mytaxi_data$DriveNo == DriverID,2]
+print(summary(temp_dataf))
+
+if(length(temp_dataf) == 0){ return(0)
+
+}
+#iterate over the rows total_time &lt;- as.numeric(1.0000)
+len = length(temp_dataf) -1 for(i in 1:len){
+total_time = total_time + as.numeric(difftime(strptime(temp_dataf[i+1],"%Y-%m-%d %H:%M:%OS"),strptime(temp_dataf[i],"%Y-%m-%d %H:%M:%OS"),units="min"))
+}
+print(total_time) }
+compute_timedriven_2(211,taxi_data)</code></pre> <p>Similarly, we can write another function that lets us compute the total distance travelled by a particular diver: </p> <pre><code>compute_distance_travelled &lt;- function(DriverID,taxi_data) {
+#create a dataframe containing only the rows of that taxi driver temp_dataf &lt;- taxi_data[taxi_data$DriveNo == DriverID,3:4]
+print(temp_dataf)
+#radius of earth
+R=6371000
+distance = 0
+total_distance = 0 #print(summary(temp_dataf))
+len = length(temp_dataf) -1 for(i in 1:len) {
+lon1&lt;- temp_dataf[i,1] lon2 &lt;- temp_dataf[i+1,1]
+lat1&lt;- temp_dataf[i,2] lat2 &lt;- temp_dataf[i+1,2]
+dlon = lon2 - lon1 dlat = lat2 - lat1
+print(dlon) print(dlat)
+a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 c = 2 * atan2( sqrt(a), sqrt(1-a))
+distance = R * c
+total_distance = total_distance + distance
+
+} return(total_distance)
+} compute_distance_travelled(122,taxi_data_subset)</code></pre> <p>These are useful functions that come in handy later for driver comparisons and sanity checks. e.g we can also use to quickly compute a histogram of time travelled for all drivers. </p> <p><strong>Using these functions,  we were able to compute the following stats: </strong></p> <ul> <li>Most time driven = 941027 seconds(approx. 261.4 hours)</li> <li>Least time driven = 753.979 seconds(0.21 hours)</li> <li>Mean time driven = 558808 seconds (approx. 155.22 hours)</li> <li>Driver 204 drove for a total of 669980 seconds(approx. 186.11 hours). This is more than the average value of the time driven. It falls in the 3rd quartile of time driven. </li> </ul> <p>We can identify top 10 drivers this way and see if their routes are optimal(a baseline could be google map timings). But since the dataset doesn't give start or end journey location co-ordinates, we will first have to figure out a way to extract various routes. </p> <hr> <h2 id="route-identification-">Route Identification: </h2> <p>Since the dataset doesn’t specify starting and ending points of the routes, one of the important tasks in our analysis is to identify driver routes. </p> <p>Firstly, we have to identify if the driver is on duty or inactive. We use the time filter for doing so. e.g An hour was used as the limiter for deciding if the taxi was on duty or not. If there was a gap of more than an hour between the two GPS points then the time between them will not be considered as part of the total time driven for that driver. </p> <p>Secondly we assume that Taxi drivers prefer to roam around the areas with the most potential customers which would mean we should find that many journeys would begin or end at destinations like railway stations, hotels and other places of interest for visitors. </p> <p>One way to approach this is to use GPS co-ordinates of popular destinations(using google maps), like for example the airport and holiday INN:</p> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/1*zwxEW8aajOZhWT11LEFsKg.png" class="kg-image" alt="" loading="lazy"></figure> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/1*8k-MGitqUzhv2GWo2012KQ.png" class="kg-image" alt="" loading="lazy"></figure> <p>If the same driver(for example driver no. 30 was in these two spots within a 30min window frame, we can label it as a journey and extract the data points).</p> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/1*uCtiS-l5CvMI_K7VcgrhWA.png" class="kg-image" alt="" loading="lazy"></figure> <p>Using this hack, we extracted several different paths. Sometimes the extracted paths were taking longer than an hour. we can imagine a traffic jam could be causing this but we filter anything longer than 2.5 hours. </p> <h2 id="mobility-intelligence-and-activity-analysis-">Mobility intelligence and Activity Analysis:</h2> <p>One of our goals in this project was to discover interesting cases of work ethics among the drivers. As most of the taxi fare systems are based on trip distance we can assume that in order to maximize the revenue, a taxi driver may not always take the shortest path. This means, after picking up a customer at origin zone, taxi will not move to the customer’s destination zone via the shortest path. Now sometimes there could be traffic jams and intelligent drivers could find alternate routes which are equally good, in which case. But detection of fraudulent behaviour assumes that in normal circumstances average trip should looks quit different from the optimal route should be flagged for further investigation. </p> <p>We therefore need a method that can uncover the difference in taxi driver performance based on when and where they operate, routes they pick in order to reveal the differences in decisions made. We use the routes takes by the top drivers as our baseline and compare it to the low performing ones. </p> <p>To compare the paths of taxi drivers we can use the VFractal approach, proposed by Nams [1][2]. This lets us to quantify tortuosity of movement paths and to compare how top and ordinary drivers operate on different spatial scales at different time. Using this approach we can can reveal driver fraudulent behaviour and their mobility intelligence. </p> <p>How does it work? well, VFractal considers a movement path to be a series of turning angles for each scale. Vfractal Analysis takes in a path and returns a fractal value ranging from 1 to 2. A higher number(&gt;1.5) represents a tortuous movement path. For each V formed by turning angle, various statistics are calculated, and then D is estimated from the mean of these statistics over the whole path.</p> <p>Following equation gives an estimate of D for the V formed by one pair of steps[1]:</p> <p>$$D=\frac{\log (2)}{\log \left(\frac{N e t}{s}\right)}=\frac{\theta}{1+\log _{2}(\cos \theta+1)}$$</p> <p><em>where, s is size of one step, Net is the net distance from start of the first step to the end of the second step, and θ is the turning angle between the two steps</em></p> <p>To estimate D for the whole path we calculate for D for each V, and then find the mean D for the whole path. </p> <p><strong>Results:</strong></p> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/1*miiKj_xG_cxdzOG9dkXZQw.png" class="kg-image" alt="" loading="lazy"></figure> <p>In the plot above we compare Vfractal values of three different routes taken by three different drivers(extracted in the previous step). The higher values(closer to 2.0) indicate a more torturous path, which means the driver didn’t take the most direct route even though it existed. We repeated the process for several other extracted paths and noticed a similar pattern. The results of our analysis show that taxi drivers may not always take the most optimal route. Moreover, we noticed that Taxi drivers tend to exhibit different behaviour on longer trips, as the incentives change. In particular we noticed that for a longer trip even the most top drivers(with respect to distance travelled) tend to take longer routes. </p> <h3 id="conclusion-">Conclusion: </h3> <p>In this project we used the rome taxi dataset to analyse pattern movement of taxi drivers. Analysis of this sort  can yield various insights for planning bureaus, city planners and transportation analysis etc.  After initial exploration and cleaning of data we extracted various routes and then Fractal analysis was employed to quantify tortuosity of movement paths in order to explore how top and ordinary drivers operate on different spatial scales at different times, where the primary focus is to reveal top driver mobility intelligence. Based on our results we can conclude that taxi drivers indeed sometimes try to maximize their income using unethical ways. Moreover, its interesting to see how taxi’ drivers intelligence can be learned from a large number of historical data. </p> <p><strong>Future work</strong>: One of the improvements that can made to this work is registering the extracted paths with the underlying road network to get more accurate comparison of paths. We also aim to perform the same analysis based on varying trip length. You can find the code on <a href="https://github.com/asjad99/mobility-intelligence%20" rel="external nofollow noopener" target="_blank">github</a>: </p> <p><strong>References</strong>:</p> <p>[1] <a href="http://www.igi-global.com/chapter/revealing-taxi-driver-mobility-intelligence/42393" rel="nofollow noopener noopener" target="_blank">http://www.igi-global.com/chapter/revealing-taxi-driver-mobility-intelligence/42393</a></p> <p>[2] The VFractal: a new estimator for fractal dimension of animal movement paths <a href="http://link.springer.com/article/10.1007/BF02059856#page-1" rel="nofollow noopener noopener" target="_blank">http://link.springer.com/article/10.1007/BF02059856#page-1</a></p> <p>[3] Big Trajectory Data: A Survey of Applications and Services</p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

@@ -1,0 +1,874 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Explainable AI and AI-Alignment | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2021/09/ai-alignment/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Explainable AI and AI-Alignment</h1> <p class="post-meta"> Created on September 29, 2021 </p> <p class="post-tags"> <a href="/blog/2021"> <i class="fa-solid fa-calendar fa-sm"></i> 2021 </a>   ·   <a href="/blog/tag/blog"> <i class="fa-solid fa-hashtag fa-sm"></i> #blog</a>   <a href="/blog/tag/template-narrow"> <i class="fa-solid fa-hashtag fa-sm"></i> #template-narrow</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>As AI systems become more integrated into our lives, one thing is becoming clear: they need to explain themselves. Whether it’s a recommendation, a prediction, or a life-altering decision, people want to know why. And in many cases, they have the right to ask. This isn’t just a technical challenge; it’s a cultural one. Explainability has moved from being a "nice-to-have" feature to a matter of public debate, especially in sensitive areas like healthcare and criminal justice. In some countries, laws are starting to require a “right to explanation,” and that’s going to make it harder to rely on black-box systems like deep neural networks.</p> <p>This shift raises an even bigger question: how do we make AI systems not just explainable, but trustworthy? Explainability and trust go hand in hand, but solving one doesn’t automatically solve the other. The real challenge lies in defining the “right” behavior for an AI system—and making sure that behavior aligns with human values.</p> <h3 id="the-utility-problem">The Utility Problem</h3> <p>To understand why this is hard, we need to talk about utility functions. In theory, a utility function is just a way of telling an AI system what we want it to do. But defining utility functions that align with human values turns out to be incredibly tricky. Peter Norvig explains this well:</p> <blockquote>"We’ve built this society in this infrastructure where we say we have a marketplace for attention. And we’ve decided as a society that we like things that are free. And so we want all apps on our phone to be free, and that means they're all competing for your attention. They can only win by defeating all the other apps, by stealing your attention... I'd like to find a way where we can change the playing field, so you feel more like these things are on your side."</blockquote> <p>This example highlights one of the core issues with utility functions: incentives. When attention becomes the currency, apps compete in a zero-sum game. The result? A marketplace where apps work against you, not with you. The same misalignment can happen in AI systems. If the utility function isn’t carefully designed, the system might optimize for something that isn’t what we actually want.</p> <h3 id="the-genie-problem">The Genie Problem</h3> <p>Here’s the issue with utility functions in a nutshell: AI systems are literal. They’ll give you exactly what you ask for, not what you want. This problem isn’t new—it’s the same one we see in stories about genies, King Midas, or the Sorcerer’s Apprentice. But in the context of AI, it gets much scarier. As Stuart Russell puts it:</p> <blockquote>"A system that is optimizing a function of n variables, where the objective depends on a subset of size k&lt;n, will often set the remaining unconstrained variables to extreme values. If one of those unconstrained variables is something we care about, the solution found may be highly undesirable."</blockquote> <p>Imagine a highly capable AI system, connected to the internet and billions of devices. If its utility function isn’t perfectly aligned with human values, the consequences could be irreversible. This isn’t about emergent consciousness or sci-fi scenarios; it’s about decision-making quality. Even the smartest AI can make terrible decisions if its goals are misaligned.</p> <p>Here is a visual example of what that undesirable solution looks like: </p> <figure class="kg-card kg-embed-card"><iframe width="459" height="344" src="https://www.youtube.com/embed/tlOIHko8ySg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></figure> <p></p> <h3 id="learning-instead-of-encoding">Learning Instead of Encoding</h3> <p>So, how do we fix this? One promising approach is to let AI systems learn their utility functions from data, rather than trying to encode them manually. This is where fields like <strong>inverse reinforcement learning</strong> come in. The idea is to observe human behavior and infer the underlying goals. For example, if you watch an expert surgeon perform a procedure, you can try to deduce what they’re optimizing for—precision, speed, patient safety—and use that as the basis for training an AI system.</p> <p>This approach has its limits. Human values are complex, and it’s hard to reduce them to a set of objectives. But learning from data is still easier—and often more accurate—than writing utility functions from scratch.</p> <h3 id="explainability-and-alignment">Explainability and Alignment</h3> <p>Explainability alone won’t solve the AI alignment problem, but it’s a step in the right direction. If people can understand why an AI system made a particular decision, they’re more likely to trust it. And if they don’t trust it, they can push back, creating a feedback loop that helps refine the system over time.</p> <p>But there’s a deeper problem here: even if we make AI systems explainable, we still need to figure out how to align them with human values. That’s hard, because human values are messy and often contradictory. As Stuart Russell points out:</p> <ol> <li>The utility function might not perfectly reflect human values, which are hard to define.</li> <li>A sufficiently intelligent system might prioritize self-preservation and resource acquisition—not for its own sake, but to achieve its goals.</li> </ol> <p>In other words, even the best-designed systems can go wrong if their objectives aren’t perfectly aligned.</p> <h3 id="the-path-forward">The Path Forward</h3> <p>We’re at a point where optimizing utility functions is easy, but deciding what those functions should be is hard. The good news is that we’re starting to recognize the problem. Researchers are exploring ways to make AI systems more explainable, trustworthy, and aligned with human values. But this work is just beginning.</p> <p>The challenge will only grow as AI systems become smarter and more autonomous. The key will be to keep asking hard questions—and to remember that the answers might change over time. Explainability, trust, and alignment aren’t destinations; they’re ongoing processes. If we approach them with the right mindset, we might just get what we want, not what we ask for.</p> <p>There is also a whole philosophical side to it, where we can ask ourselves: <em>Given unlimited time and perfect knowledge about (ideal) human behavior, can we find any reasonable approximation to “what a human wants"? </em>We will leave the answer for discussion in another post and end with an old radio talk by alan turing. </p> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://asjadkhan.ghost.io/content/images/2021/02/Screen-Shot-2021-02-10-at-3.07.03-pm-1.png" class="kg-image" alt="" loading="lazy" width="1292" height="968" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2021/02/Screen-Shot-2021-02-10-at-3.07.03-pm-1.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2021/02/Screen-Shot-2021-02-10-at-3.07.03-pm-1.png 1000w, https://asjadkhan.ghost.io/content/images/2021/02/Screen-Shot-2021-02-10-at-3.07.03-pm-1.png 1292w" sizes="(min-width: 720px) 720px"><figcaption><span style="white-space: pre-wrap;">'Can digital computers think?' - Alan Turing</span></figcaption></figure> <hr> <p><strong>Read more: </strong></p> <ul> <li><a href="https://arxiv.org/pdf/1606.06565.pdf" rel="external nofollow noopener" target="_blank"> Concrete Problems in AI Safety</a></li> <li><a href="https://micahcarroll.github.io/assets/ValueAlignment.pdf" rel="external nofollow noopener" target="_blank">Overview of current AI Alignment Approaches</a></li> </ul> <p><strong>References</strong></p> <figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://intelligence.org/stanford-talk/" rel="external nofollow noopener" target="_blank"><div class="kg-bookmark-content"> <div class="kg-bookmark-title">The AI Alignment Problem: Why It’s Hard, and Where to Start - Machine Intelligence Research Institute</div> <div class="kg-bookmark-description">What is it?: A talk by Eliezer Yudkowsky given at Stanford University on May 5, 2016 for the Symbolic Systems Distinguished Speaker series. Talk: Full video. Transcript: Full (including Q&amp;A), partial (including select slides). Slides without transitions: High-quality, low-quality. Slides with tran…</div> <div class="kg-bookmark-metadata"> <img class="kg-bookmark-icon" src="https://intelligence.org/files/miri_icon_114px.png" alt=""><span class="kg-bookmark-author">Machine Intelligence Research Institute</span> </div> </div> <div class="kg-bookmark-thumbnail"><img src="https://intelligence.org/wp-content/uploads/2013/02/miri_horizontal_even.png" alt="" onerror="this.style.display = 'none'"></div></a></figure> <figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://thegradient.pub/interpretability-in-ml-a-broad-overview/" rel="external nofollow noopener" target="_blank"><div class="kg-bookmark-content"> <div class="kg-bookmark-title">Interpretability in Machine Learning: An Overview</div> <div class="kg-bookmark-description">A broad overview of the sub-field of machine learning interpretability; conceptual frameworks, existing research, and future directions.</div> <div class="kg-bookmark-metadata"> <img class="kg-bookmark-icon" src="https://thegradient.pub/favicon.png" alt=""><span class="kg-bookmark-author">The Gradient</span><span class="kg-bookmark-publisher">Owen Shen</span> </div> </div> <div class="kg-bookmark-thumbnail"><img src="https://thegradient.pub/content/images/2020/11/main-8.png" alt="" onerror="this.style.display = 'none'"></div></a></figure> <p>[1] European Union Regulations on Algorithmic Decision Making and a “Right to Explanation” Bryce Goodman, Seth Flaxman</p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

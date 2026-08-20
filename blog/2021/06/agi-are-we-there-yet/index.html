@@ -1,0 +1,874 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Chasing Artificial Intelligence | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2021/06/agi-are-we-there-yet/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Chasing Artificial Intelligence</h1> <p class="post-meta"> Created on June 10, 2021 </p> <p class="post-tags"> <a href="/blog/2021"> <i class="fa-solid fa-calendar fa-sm"></i> 2021 </a>   ·   <a href="/blog/tag/blog"> <i class="fa-solid fa-hashtag fa-sm"></i> #blog</a>   <a href="/blog/tag/template-toc"> <i class="fa-solid fa-hashtag fa-sm"></i> #template-toc</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2021/01/image.png" class="kg-image" alt="" loading="lazy" width="1328" height="526" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2021/01/image.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2021/01/image.png 1000w, https://asjadkhan.ghost.io/content/images/2021/01/image.png 1328w" sizes="(min-width: 720px) 720px"></figure> <p>This is Feb 2026 the world, and there is a lot of doom and gloom about AI (and some of it rightly justified). <a href="https://www.youtube.com/@peterdiamandis" rel="external nofollow noopener" target="_blank">Peter H. Diamandis</a> is one of the more most optimistic people on the planet who thinks tech and AI will bring immense abudance. In one of his recent podcasts, the panel is claiming <a href="https://youtu.be/JlB852LGRJk" rel="external nofollow noopener" target="_blank">AGI is here</a> ! </p> <p>Why does AI stir so much of our emotions? what is it about AI that threatens our identity as a species? Let's rewind a little bit and start by understanding the history. </p> <p>The academic discipline of computer science emerged in the 1960s, with a focus on programming languages, compilers, operating systems, and the mathematical theories supporting these areas. The first coordinated <em>AI</em> research at <em>MIT</em> began in 1959 when John McCarthy and Marvin Minsky founded the <em>Artificial Intelligence</em> Project. </p> <p>But even before that optimism around building intellignet machines was high. The <strong>Dartmouth Summer Research Project on Artificial Intelligence</strong> was a 1956 summer workshop widely considered to be the founding event of <a href="https://en.wikipedia.org/wiki/Artificial_intelligence" rel="external nofollow noopener" target="_blank">artificial intelligence</a> as a field. </p> <blockquote>We propose that a 2-month, 10-man study of artificial intelligence be carried out during the summer of 1956 at Dartmouth College in <a href="https://en.wikipedia.org/wiki/Hanover,_New_Hampshire" rel="external nofollow noopener" target="_blank">Hanover, New Hampshire</a>. The study is to proceed on the basis of the conjecture that every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it. An attempt will be made to find how to make machines use language, form abstractions and concepts, solve kinds of problems now reserved for humans, and improve themselves. We think that a significant advance can be made in one or more of these problems if a carefully selected group of scientists work on it together for a summer.</blockquote> <p>AI Winters: </p> <p></p> <p>NN: </p> <p><strong>The Perceptron:</strong> Frank Rosenblatt of the Cornell Aeronautical Laboratory (though not directly at MIT in 1957, his work profoundly influenced the field) introduced the Perceptron, an early artificial neural network for pattern recognition, which later became a major subject of study at MIT.</p> <p>The interesting thing <strong>is we do have Existence Proof: </strong></p> <blockquote>The marvel of the human brain is proof that general intelligence is possible; creating AI is as much a journey of discovery into the inner workings of our own minds as it is an invention. The evolution of a larger cortex equipped humans with greater intelligence, enabling us to build more complex and co-operative social structures, which eventually gave rise to all of modern civilisation. Similarly, AI can help us build radically new and improved ways of life. The very curiosity that led to the scientific method may well be the key—not only to solving society’s greatest challenges today, but to understanding ourselves and making sense of the universe around us.</blockquote> <p><strong>How to define AGI: </strong></p> <p><strong> </strong>After surveying some 70 informal definitions of intelligence proposed by various psychologists and artificial intelligence researchers, Legg and Hutter (2007) argue that the informal definition: <strong>“intelligence measures an agent’s ability to achieve goals in a wide range of environments”</strong>, broadly captures many important properties associated with intelligence. To formalise this intuition, they used reinforcement learning (Sutton and Barto, 1998), a general framework for goal achieving agents in unknown environments. In this setting, cycles of interaction occur between the agent and the environment. At each cycle, the agent sends an action to the environment, that then responds with an observation and (scalar) reward. The agent’s goal is to choose its actions, based on its previous observations and rewards, so as to maximise the rewards it receives over time. With a little imagination, it is not hard to see that practically any problem can be expressed in this framework, from playing a game of chess to writing an award-winning novel [10].</p> <p></p> <p>Building SIRI and ALEXA: </p> <p>Understanding is a AI complete problem.</p> <p></p> <p><strong>Car Wash and Reasoning with NNs: </strong></p> <p></p> <p></p> <hr> <p></p> <p>In 2011 Demis Hassabis and others sold their company DeepMind to google for a cool half a billion dollars. At the time their only accomplishment was coming up with a single novel algorithm that could achieve super human performance in multiple Atari games. Since then DeepMind with a mission to <em>solve intelligence and use that to solve everything else </em>has come a long way. Challenging the traditional research model of academia they have been consistently coming up with results that can arguably be considered the biggest accomplishments in the field of AI while reviving interest in Artificial General Intelligence (which some argue was the original goal of the field).</p> <p></p> <p>There is no agreed definition of AGI. But typically we mean building a system capable of (solving) a wide range of tasks.</p> <p>Before we dig deep into if and how that is possible. Lets start with a few observations on state of affairs:</p> <p><strong>Scaling up Deep Learning: </strong></p> <p>Engineering efforts are leading science in such areas — Most typical research is leaderboard driven where benchmark-centric evaluation methodology is followed (as opposed to Hypothesis-driven etc.) and most publications are focused on popular single paradigms(such as statistical pattern recognition) with tweaks to existing old math ideas and scaling them by throwing massive compute and datasets [2] [3].</p> <p>When it comes to RL applications, most success so far in industry have been in offline settings. e.g google controlling their data centre cooling system by learning from past data. And given the fact that most of the community is not even focused on addressing these, its not clear how long it will take to for example solve fundamental problems(e.g reward design, generalization, sample efficiency, and exploration vs. exploitation dilemma. etc.) which the field of RL faces before it see mainstream adoption in building practical applications[4].</p> <p>Good research takes a long time: ultimately coming with ideas that lead to general methods that can scale and leverage computation like those used in AlphaZero or Dota 2(but they still assume a model or simulator is available) are hard but worth pursuing[7]. Most serious ML/RL researchers seem to be sold on the following philosophy:</p> <ol> <li> <strong>Learning</strong> vs Handcrafted — Systems must learn from first principles</li> <li> <strong>General</strong> vs Specific (systems should operate across a wide range of tasks and environments out-of-the-box)</li> <li> <strong>Grounded</strong> vs Logic Based (ability to trace the origins knowledge system has created all the way back to the raw basic inputs)</li> <li> <strong>Active</strong> vs Passive Learning (classifier is passive vs agents based systems that are active participants in their own learning)</li> </ol> <p><strong>Towards AGI: </strong></p> <p>Most large scale AI systems deployed in industry (watson or Alexa etc) are not built on these principles rather they are multi-paradigm [6]. Most accomplishments in last 10 years have been in strong AI and AGI research is in very still primitive stages and has a still a long way to go e.g Here is a slightly old article [9] explaining the state of affairs in computer vision(poster child of ML success story) which are still mostly true today. But knowing all of this doesn’t stop all the enthusiasm in popular press or from famous researchers making all sorts of predictions. e.g some OpenAI researchers are confident that AGI is possible within 15years) [5].</p> <p>Most academics would argue, that even though There is a lot of excitement in areas of AI research like Deep RL it seems like a lot of progress is empirical.  Although there is no shortage of 'promising ideas' (proposed in top conferences). They argue, for the longest time, there hasn't been what we would call a ‘scientific breakthrough’ in past 10 years or so. e.g see talk by John Tsitsiklis [1]. </p> <p><em>what deep learning is appropriate for, and so far as I can tell, deep learning has little to offer such problems. In a recent review of commonsense reasoning, Ernie Davis and I (2015) began with a set of easily-drawn inferences that people can readily answer without anything like direct training, such as Who is taller, Prince William or his baby son Prince George? Can you make a salad out of a polyester shirt? If you stick a pin into a carrot, does it make a hole in the carrot or in the pin? As far as I know, nobody has even tried to tackle this sort of thing with deep learning. Such apparently simple problems require humans to integrate knowledge across vastly disparate sources, and as such are a long way from the sweet spot of deep learning-style perceptual classification. Instead, they are perhaps best thought of as a sign that entirely different sorts of tools are needed, along with deep learning, if we are to reach human-level cognitive flexibility. - Deep Learning - A Critical Appraisal </em></p> <p>Here is what Sam Altman (founder of billion dollar startup openAI said a while ago):</p> <blockquote><em>To be clear, AI (under the common scientific definition) likely won’t work. You can say that about any new technology, and it’s a generally correct statement. But I think most people are far too pessimistic about its chances — AI has not worked for so long that it’s acquired a bad reputation. CS professors mention it with a smirk. Neural networks failed the first time around, the logic goes, and so they won’t work this time either.</em></blockquote> <blockquote><em>But artificial general intelligence might work, and if it does, it will be the biggest development in technology ever.</em></blockquote> <p></p> <p>Chat-GPT: </p> <p>GPT-3 was a landmark moment in <a href="https://www.ibm.com/topics/artificial-intelligence" rel="external nofollow noopener" target="_blank">AI</a> due to its unprecedented size, featuring 175 billion parameters, which enabled it to perform a wide range of natural language tasks without extensive fine-tuning. This model was trained using big data, allowing it to generate human-like text and engage in conversations. It also had the ability to perform few-shot learning, significantly improving its versatility and demonstrated usefulness in commercial AI applications such as chatbots and virtual assistants.</p> <p></p> <p></p> <p>Going Forward: </p> <blockquote><em>There are certainly some reasons to be optimistic. Andrew Ng, who worked or works on Google’s AI, has said that he believes learning comes from a single algorithm — the part of your brain that processes input from your ears is also capable of learning to process input from your eyes. If we can just figure out this one general-purpose algorithm, programs may be able to learn general-purpose things.</em></blockquote> <p></p> <p>and even with existing accomplishments, there is a lot that can be done in terms of producing value for business. Andrew Ng for example says he can’t imagine a domain where AI will have a huge role to play. But because we have seen two AI winters, every time the topic of AI comes up, everyone tends get a bit critical, which is not necessarily a bad thing(overhype is always bad).</p> <p><strong>What are the essential ingredients needed to build AGI systems? and what are the limitations of current methods?</strong></p> <blockquote>One of the key challenges of building intelligent people facing systems is learning quickly from few examples, and giving the systems common sense and reasoning abilities.</blockquote> <p>These issues have been acknowledged by both RL and other AI communities. e.g by researchers like Emma Brunskills at stanford, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Lake%2C+B+M" rel="noreferrer nofollow noopener noopener noopener" target="_blank">Brenden M. Lake</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Ullman%2C+T+D" rel="noreferrer nofollow noopener noopener noopener" target="_blank">Tomer D. Ullman</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Tenenbaum%2C+J+B" rel="noreferrer nofollow noopener noopener noopener" target="_blank">Joshua B. Tenenbaum</a> at MIT and folks that work on topics like transfer learning and learning to learn.</p> <p>In [10] authors review essential ingredients for building an AGI system that learns or thinks like a person and state that machines should:</p> <blockquote><em>“(a) build causal models of the world that support explanation and understanding, rather than merely solving pattern recognition problems; (b) ground learning in intuitive theories of physics and psychology, to support and enrich the knowledge that is learned; and harness compositionality and learning-to-learn to rapidly acquire and generalize knowledge to new tasks and situations.”</em></blockquote> <p>On the Engineering side its interesting to ask how will we build future generations of AI systems? it seems like apart from DL/RL, recent advances in “<em>probabilistic machine learning (Ghahramani 2015), automated statistical reasoning techniques (Lloyd et al. 2014), automated techniques for model building and selection (Grosse et al. 2012), and probabilistic programming languages (e.g., Gelman et al. 2015; Goodman et al. 2008; Mansinghka et al. 2014) are promising technologies and will likely play a key role”</em>.</p> <p>These challenges and ingredients to consider have been discussed in detail in [10] [11] [12]. we will discuss specific instances of these in coming posts.</p> <p>To realize the dreams and impact of AI, requires autonomous systems that learn to make good decisions. To get there we need to create AI systems that learn from few samples to robustly make good decisions, motivated by our applications to healthcare and education. This will have a tremendous impact on society. e.g Safe AI would enable: </p> <ul> <li> <strong> AI-enabled infrastructure</strong>: where need new approaches where AI can be embedded into objects and services to provide <em>ambient intelligence</em> and new kinds of experiences.</li> <li> <strong>AI-Enabled business processes:</strong> We need new tools and workflows for designing our processes where AI can provide automation and decision-support</li> <li> <strong>AI-as-collaborators:</strong> Intelligent machines could one day become capable partners in creative process </li> </ul> <p>I recommend reading <a href="https://aiindex.stanford.edu/report/" rel="external nofollow noopener" target="_blank">stanford's annual AI index report</a> for an accurate picture of our progress. </p> <p>AI and any advanced technology comes with its own sets of challenges, therefore its vitally important that we spend time thinking about how we as a society can create technologies that are safe, regulated and work towards creating a more egalitarian society where we welcome and create space for a <em>diverse</em> next generation leaders that will help shape the future. </p> <p><strong>Pursuit of the Dream Machine: </strong>All of this brings us to idea that computers have always been bicycles for mind and that Net positive impact that technology can have on society as well as create abundance. </p> <p></p> <p></p> <p></p> <p></p> <p>Outcomes: </p> <ul> <li>Bubble Bust <ul><li>Low Probability Race for AGI is a matter of national security: </li></ul> </li> <li>Gartner hype Cycle </li> <li>Industrial revolution</li> </ul> <p></p> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/1*27FlX1OS__D9cgAU6Oy0FQ.png" class="kg-image" alt="" loading="lazy" width="1280" height="652"></figure> <p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — -</p> <p>[1]<a href="https://youtu.be/OmpzeWym7HQ?list=TLPQMTkwMjIwMjAU0BnvKyg1cQ" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://youtu.be/OmpzeWym7HQ?list=TLPQMTkwMjIwMjAU0BnvKyg1cQ</a></p> <p>[2] <a href="https://www.reddit.com/r/MachineLearning/comments/cx0zxy/d_specific_tips_on_machine_learning_research_in_a/" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://www.reddit.com/r/MachineLearning/comments/cx0zxy/d_specific_tips_on_machine_learning_research_in_a/</a></p> <p>[3] <a href="http://www.deeplearningindaba.com/uploads/1/0/2/6/102657286/principles_of_deep_rl.pdf" rel="noreferrer nofollow noopener noopener noopener" target="_blank">http://www.deeplearningindaba.com/uploads/1/0/2/6/102657286/principles_of_deep_rl.pdf</a></p> <p>[4] <a href="https://slideslive.com/38917654/a-real-world-reinforcement-learning-revolution" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://slideslive.com/38917654/a-real-world-reinforcement-learning-revolution</a></p> <p>[5] <a href="https://www.technologyreview.com/s/615181/ai-openai-moonshot-elon-musk-sam-altman-greg-brockman-messy-secretive-reality/" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://www.technologyreview.com/s/615181/ai-openai-moonshot-elon-musk-sam-altman-greg-brockman-messy-secretive-reality/</a></p> <p>[6] <a href="https://plato.stanford.edu/entries/artificial-intelligence/index.html" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://plato.stanford.edu/entries/artificial-intelligence/index.html</a></p> <p>[7] <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" rel="noreferrer nofollow noopener noopener noopener" target="_blank">http://www.incompleteideas.net/IncIdeas/BitterLesson.html</a></p> <p>[8] <a href="https://cs.stanford.edu/people/ebrun/NIPS_2017_tutorial_brunskill.pdf" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://cs.stanford.edu/people/ebrun/NIPS_2017_tutorial_brunskill.pdf</a></p> <p>[9] <a href="https://karpathy.github.io/2012/10/22/state-of-computer-vision/" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://karpathy.github.io/2012/10/22/state-of-computer-vision/</a></p> <p>[10] Lake, Brenden M., et al. “Building machines that learn and think like people.” <em>Behavioral and brain sciences</em> 40 (2017).</p> <p>[11] <a href="https://youtu.be/RB78vRUO6X8" rel="noreferrer nofollow noopener noopener noopener" target="_blank">https://youtu.be/RB78vRUO6X8</a> (see slides at )</p> <p>[12] Mikolov, Tomas, Armand Joulin, and Marco Baroni. “A roadmap towards machine intelligence.” <em>International Conference on Intelligent Text Processing and Computational Linguistics</em>. Springer, Cham, 2016.</p> <p>[13] <a href="https://arxiv.org/pdf/1109.5951v2" rel="external nofollow noopener" target="_blank">https://arxiv.org/pdf/1109.5951v2</a></p> <figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://www.ibm.com/think/topics/history-of-artificial-intelligence" rel="external nofollow noopener" target="_blank"><div class="kg-bookmark-content"> <div class="kg-bookmark-title">The History of Artificial Intelligence | IBM</div> <div class="kg-bookmark-description">As AI improves, its influence will continue to grow. To understand the directions the technology can take, it helps to understand how we got here.</div> <div class="kg-bookmark-metadata"> <img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/content/images/icon/apple-touch-icon-180x180.png" alt=""><span class="kg-bookmark-author">IBM</span><span class="kg-bookmark-publisher">Tim Mucci</span> </div> </div> <div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/thumbnail/cq5dam.web.1280.1280.jpeg" alt="" onerror="this.style.display = 'none'"></div></a></figure> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

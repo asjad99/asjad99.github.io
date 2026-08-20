@@ -1,0 +1,1032 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Removing Image Compression Artifacts | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2020/03/automated-image-segmentation/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Removing Image Compression Artifacts</h1> <p class="post-meta"> Created on March 19, 2020 </p> <p class="post-tags"> <a href="/blog/2020"> <i class="fa-solid fa-calendar fa-sm"></i> 2020 </a>   ·   <a href="/blog/tag/advanced-data-algorithms"> <i class="fa-solid fa-hashtag fa-sm"></i> Advanced data algorithms</a>   <a href="/blog/tag/docs"> <i class="fa-solid fa-hashtag fa-sm"></i> #docs</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p><strong>tldr</strong>: <em>DCT compression methods can introduce visible artifacts at block boundaries of images. In this post we take a look at an algorithm proposed by Luo and Ward [1] for the removal of edges of the blocks in regions that are affected by blockiness effects. The algorithm uses an adaptive approach where it considers the local information of the image before proceeding with the modification of pixel values based on weighted average of neighbouring blocks. Experiments show that the algorithm can significantly reduce the visible blockiness artifacts from the given images.</em></p> <p>Data compression is the process of removing the redundant data present in a given image while trying to preserve as much information present in the original image as possible. The common types of data redundancies can be characterized into three categories.</p> <p>1) Coding Redundancy </p> <p>2) Spatial Redundancy </p> <p>3) Irrelevant Information.</p> <p>Several methods are available compress the given image for transmission and storage. However these methods come with their own set of challenges. For example block-based DCT compression methods can introduce certain types of visible artifacts at block boundaries[4]. This digression is because of coarse quantization of coefficients. If we do not take into account the existing correlations among adjacent blocks then these types of “blocking artifact” can occur. Several filtering techniques exist to reduce the blockiness by reducing the high frequency components present near the block boundaries. In this work we will take a look at the technique proposed by Luo and Ward [1] for removing the blocking effects in smooth regions of the image.</p> <p>The algorithm proposed by Luo and Ward is based on the idea that some of the DCT coefficients of a step function(representing a sharp edge) have nonzero values. First step in this approach is to detect the strong texture and edge regions based on frequency co-efficients. We iterate through the image and extract two neighboring 8x8 blocks in each step. If they have similar frequency properties and the boundary 8x8 pixel contains no high frequencies then portion of image is considered to be smooth. DCT filtering has shown to be effective in this case as it ensures pixel value continuity.</p> <p>Our core algorithm consists of following steps:</p> <p><em>Extracting adjacent blocks</em></p> <figure class="kg-card kg-image-card"><img src="https://phaven-prod.s3.amazonaws.com/files/image_part/asset/2743197/XbFpALJtqkvL3Npb5fs33AlVdOc/medium_Screen_Shot_2022-01-25_at_8.51.14_pm.png" class="kg-image" alt="" loading="lazy"></figure> <p>Figure 1. Blockiness Diagram [4]</p> <p>We pick two blocks A and B from the given image as show in figure 1. Block C will contain boundary pixels as it will contains right and left half of Block A and Block B respectively. In the first phase we pick horizontally adjacent blocks and iterate column wise through the image, while in the second phase we pick vertically adjacent blocks while iterating row wise through the image.</p> <p><em>ii. Calculating DCT transform</em></p> <p>The Next step will be to calculate the DCT matrix of all the three blocks. DCT has the ability to concentrate information and is used in image compression applications. The definition of the two-dimensional DCT for an input image A and output image B is:</p> <p>$B_{p q}=\alpha_{p} \alpha_{q} \sum_{m=0}^{M-1} \sum_{n=0}^{N-1} A_{m n} \cos \frac{\pi(2 m+1) p}{2 M} \cos \frac{\pi(2 n+1) q}{2 N}, \begin{aligned}&amp;0 \leq p \leq M-1 \&amp;0 \leq q \leq N-1\end{aligned}$ </p> <p>where<br>$$\alpha_{p}=\left{\begin{array}{l}<br>\frac{1}{\sqrt{M}}, p=0 \<br>\sqrt{\frac{2}{M}}, 1 \leq p \leq M-1<br>\end{array}\right.$$<br>and<br>$$<br>\alpha_{q}= \begin{cases}\frac{1}{\sqrt{N}}, &amp; q=0 \ \sqrt{\frac{2}{N}}, &amp; 1 \leq \mathrm{q} \leq \mathrm{N}-1\end{cases}<br>$$</p> <p><em>Threshold Comparisons:</em></p> <p>To adapt the filtering to the local information content of the image we apply the following conditions. They will ensure that modifications are done to relatively smooth regions.</p> <p>where values for T<sub>1,</sub> T<sub>2</sub>, T<sub>3</sub> are predefined and are found through experimentation. If the above three conditions are met we can proceed with blockiness reduction in DCT domain as explained in next step 4.<br></p> <p>a. $\left|F_{a}(0,0)-F_{b}(0,0)\right|&lt;T_{1}$<br>b. $\left|F_{a}(0,1)-F_{b}(0,1)\right|&lt;T_{2}$.<br>c. $\left|F_{c}(3,3)\right|&lt;T_{3}$. </p> <p>where values for T<sub>1,</sub> T<sub>2</sub>, T<sub>3</sub> are predefined and are found through experimentation. If the above three conditions are met we can proceed with blockiness reduction in DCT domain as explained in next step 4.</p> <p><em>iv. Computing Modified Block C</em></p> <p>It is observed that Block C will have non-zero values at row 0 and column= 0,1,3,5,7 of the image. Hence we will modify five coefficients values of block C, but we have to modify them in a way that original information (e.g sharp edges) in the image should not be lost during the process. Modified block C can be computed using weighted average of blocks A, B, and C which makes filtering more adaptive to image contents. Following equations are used for the computing the modified block C which takes into account information present in neighboring blocks B and C.</p> <p>$$<br>F_{M c}(0, v)=\alpha_{0} F_{c}(0, v)+\beta_{0}\left[F_{a}(0, v)+F_{b}(0, v)\right]<br>$$<br>where<br>$$<br>\begin{aligned}<br>v &amp;=0,1 \<br>F_{M c}(0, v) &amp;=\alpha_{1} F_{c}(0, v)+\beta_{1}\left[F_{a}(0, v)+F_{b}(0, v)\right]<br>\end{aligned}<br>$$<br>where<br>$$<br>\begin{aligned}<br>v &amp;=3,5,7 \<br>F_{M c}(u, v) &amp;=F_{c}(u, v) \quad \text { for all } \quad v \neq 0,1,3,5,7<br>\end{aligned}<br>$$</p> <p><em>i. Replacing input image with inverse DCT of Modified C block</em></p> <p>In this step we compute the inverse DCT of modified block C and replace the original block C pixel values with the newly computed values. The new modified pixel values of block C can be represented by the following equation:</p> <p><br>$$<br>C_{M c}(k, l)=c(k, l)+\xi(l)<br>$$<br>$\begin{aligned} C_{M c}(k, l)=&amp; c(k, l)+\xi(l) \ \text { where } \ \xi(l)=&amp; \sum_{u=0}^{N-1} \sum_{v=0}^{N-1}\left(C_{u} C_{v}\left(F_{M c}(u, v)-F_{c}(u, v)\right)\right.\=&amp;\left.\times W_{D C T}(u, k) W_{D C T}(v, l)\right) \=&amp; C_{0} C_{0}\left[F_{M c}(0,0)-F_{c}(0,0)\right] \ &amp;+\sum_{i=0}^{3} C_{0} C_{v}\left[F_{M c}(0, v)-F_{c}(0, v)\right] \ &amp; \times W_{D C T}(v, l) \end{aligned}$<br>where $v=2 i+1$.</p> <p>Steps i to v will remove discontinuity present at boundary pixels of horizontally adjacent blocks. These step are repeated in Phase II to remove discontinuity from vertically adjacent blocks.</p> <p><strong>Coding Listing: </strong></p> <pre><code>%read given compressed image image
+
+f = imread('portrait_compressed_10.jpg');
+input = f;
+ref = imread('portrait.bmp');
+
+f = double(f);
+img_size = size(f);
+
+%Declare Thresholds
+
+Threshold_1 = 350;
+Threshold_2 = 120;
+Threshold_3 = 60;
+
+%---------------------------------------------------------- 
+%PHASE 1: iterating through input image using Horizontally Adjacent Blocks 
+%---------------------------------------------------------- 
+
+for row_pixel = 1:8:(img_size(1) - 16)
+    
+   for column_pixel = 1:8:(img_size(2) - 16)
+        
+       % Extract 8x8 Blocks A,B,C. Blocks C is an overlap of Block A and B 
+       % and contains boundry pixels of both blocks. 
+       f_blockA = f(row_pixel:row_pixel + 7,column_pixel: column_pixel + 7);  
+       f_blockC = f(row_pixel:row_pixel+7,column_pixel + 4 : column_pixel + 11);
+       f_blockB = f(row_pixel :row_pixel +7,column_pixel + 8:  column_pixel + 15);
+        
+       %calculate two-dimensional discrete cosine transform of Blocks A,B,C
+       DCT_blockA = dct2(f_blockA);
+       DCT_blockB = dct2(f_blockB);
+       DCT_blockC = dct2(f_blockC);
+       
+      %Condition 1: checks if Block A has a similar horizontal frequency property as block B.
+      %in the if condition we check if first row of the DCT matrix block A
+      %and of block B are close in values or not 
+      
+      %Condition 2: boundary between block A and block B belongs to a relatively smooth region.
+      % we check if block C is of low frequency content. if textures and other strong diagonal edges are present then it
+      % would result in relatively high values of DCT co-efficients 
+       
+       diff1 = (DCT_blockA(1,1) - DCT_blockB(1,1));
+       diff2 =  (DCT_blockA(1,2) - DCT_blockB(1,2));
+       diff3 =  (DCT_blockC(4,4));   
+      
+      if (diff1 &lt; Threshold_1 &amp;&amp; diff2 &lt; Threshold_2 &amp;&amp; diff3 &lt; Threshold_3) 
+           
+      %calculating the modified DCT coefficient of block C.
+      %New values for column 0,1,3,5,7 would be calculated using weighted average of blocks A,B,C 
+      %alpha = 0.6, Beta = 0.2 for case v=0, v=1. 
+      
+      %case v=0    
+        DCT_blockC(1,1) = 0.6 *  DCT_blockC(1,1) + 0.2 * (DCT_blockA(1,1) +  DCT_blockB(1,1));
+        
+      %case v=1 
+        DCT_blockC(1,2) = 0.6 *  DCT_blockC(1,2) + 0.2 * (DCT_blockA(1,2) +  DCT_blockB(1,2));
+        
+       %0.5 and 0.25 are the values of alpha and beta are used for columns 3,5,7 
+       %case v=3 
+         DCT_blockC(1,4) = 0.5 *  DCT_blockC(1,4) + 0.25 * (DCT_blockA(1,4) +  DCT_blockB(1,4));
+        
+       %case v=5
+         DCT_blockC(1,6) = 0.5 *  DCT_blockC(1,6) + 0.25 * (DCT_blockA(1,6) +  DCT_blockB(1,6));
+       
+       %calculate inverse dct of modified block C 
+       %case v=7 
+        DCT_blockC(1,8) = 0.5 *  DCT_blockC(1,8) + 0.25 * (DCT_blockA(1,8) +  DCT_blockB(1,8));         
+        
+        %calculate inverse dct
+       inv_DCT_blockC = idct2(DCT_blockC);
+       
+       %replace f_blockC with inverse dct of modified block C   
+       f(row_pixel : row_pixel + 7,column_pixel + 4: column_pixel + 11) = inv_DCT_blockC(:,:);
+       
+       end    
+   end
+end
+
+
+%---------------------------------------------------------- 
+%PHASE 2: iterating through image using Vertically Adjacent Blocks 
+%---------------------------------------------------------- 
+
+for column_pixel2 = 1:8:(img_size(2) - 16)
+    
+     for row_pixel2 = 1:8:(img_size(1) - 16)
+     
+       % Extract 8x8 Blocks A,B,C. Blocks C is an overlap of Block A and B 
+       % and contains boundry pixels of both blocks. 
+       f_blockA = f(row_pixel2:row_pixel2 + 7,column_pixel2: column_pixel2 + 7); 
+       f_blockC = f(row_pixel2 + 4:row_pixel2 + 11,column_pixel2 : column_pixel2 + 7);
+       f_blockB = f(row_pixel2 + 8 :row_pixel2 +15,column_pixel2:  column_pixel2 + 7);
+
+       %calculate two-dimensional discrete cosine transform of Blocks A,B,C
+       DCT_blockA = dct2(f_blockA);
+       DCT_blockB = dct2(f_blockB);
+       DCT_blockC = dct2(f_blockC);
+       
+      %Condition 1: checks if Block A has a similar horizontal frequency property as block B.
+      %in the if condition we check if first row of the DCT matrix block A
+      %and of block B are close in values or not 
+      
+      %Condition 2: boundary between block A and block B belongs to a relatively smooth region.
+      % we check if block C is of low frequency content. if textures and other strong diagonal edges are present then it
+      % would result in relatively high values of DCT co-efficients 
+       
+     
+       diff1 = (DCT_blockA(1,1) - DCT_blockB(1,1));
+       diff2 =  (DCT_blockA(2,1) - DCT_blockB(2,1));
+       diff3 =  (DCT_blockC(4,4));   
+      
+      if (diff1 &lt; Threshold_1 &amp;&amp; diff2 &lt; Threshold_2 &amp;&amp; diff3 &lt; Threshold_3) 
+      
+                 
+      %calculating the modified DCT coefficient of block C.
+      %New values for column 0,1,3,5,7 would be calculated using weighted average of blocks A,B,C 
+      
+      %alpha = 0.6, Beta = 0.2 for case v=0, v=1. 
+             
+      %case v=0    
+        DCT_blockC(1,1) = 0.6 *  DCT_blockC(1,1) + 0.2 * ( DCT_blockA(1,1) +  DCT_blockB(1,1));
+        
+      %case v=1 
+        DCT_blockC(2,1) = 0.6 *  DCT_blockC(2,1) + 0.2 * (DCT_blockA(2,1) +  DCT_blockB(2,1));
+        
+      %0.5 and 0.25 are the values of alpha and beta are used for columns 3,5,7 
+      %case v=3 
+        DCT_blockC(4,1) = 0.5 *  DCT_blockC(4,1) + 0.25 * (DCT_blockA(4,1) +  DCT_blockB(4,1));
+        
+       %case v=5
+       DCT_blockC(6,1) = 0.5 *  DCT_blockC(6,1) + 0.25 * (DCT_blockA(6,1) +  DCT_blockB(6,1));
+          
+        %case v=7 
+       DCT_blockC(8,1) = 0.5 *  DCT_blockC(8,1) + 0.25 * (DCT_blockA(8,1) +  DCT_blockB(8,1));         
+        
+       %calculate inverse dct of modified block C 
+       inv_DCT_blockC = idct2(DCT_blockC);
+       
+       %replace the corresponding original image pixels with inverse dct of modified block C       
+        f(row_pixel2 + 4:row_pixel2 + 11,column_pixel2 : column_pixel2 + 7) = inv_DCT_blockC(:,:);
+       
+       end    
+   end
+end
+
+%---------------------------------------------------------- 
+%Display and Compare input/output images
+%---------------------------------------------------------- 
+
+subplot(1,2,1), imshow(input), title('Original image') 
+subplot(1,2,2), imshow(uint8(f)), title('Filtered image')
+ 
+%---------------------------------------------------------- 
+%Calculate PeakSNR values 
+%---------------------------------------------------------- 
+[peaksnr, snr] = psnr(uint8(f), ref);
+fprintf('\n The Peak-SNR value is %0.4f', peaksnr);
+fprintf('\n The SNR value is %0.4f \n', snr);</code></pre> <p>The following page(Figures 1-4) contains the input output visual comparisons of the images. </p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2022/03/image.png" class="kg-image" alt="" loading="lazy" width="800" height="992" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2022/03/image.png 600w, https://asjadkhan.ghost.io/content/images/2022/03/image.png 800w" sizes="(min-width: 720px) 720px"></figure> <p></p> <p><strong>Future Improvements </strong></p> <p>Through our experiments I propose following future improvements in the code:</p> <p><em>Adaptive Threshold values</em></p> <p>Current Algorithm uses hard-coded threshold values to ensure original contents of the image remain preserved. Our aim here is to only remove sharp edges introduced by the compression algorithm and not remove any actual edges present in the image. The hard- coded values currently being used in the image can work well for some of the images but cannot generalize well. Therefore for our algorithm to work equally well with all sets of input images, we need to come up with a generic approach that uses local information of the image to come up with these values. The values should also be dependent of the bit rate of the given input image as they can result in varying amount of filtering for different bit rates.</p> <p><em>Boundary Block value comparisons:</em></p> <p>To save computations, only one pixel value comparison was done of the boundary containing block(condition 3 in step 3 of our algorithm). This step was to ensure that boundary containing block is of low frequency content[4]. Through experimentation I found that more number of comparisons can potentially result in better performance. However the correlation of computational savings vs quality gain is not clear at this point and further experimentation is needed to explore this.</p> <p></p> <p>[1] Ying Luo and Rabab K. Ward, “Removing the Blocking Artifacts of Block-Based DCT Compressed Images”<em>, IEEE transactions on image processing</em>, vol. 12, no. 7, July 2003.</p> <p></p> <p></p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

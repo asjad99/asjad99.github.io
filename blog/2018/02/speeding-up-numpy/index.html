@@ -1,0 +1,1058 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Notes on Numpy Performance improvement | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2018/02/speeding-up-numpy/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Notes on Numpy Performance improvement</h1> <p class="post-meta"> Created on February 08, 2018 </p> <p class="post-tags"> <a href="/blog/2018"> <i class="fa-solid fa-calendar fa-sm"></i> 2018 </a>   ·   <a href="/blog/tag/machine-learning"> <i class="fa-solid fa-hashtag fa-sm"></i> Machine Learning</a>   <a href="/blog/tag/docs"> <i class="fa-solid fa-hashtag fa-sm"></i> #docs</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p><em>Disclaimer</em>: <em>These are complied notes from various sources. Apologies if some references are missing. </em></p> <hr> <p>When conducting experiments with Gensim(an awesome NLP library), i noticed i wasn't getting the same results as fast as the authors claimed. This led me to thinking can something we done to speed up Numpy Operations? Numpy performs accelerated linear algebra, using one of several backends such as OpenBLAS or Intel MKL optimized for the CPUs at hand. </p> <p>In this post, we will discuss follow: </p> <ol><li><strong>Brief Introduction to the libraries: </strong></li></ol> <ul> <li>Default BLAS &amp; LAPACK</li> <li>Automatically Tuned Linear Algebra Software (ATLAS)</li> <li>Intel Math Kernel Library (Intel MKL)</li> <li>OpenBLAS</li> </ul> <p><strong>2. Use parallel primitives</strong></p> <p><strong>3. Diagnostics - Check Linkage and installations</strong></p> <p><strong>4. Installation Guides</strong></p> <ul> <li>Installation and Experimentation on Local Machine</li> <li>Installation Guide 1: Install OpenBLAS library:</li> <li><a href="https://roman-kh.github.io/numpy-multicore/" rel="noreferrer nofollow noopener" target="_blank">https://roman-kh.github.io/numpy-multicore/</a></li> <li>Installation Guide 2: compiled numpy inside a virtualenv with OpenBLAS integration</li> <li>Installation Guide 3: Installing Atlas on Linux Server(official documentation):</li> </ul> <p><strong>5. Benchmarking Gensim operations:</strong></p> <ul> <li>Basic Matrix Decomposition Experiment</li> <li>My Experiment on Wikipedia Dataset</li> <li>OpenBlas vs Intel MKL performance comparison (3rd Party)</li> <li>Lessons Learned</li> </ul> <hr> <h2 id="1-brief-introduction-to-the-libraries">1. Brief Introduction to the libraries: </h2> <p></p> <h3 id="blas-lapack">BLAS &amp; LAPACK</h3> <p><em>BLAS</em> is the low–level part of your system that is responsible for efficiently performing <a href="http://en.wikipedia.org/wiki/Numerical_linear_algebra" rel="noreferrer nofollow noopener" target="_blank">numerical linear algebra</a>, i.e. all the heavy number crunching. More precisely:<br></p> <p><em>Basic Linear Algebra Subprograms (BLAS) is a specification that prescribes a set of low-level routines for performing common linear algebra operations such as vector addition, scalar multiplication, dot products, linear combinations, and matrix multiplication. They are the de facto standard low-level routines for linear algebra libraries; the routines have bindings for both C and Fortran. Although the BLAS specification is general, BLAS implementations are often optimized for speed on a particular machine, so using them can bring substantial performance benefits.<br></em></p> <p>Together with something like LAPACK, it is the cornerstone of today's scientific software packages.</p> <p><em> LAPACK (Linear Algebra Package) is a standard software library for numerical linear algebra. It provides routines for solving systems of linear equations and linear least squares, eigenvalue problems, and singular value decomposition. It also includes routines to implement the associated matrix factorizations such as LU, QR, Cholesky and Schur decomposition.</em></p> <p><br>Now, as mentioned above, <em>BLAS</em> &amp; <em>LAPACK</em> are merely defining a standard interface, but what really matters is the implementation you choose. There are many different implementations under different licenses, which all have their advantages and disadvantages. It can sometimes be difficult to choose the most beneficial implementation for your machine.<br><br><strong>Default BLAS &amp; LAPACK</strong><br> By default, you will most likely only have the standard <em>BLAS</em> &amp; <em>LAPACK</em> implementation on your system (e.g. Arch Linux packages blas/cblas and lapack). While this situation is certainly sufficient if you don't care about performance and works out of the box, is has considerable shortcomings compared to more recent implementation, e.g. not fully supporting multi–core computations. <br><br><strong>Automatically Tuned Linear Algebra Software (ATLAS)</strong><br>The main purpose of the <a href="http://math-atlas.sourceforge.net/" rel="noreferrer nofollow noopener" target="_blank">ATLAS project</a> is to provide a portable high–performance implementation for many different platforms. To achieve this, they use a complex mechanism to automatically determine the optimal parameters for the respective hardware during compilation. ATLAS has become quite popular in recent years, since it uses the <a href="http://opensource.org/licenses/bsd-license.html" rel="noreferrer nofollow noopener" target="_blank">BSD license</a> and is platform independent. When compiled properly, it probably provides a reasonably good <em>BLAS</em> library for most performance–critical applications on most platforms.</p> <p>On Arch Linux you can use the atlas-lapack package from the repository, which will download and compile ATLAS on your machine. However, before starting the compilation, make sure to disable <em>CPU throttling</em> in your OS, since this will mess up the timing when benchmarking ATLAS during compilation. <br></p> <p><strong>Intel Math Kernel Library (Intel MKL)</strong></p> <p> The <a href="http://software.intel.com/en-us/intel-mkl" rel="noreferrer nofollow noopener" target="_blank">Intel Math Kernel Library</a> (Intel MKL) is a proprietary library that is hand–optimized specifically for Intel processors. As of February 2017, it is free of charge for some use cases. read more about the <em>Community Licensing</em> <a href="https://software.intel.com/en-us/articles/free-mkl" rel="noreferrer nofollow noopener" target="_blank">here</a>.</p> <p><strong>OpenBLAS</strong></p> <p> <a href="http://github.com/xianyi/OpenBLAS" rel="noreferrer nofollow noopener" target="_blank">OpenBLAS</a> is another popular open–source implementation that is based on a fork of <a href="https://www.tacc.utexas.edu/research-development/tacc-software/gotoblas2" rel="noreferrer nofollow noopener" target="_blank">GotoBLAS2</a>. They claim in their <a href="http://github.com/xianyi/OpenBLAS/wiki/faq" rel="noreferrer nofollow noopener" target="_blank">FAQ</a> that OpenBLAS achieves a performance comparable to Intel MKL for Intel's Sandy Bridge CPUs. Furthermore, OpenBLAS is well–known for its multi-threading features and apparently scales very nicely with the number of cores.Obtain a copy from <a href="http://www.openblas.net/" rel="noreferrer nofollow noopener" target="_blank">openblas.net</a> or GitHub and follow the <a href="http://github.com/xianyi/OpenBLAS/wiki/Installation-Guide" rel="noreferrer nofollow noopener" target="_blank">installation instructions</a>. This will walk you through the compilation and installation process.<br>reference: <a href="http://markus-beuckelmann.de/blog/boosting-numpy-blas.html" rel="noreferrer nofollow noopener" target="_blank">http://markus-beuckelmann.de/blog/boosting-numpy-blas.html</a></p> <hr> <h2 id="2-use-parallel-primitives">2. Use parallel primitives:</h2> <p>One of the great strengths of numpy is that you can express array operations very cleanly. For example to compute the product of the matrix A and the matrix B, you just do:</p> <pre><code>C = numpy.dot(A,B)</code></pre> <p><br>Not only is this simple and clear to read and write, since numpy knows you want to do a matrix dot product it can use an optimized implementation obtained as part of "BLAS" (the Basic Linear Algebra Subroutines). This will normally be a library carefully tuned to run as fast as possible on your hardware by taking advantage of cache memory and assembler implementation. But many architectures now have a BLAS that also takes advantage of a multicore machine. If your numpy/scipy is compiled using one of these, then dot() will be computed in parallel (if this is faster) without you doing anything. Similarly for other matrix operations, like inversion, singular value decomposition, determinant, and so on. For example, the open source library ATLAS allows compile time selection of the level of parallelism (number of threads). The proprietary MKL library from Intel offers the possibility to chose the level of parallelism at runtime. There is also the GOTO library that allow run-time selection of the level of parallelism. This is a commercial product but the source code is distributed free for academic use.</p> <p>Finally, scipy/numpy does not parallelize operations like<br></p> <pre><code>A = B + C
+A = numpy.sin(B)
+A = scipy.stats.norm.isf(B)</code></pre> <p><br>These operations run sequentially, taking no advantage of multicore machines (but see below). In principle, this could be changed without too much work. OpenMP is an extension to the C language which allows compilers to produce parallelizing code for appropriately-annotated loops (and other things). If someone sat down and annotated a few core loops in numpy (and possibly in scipy), and if one then compiled numpy/scipy with OpenMP turned on, all three of the above would automatically be run in parallel. Of course, in reality one would want to have some runtime control - for example, one might want to turn off automatic parallelization if one were planning to run several jobs on the same multiprocessor machine.</p> <p><strong>reference</strong>: <strong>from SciPy documentation</strong>: <a href="https://scipy.github.io/old-wiki/pages/ParallelProgramming" rel="noreferrer nofollow noopener" target="_blank">https://scipy.github.io/old-wiki/pages/ParallelProgramming</a></p> <hr> <h1 id="3-diagnostics">3. Diagnostics </h1> <h3 id="check-linkage-and-installations"> Check Linkage and installations:</h3> <p>To see what BLAS and LAPACK you are using, type into your shell:</p> <pre><code>
+  python -c 'import scipy; scipy.show_config()’
+</code></pre> <p>To see what library was your NumPy compiled against, run</p> <pre><code>
+python -c 'import numpy; numpy.show_config()'
+</code></pre> <p>Output <strong>on Mac </strong>after installations<strong>:</strong></p> <pre><code>
+lapack_mkl_info:
+    libraries = ['mkl_intel_lp64', 'mkl_intel_thread', 'mkl_core', 'iomp5', 'pthread']
+    library_dirs = ['/Users/asjad/anaconda/lib']
+    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
+    include_dirs = ['/Users/asjad/anaconda/include']
+lapack_opt_info:
+    libraries = ['mkl_intel_lp64', 'mkl_intel_thread', 'mkl_core', 'iomp5', 'pthread']
+    library_dirs = ['/Users/asjad/anaconda/lib']
+    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
+    include_dirs = ['/Users/asjad/anaconda/include']
+blas_mkl_info:
+    libraries = ['mkl_intel_lp64', 'mkl_intel_thread', 'mkl_core', 'iomp5', 'pthread']
+    library_dirs = ['/Users/asjad/anaconda/lib']
+    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
+    include_dirs = ['/Users/asjad/anaconda/include']
+blas_opt_info:
+    libraries = ['mkl_intel_lp64', 'mkl_intel_thread', 'mkl_core', 'iomp5', 'pthread']
+    library_dirs = ['/Users/asjad/anaconda/lib']
+    define_macros = [('SCIPY_MKL_H', None), ('HAVE_CBLAS', None)]
+    include_dirs = ['/Users/asjad/anaconda/include']</code></pre> <p>On Amazon t2.Medium (Intel Xeon Server)</p> <pre><code>
+lapack_opt_info:
+    libraries = ['openblas']
+    library_dirs = ['/usr/local/lib']
+    language = f77
+blas_opt_info:
+    libraries = ['openblas']
+    library_dirs = ['/usr/local/lib']
+    language = f77
+openblas_info:
+    libraries = ['openblas']
+    library_dirs = ['/usr/local/lib']
+    language = f77
+openblas_lapack_info:
+    libraries = ['openblas']
+    library_dirs = ['/usr/local/lib']
+    language = f77
+blas_mkl_info:
+  NOT AVAILABLE</code></pre> <p><strong>Check Linkage:</strong></p> <p>To find out what you have, check whether your numpy is linked to BLAS<br>The most definitive way to check on *nix is to use <a href="https://en.wikipedia.org/wiki/Ldd_(Unix)" rel="noreferrer nofollow noopener" target="_blank">ldd</a> to find out which shared libraries numpy links against at runtime. </p> <pre><code>
+~$ ldd /usr/lib/python2.7/dist-packages/numpy/core/_dotblas.so 
+
+    linux-vdso.so.1 =&gt;  (0x00007fff12db8000)
+    libblas.so.3 =&gt; /usr/lib/libblas.so.3 (0x00007fce7b028000)
+    libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fce7ac60000)
+    libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007fce7a958000)
+    libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fce7a738000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007fce7ca40000)
+</code></pre> <p>/usr/lib/libblas.so.3 is actually the start of a chain of symlinks. If I follow them to their ultimate target using readlink -e, I see that they point to my OpenBLAS shared library:</p> <pre><code>~$ readlink -e /usr/lib/libblas.so.3/usr/lib/openblas-base/libblas.so.3</code></pre> <hr> <h2 id="4-installation-guides">4. Installation Guides</h2> <p></p> <h2 id="installation-and-experimentation-on-local-machine">Installation and Experimentation on Local Machine</h2> <ul><li>local Mac installation guide (see issue <a href="https://git.joinant.com/foretheta/machinelearning/issues/36" rel="noreferrer nofollow noopener" target="_blank">https://git.joinant.com/foretheta/machinelearning/issues/36</a>):</li></ul> <h2 id="guide-1-install-openblas-library">Guide 1: Install OpenBLAS library:</h2> <ul><li><a href="https://roman-kh.github.io/numpy-multicore/" rel="noreferrer nofollow noopener" target="_blank">https://roman-kh.github.io/numpy-multicore/</a></li></ul> <h2 id="guide-2-compiled-numpy-inside-a-virtualenv-with-openblas">Guide 2: compiled numpy inside a virtualenv with OpenBLAS</h2> <p><br>Following steps: </p> <ol><li>Compile OpenBLAS:</li></ol> <pre><code>
+$ git clone https://github.com/xianyi/OpenBLAS
+$ cd OpenBLAS &amp;&amp; make FC=gfortran
+$ sudo make PREFIX=/opt/OpenBLAS install</code></pre> <p>2. If you don't have admin rights you could set PREFIX= to a directory where you have write privileges (just modify the corresponding steps below accordingly).</p> <p>3. Make sure that the directory containing libopenblas.so is in your shared library search path.</p> <ul><li>To do this locally, you could edit your ~/.bashrc file to contain the line</li></ul> <pre><code>
+export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+</code></pre> <ul> <li>The LD_LIBRARY_PATH environment variable will be updated when you start a new terminal session (use $ source ~/.bashrc to force an update within the same session).</li> <li>Another option that will work for multiple users is to create a .conf file in /etc/ld.so.conf.d/ containing the line /opt/OpenBLAS/lib, e.g.:</li> </ul> <pre><code>
+$ sudo sh -c "echo '/opt/OpenBLAS/lib' &gt; /etc/ld.so.conf.d/openblas.conf"
+</code></pre> <p>4. Once you are done with either option, run</p> <pre><code>
+$ sudo ldconfig
+</code></pre> <p>5. Grab the numpy source code:</p> <pre><code>
+$ git clone https://github.com/numpy/numpy
+$ cd numpy</code></pre> <p>6. Copy site.cfg.example to site.cfg and edit the copy:</p> <pre><code>
+$ cp site.cfg.example site.cfg
+$ nano site.cfg</code></pre> <p>7. Uncomment these lines:</p> <pre><code>
+....
+[openblas]
+libraries = openblas
+library_dirs = /opt/OpenBLAS/lib
+include_dirs = /opt/OpenBLAS/include
+....</code></pre> <p>8. Check configuration, build, install (optionally inside a virtualenv)</p> <pre><code>python setup.py config</code></pre> <p>9. The output should look something like this:</p> <pre><code>
+...
+openblas_info:
+  FOUND:
+    libraries = ['openblas', 'openblas']
+    library_dirs = ['/opt/OpenBLAS/lib']
+    language = c
+    define_macros = [('HAVE_CBLAS', None)]
+
+  FOUND:
+    libraries = ['openblas', 'openblas']
+    library_dirs = ['/opt/OpenBLAS/lib']
+    language = c
+    define_macros = [('HAVE_CBLAS', None)]
+...</code></pre> <p>10. Installing with pip is <a href="https://stackoverflow.com/a/15731459/1461210" rel="noreferrer nofollow noopener" target="_blank">preferable</a> to using python setup.py install, since pip will keep track of the package metadata and allow you to easily uninstall or upgrade numpy in the future.</p> <pre><code>
+$ pip install .
+</code></pre> <p>11. Optional: you can use <a href="https://gist.github.com/alimuldal/eb0f4eea8af331b2a890" rel="noreferrer nofollow noopener" target="_blank">this script</a> to test performance for different thread counts.</p> <pre><code>
+$ OMP_NUM_THREADS=1 python build/test_numpy.py
+
+version: 1.10.0.dev0+8e026a2
+maxint:  9223372036854775807
+
+BLAS info:
+ * libraries ['openblas', 'openblas']
+ * library_dirs ['/opt/OpenBLAS/lib']
+ * define_macros [('HAVE_CBLAS', None)]
+ * language c
+
+dot: 0.099796795845 sec
+
+$ OMP_NUM_THREADS=8 python build/test_numpy.py
+
+version: 1.10.0.dev0+8e026a2
+maxint:  9223372036854775807
+
+BLAS info:
+ * libraries ['openblas', 'openblas']
+ * library_dirs ['/opt/OpenBLAS/lib']
+ * define_macros [('HAVE_CBLAS', None)]
+ * language c
+
+dot: 0.0439578056335 sec</code></pre> <p>reference: <a href="https://stackoverflow.com/questions/11443302/compiling-numpy-with-openblas-integration/14391693#14391693" rel="noreferrer nofollow noopener" target="_blank">https://stackoverflow.com/questions/11443302/compiling-numpy-with-openblas-integration/14391693#14391693</a></p> <h2 id="guide-3-installing-atlas-on-linux-serverofficial-documentation">Guide 3: Installing Atlas on Linux Server(official documentation):</h2> <p>a. <strong>downloading:<br></strong></p> <ol> <li>wget <a href="https://sourceforge.net/projects/math-atlas/files/latest/download?source=files" rel="noreferrer nofollow noopener" target="_blank">https://sourceforge.net/projects/math-atlas/files/latest/download?source=files</a> </li> <li>rename downloaded file to atlas3.10.3.tar.bz2</li> <li>Unzip: </li> </ol> <pre><code>
+ bunzip2 -c ~/dload/atlas3.10.3.tar.bz2 | tar xfm -
+</code></pre> <p>4. Disable Throtteling:</p> <pre><code>
+http://math-atlas.sourceforge.net/atlas_install/node5.html    
+</code></pre> <p><br><br><strong>relevant links</strong>: </p> <ul> <li><a href="https://en.wikipedia.org/wiki/Dynamic_frequency_scaling" rel="noreferrer nofollow noopener" target="_blank">https://en.wikipedia.org/wiki/Dynamic_frequency_scaling</a></li> <li> <a href="https://en.wikipedia.org/wiki/SpeedStep" rel="noreferrer nofollow noopener" target="_blank">https://en.wikipedia.org/wiki/SpeedStep</a> </li> <li> <a href="https://www.howtogeek.com/196655/how-to-configure-the-grub2-boot-loaders-settings/" rel="noreferrer nofollow noopener" target="_blank">How to Configure the GRUB2 Boot Loader’s Settings</a>: <a href="https://www.howtogeek.com/196655/how-to-configure-the-grub2-boot-loaders-settings/" rel="noreferrer nofollow noopener" target="_blank">https://www.howtogeek.com/196655/how-to-configure-the-grub2-boot-loaders-settings/</a> </li> <li><a href="https://askubuntu.com/questions/523640/how-i-can-disable-cpu-frequency-scaling-and-set-the-system-to-performance" rel="noreferrer nofollow noopener" target="_blank">https://askubuntu.com/questions/523640/how-i-can-disable-cpu-frequency-scaling-and-set-the-system-to-performance</a></li> <li><a href="https://wiki.debian.org/HowTo/CpuFrequencyScaling" rel="noreferrer nofollow noopener" target="_blank">https://wiki.debian.org/HowTo/CpuFrequencyScaling</a></li> <li><a href="https://vincent.jousse.org/en/tech/archlinux-compile-lapack-atlas-kaldi/" rel="noreferrer nofollow noopener" target="_blank">https://vincent.jousse.org/en/tech/archlinux-compile-lapack-atlas-kaldi/</a></li> <li><code>https://unix.stackexchange.com/questions/121410/setting-cpu-governor-to-on-demand-or-conservative</code></li> </ul> <p>C. Installation(Basic Steps of an ATLAS install):</p> <pre><code>
+    http://math-atlas.sourceforge.net/atlas_install/node6.html
+</code></pre> <p></p> <hr> <h2 id="benchmarking">Benchmarking</h2> <h2 id="basic-matrix-decomposition-experiment">Basic Matrix Decomposition Experiment:</h2> <pre><code>
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+from __future__ import print_function
+
+import numpy as np
+from time import time
+
+# Let's take the randomness out of random numbers (for reproducibility)
+np.random.seed(0)
+
+size = 4096
+A, B = np.random.random((size, size)), np.random.random((size, size))
+C, D = np.random.random((size * 128,)), np.random.random((size * 128,))
+E = np.random.random((int(size / 2), int(size / 4)))
+F = np.random.random((int(size / 2), int(size / 2)))
+F = np.dot(F, F.T)
+G = np.random.random((int(size / 2), int(size / 2)))
+
+# Matrix multiplication
+N = 20
+t = time()
+for i in range(N):
+    np.dot(A, B)
+delta = time() - t
+print('Dotted two %dx%d matrices in %0.2f s.' % (size, size, delta / N))
+del A, B
+
+# Vector multiplication
+N = 5000
+t = time()
+for i in range(N):
+    np.dot(C, D)
+delta = time() - t
+print('Dotted two vectors of length %d in %0.2f ms.' % (size * 128, 1e3 * delta / N))
+del C, D
+
+# Singular Value Decomposition (SVD)
+N = 3
+t = time()
+for i in range(N):
+    np.linalg.svd(E, full_matrices = False)
+delta = time() - t
+print("SVD of a %dx%d matrix in %0.2f s." % (size / 2, size / 4, delta / N))
+del E
+
+# Cholesky Decomposition
+N = 3
+t = time()
+for i in range(N):
+    np.linalg.cholesky(F)
+delta = time() - t
+print("Cholesky decomposition of a %dx%d matrix in %0.2f s." % (size / 2, size / 2, delta / N))
+
+# Eigendecomposition
+t = time()
+for i in range(N):
+    np.linalg.eig(G)
+delta = time() - t
+print("Eigendecomposition of a %dx%d matrix in %0.2f s." % (size / 2, size / 2, delta / N))</code></pre> <p><br>This performs some matrix multiplication, vector–vector multiplication, <a href="http://en.wikipedia.org/wiki/Singular_value_decomposition" rel="noreferrer nofollow noopener" target="_blank">singular value decomposition</a> (SVD), <a href="http://en.wikipedia.org/wiki/Cholesky_decomposition" rel="noreferrer nofollow noopener" target="_blank">Cholesky factorization</a> and <a href="http://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors" rel="noreferrer nofollow noopener" target="_blank">Eigendecomposition</a>, and averages the timing results (which are of course arbitrary) over multiple runs.<br></p> <p><strong>Conclusion</strong>: Intel's Math Kernel Library (Intel MKL) performs best<br>reference :<a href="http://markus-beuckelmann.de/blog/boosting-numpy-blas.html" rel="noreferrer nofollow noopener" target="_blank">http://markus-beuckelmann.de/blog/boosting-numpy-blas.html</a></p> <h3 id="wikipedia-experiment">Wikipedia Experiment:</h3> <p><br>This experiment is divided into three phases<br><strong>Phase A: </strong><br>Tasks:</p> <ul> <li>Convert the articles to plain text (process Wiki markup)</li> <li>create and save dictionary + corpus</li> <li>create and save sparse TF-IDF vectors representation.</li> </ul> <p><code>python -m gensim.scripts.make_wiki </code></p> <p><br><br><strong>Phase B(create the model): </strong></p> <pre><code>
+&gt;&gt;&gt; # extract 400 LSI topics; use the default one-pass algorithm
+&gt;&gt;&gt; lsi = gensim.models.lsimodel.LsiModel(corpus=mm, id2word=id2word, num_topics=400)
+
+&gt;&gt;&gt; # print the most contributing words (both positively and negatively) for each of the first ten topics
+&gt;&gt;&gt; lsi.print_topics(10)</code></pre> <h3 id="phase-ccreate-an-index"> <br>Phase C(create an Index):</h3> <pre><code>index = Similarity('./data/wiki_index', lsi_corpus, num_features=lsi_corpus.num_terms)# store to diskindex.save('./data/wiki_index.index')# load back = same indexindex = Similarity.load('./data/wiki_index.index')print(index)</code></pre> <h2 id="my-experimental-results">My Experimental results: </h2> <table style="width: 100%;border-spacing: 0;border: 1px solid #c1c7cd;word-break: break-word;" data-ace-table-col-widths="268;120;166;186"><tbody> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:268px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"><strong>Operation(Wikipedia Exp. - phase A) </strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:120px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"><strong>Library</strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:166px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"><strong>System Details</strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:186px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"><strong>Total Time</strong></span></span></div></td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:268px;"> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">Convert the articles to plain text</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo h-lparen">(process</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"> Wiki markup)</span> </li></ul></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">create and save dictionary + corpus </span></li></ul></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">create and save sparse TF-IDF vectors representation.  </span></li></ul></div> </td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:120px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">mkl_intel_lp64</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:166px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">MacBook Pro</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo h-lparen">(Intel</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"> Core i7(4 cores))</span> </div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:186px;"> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">Start: 18:26:59,674 </span></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">End: 00:55:16,216 </span></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">~6hrs </span></div> </td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:268px;"> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">Convert the articles to plain text</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo h-lparen">(process</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"> Wiki markup)</span> </li></ul></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">create and save dictionary + corpus </span></li></ul></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo line-list-type-bullet ace-ltr"><ul class="listtype-bullet listindent1 list-bullet1"><li><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">create and save sparse TF-IDF vectors representation. </span></li></ul></div> </td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:120px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">Openblas</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:166px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">t2.Medium</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo h-lparen">(Intel</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"> Xeon, 2 cores) </span> </div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:186px;"> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">Start: </span></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">2017-09-18:</span></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">07:38:50,521</span></div> <div dir="auto" style="" class="ace-line gutter-noauthor ace-ltr"><br></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo"> </span></div> <div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zmwnz77znz89z33lz90zz70zz78zz90zb31lnpz76zv7z83zz70zz75zqz81zz70zo">still going at: 2017-09-19:  01:15:30,764</span></div> <div dir="auto" style="" class="ace-line gutter-noauthor ace-ltr"><br></div> <div dir="auto" style="" class="ace-line gutter-noauthor ace-ltr"><br></div> </td> </tr> </tbody></table> <p><br><br><strong>Thread Comparison:</strong></p> <figure class="kg-card kg-image-card"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505773181035_Screen+Shot+2017-09-19+at+8.18.36+am.png" class="kg-image" alt="" loading="lazy"></figure> <figure class="kg-card kg-image-card"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505773858642_Screen+Shot+2017-09-19+at+8.30.03+am.png" class="kg-image" alt="" loading="lazy"></figure> <p><br><strong>Experiments by others </strong></p> <figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505771827538_Screen+Shot+2017-09-19+at+7.56.47+am.png" class="kg-image" alt="" loading="lazy"><figcaption><b><strong style="white-space: pre-wrap;">Library Comparison - Benchmarks: </strong></b></figcaption></figure> <p>details: <a href="https://software.intel.com/en-us/articles/performance-comparison-of-openblas-and-intel-math-kernel-library-in-r" rel="noreferrer nofollow noopener" target="_blank">https://software.intel.com/en-us/articles/performance-comparison-of-openblas-and-intel-math-kernel-library-in-r</a></p> <p>Intel Xeon E5-2670 has eight physical cores in one chipset, so there are 16 physical cores in one server node.<a href="https://software.intel.com/en-us/articles/parallelism-in-the-intel-math-kernel-library" rel="noreferrer nofollow noopener" target="_blank">Intel MKL library</a> supports the single thread mode (Sequential) or OpenMP threading mode. MKL with OpenMP threading mode defaultly uses all physical cores in one node(here is 16).Fig.1 shows the results of using Intel MKL for 1 thread and 16 threads with automatic parallel execution are shown in blue. There are five subtasks showing a significant benefit from either optimized sequential math library or the automatic parallelization with MKL including <strong>crossprod</strong>(matrix size 2800*2800), <strong>linear regression</strong>, <strong>matrix decomposition</strong>, <strong>computing inverse </strong>and<strong>determinant of a matrix</strong>. Other non-computational intensive tasks received very little performance gains from parallel execution with MKL.<br><br></p> <figure class="kg-card kg-image-card"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505771906790_Screen+Shot+2017-09-19+at+7.57.53+am.png" class="kg-image" alt="" loading="lazy"></figure> <p>More details :<a href="http://www.parallelr.com/r-hpac-benchmark-analysis/" rel="noreferrer nofollow noopener" target="_blank">http://www.parallelr.com/r-hpac-benchmark-analysis/</a></p> <p></p> <h1 id="benchmark-openblas-intel-mkl-vs-atlas">Benchmark OpenBLAS, Intel MKL vs ATLAS</h1> <p></p> <figure class="kg-card kg-image-card"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505771293450_Screen+Shot+2017-09-19+at+7.46.32+am.png" class="kg-image" alt="" loading="lazy"></figure> <p></p> <figure class="kg-card kg-image-card"><img src="https://paper-attachments.dropbox.com/s_0729D20DD6566D5C8944EDEF1EFBF7D9B296F1FCCAA354B25414CD835DAAA99E_1505771540187_Screen+Shot+2017-09-19+at+7.52.05+am.png" class="kg-image" alt="" loading="lazy"></figure> <p>reference :<a href="https://github.com/tmolteno/necpp/issues/18" rel="noreferrer nofollow noopener" target="_blank"> https://github.com/tmolteno/necpp/issues/18</a></p> <p></p> <h2 id="lessons-learned">Lessons Learned:</h2> <p><br>The numpy parts of LSI implementation that deal with matrices (matrix multiplications, SVD, ...) are done via low-level libraries (BLAS + LAPACK). MKL and similar libraries are highly optimized and tailored for a particular hardware architecture and can yield significant speed–ups almost for free. Many of these libraries are also multi-threaded and can make use of all the available cores on a given system. The default implementation has many limitations. E.g it does not make use of all cores on a given machine. Installing ATLAS, OpenBLAS or preferably Intel's Math Kernel Library (Intel MKL) can make use of all available cores on a given machine, and we can expect speed–ups upto a factor of 10x-20x. From the Wikipedia experiment I can confirm that Linking numpy and sci-py to the appropriate BLAS library (in my case it was intel’s MKL) can indeed Accelerate the process of cleaning+dictionary and corpus creation+TF_IDF Conversion.</p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

@@ -1,0 +1,898 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> A long introduction to Machine Learning | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2021/03/ml-models/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">A long introduction to Machine Learning</h1> <p class="post-meta"> Created on March 06, 2021 </p> <p class="post-tags"> <a href="/blog/2021"> <i class="fa-solid fa-calendar fa-sm"></i> 2021 </a>   ·   <a href="/blog/tag/machine-learning"> <i class="fa-solid fa-hashtag fa-sm"></i> Machine Learning</a>   <a href="/blog/tag/docs"> <i class="fa-solid fa-hashtag fa-sm"></i> #docs</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>Machine learning is closely related to Artificial intelligence </p> <ul> <li>AI is about building machines or intelligent agents that exhibit intelligence.</li> <li>ML enables machines to learn from experience, and is a sub-field of AI.</li> <li>Deep learning focuses on a family of learning algorithms known as neural networks.</li> </ul> <figure class="kg-card kg-image-card"><img src="https://raw.githubusercontent.com/kuleshov/cornell-cs5785-2022-applied-ml/fab3401185850553f5289a4b78e48c70b2d2fc4d/slides/img/ai_ml_dl.png" class="kg-image" alt="" loading="lazy"></figure> <p><br>The focus of this series is on Machine Learning, so lets dig in:</p> <p>Machine Learning uses a set of observations to uncover an underlying process. It enables us to tackle tasks that are too difficult to solve with fixed programs written and designed by human beings. In tackling machine learning we face some deep philosophical questions. Questions like, “<em>What does it mean to learn</em>?” and, “<em>Can a computer learn</em>?” and, “<em>How do you define simplicity</em>?” and, “<em>Why does Occam’s Razor work</em>? (Why do simple hypotheses do well at modeling reality?)” In a very deep sense, learning theorists take these philosophical questions — or at least aspects of them — give them fleshy mathematical bodies, and then answer them with theorems and proof.</p> <p>A machine learning algorithm is an algorithm that is able to learn from data.</p> <p>Formally, a reasonable <strong>definition</strong> of ML is as follows:</p> <p><em>A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E</em></p> <p>Considering the above definition, from a task perspective we typically categorise machine learning as supervised, unsupervised, and reinforcement learning. In supervised learning, the training dataset includes correct solutions (labelled data); in unsupervised learning, there is no labelled data; and in reinforcement learning, there is evaluative feedback, but no supervised signals.</p> <p><strong>Anatomy of a Supervised Learning Problem:</strong></p> <p>On a practical level, from a system<strong> </strong>perspective, A supervised machine learning system is composed of a dataset, a cost/loss function, an optimization procedure, and a model.</p> <p>i.e Learning = Representation (model Class) + Evaluation (objective) + Optimization</p> <p>Classification and regression are two types of supervised learning problems, with categorical and numerical outputs respectively. Without getting overwhelmed with terminology, lets explore each of these concepts individually and then construct the bigger picture.</p> <p>Suppose we want to find out if money makes people happy. We head to the website <a href="https://ourworldindata.org/grapher/gdp-vs-happiness" rel="external nofollow noopener" target="_blank">'our world in data'</a> and find this plot. </p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/Screenshot-from-2023-03-14-11-35-34.png" class="kg-image" alt="" loading="lazy" width="1854" height="898" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/Screenshot-from-2023-03-14-11-35-34.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2023/03/Screenshot-from-2023-03-14-11-35-34.png 1000w, https://asjadkhan.ghost.io/content/images/size/w1600/2023/03/Screenshot-from-2023-03-14-11-35-34.png 1600w, https://asjadkhan.ghost.io/content/images/2023/03/Screenshot-from-2023-03-14-11-35-34.png 1854w" sizes="(min-width: 720px) 720px"></figure> <p></p> <p>We do see a trend here. In the simplest scenario, we can model life satisfaction as a linear function of GDP per capita. This step is called model selection: we selected a linear model of life satisfaction with one attribute per capita. </p> <p>life_satisfaction = $ \theta_{0} + \theta_{1} $ * GDP_per_capita </p> <p>This model is simply a linear function of the input feature GDP_per_capita. This model has two parameters $ \theta_{0} + \theta_{1} $ which can be tweaked to represent any linear function. Our model makes a prediction by simply computing a weighted sum of the input features, plus a constant called bias term (also called intercept). Remember, we're doing supervised learning here, so that means we already have an idea about what the input/output cause and effect should be. Internally, the learner needs to learn the parameters $ \theta_0 $ and $ \theta_1 $. We can visualise what the effect of model is on tweaking these parameters: </p> <pre><code>theta_list = [(1, 2), (2,1), (1,0), (0,1)]
+for theta0, theta1 in theta_list:
+    x = np.arange(10)
+    y = theta1 * x + theta0
+    plt.plot(x,y)</code></pre> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-8.png" class="kg-image" alt="" loading="lazy" width="713" height="248" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-8.png 600w, https://asjadkhan.ghost.io/content/images/2023/03/image-8.png 713w"></figure> <p><strong>Model representation:</strong></p> <p>Given the training set, our goal is to construct a learner that will output a function donated by $ h $ (hypothesis), which takes as input $x_{1}, x_{2}, ...x{n} $ features and outputs an estimate Y. i.e learn $ h: X-&gt; Y$ so that h(x) is a good predictor for the corresponding value of Y. </p> <p>Formally, to perform supervised learning, we must decide how we're going to represent functions/hypotheses $ h $ in a computer. As an initial choice, let's say we decide to approximate $y$ as a linear function of $x$ :</p> <p>$$‌‌h_{\theta}(x)=\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}‌‌+...+\theta_{n} x_{n}‌‌$$‌‌</p> <p>Here, the $ \theta{i} $<em> 's</em> are the parameters (also called weights) parameterizing the space of linear functions mapping from $ \mathcal{X} $ to $ \mathcal{Y} $.<em> </em></p> <p>$$‌‌\hat{y}=h_\theta(x)= \theta \cdot x‌‌ $$</p> <p>In this equation: </p> <ul> <li>$ \theta $ is the model's parameter vector, containing the bias term and the feature weights $ \theta_{1} $ to $ \theta_{n} $. </li> <li>$ x $ is the instance's feature vector containing $ x_{0} $ to $ x_{n} $ , with $ x_{0} $ always equal to 1. </li> <li>$ \theta \cdot x‌‌ $is the dot product of the vetor $ \theta $ and $ x $ </li> <li>$ h_\theta(x) $ is the hypothesis function, using the model parameters $ \theta $</li> </ul> <p><strong>Cost function:</strong></p> <p>Now, given a training set, how do we pick, or learn, the parameters $\theta$ ? We need to specify a performance measure that measures how good your model is or a cost function that measure how bad it is. One reasonable method seems to be to make $h(x)$ close to $y$, at least for the training examples we have. Formally, we can measure the accuracy of our hypothesis function by using a cost function.</p> <p>$$‌‌J\left(\theta_0, \theta_1\right)=\frac{1}{2 m} \sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)^2‌‌$$‌‌</p> <p>Here we take difference between predicted value and actual value. This function is called mean squared error. The error metric provides a way to measure distance between two vectors (prediction vector and target values). This allows us to choose $ \theta_0 $ and $ \theta_1 $ so that $ h(\theta) $ is close to y for our training examples $ (x,y) $. Next our goal is to minimize this cost function:<br>$$<br>\underset{\theta_{0}, \theta_{1}}{\operatorname{minimize}} J\left(\theta_{0}, \theta_{1}\right)<br>$$</p> <p><strong>Training the Model:</strong></p> <p>Training a model means searching for a combination of model parameters that minimize a cost function. It is a search in the model's parameter space: the more parameters a model has, the more dimensions this space has and the harder the search is: searching for a needle in a 300-dimensional haystack is a much trickier than in 3 dimensions.</p> <p>To make a machine learning algorithm, we need to design an algorithm that will improve the parameters (or weights $\boldsymbol{w}$) in a way that reduces MSE $_{\text {test }}$ when the algorithm is allowed to gain experience by observing a training set $ \left(\boldsymbol{X}^{(\text {train })}, \boldsymbol{y}^{(\text {train })}\right) . $</p> <p>Minimize the mean squared error on the training set, MSE $_{\text {train }} .$ i.e $‌‌\underset{\theta_0, \theta_1}{\operatorname{minimize}} J\left(\theta_0, \theta_1\right) $</p> <p>There are two ways to train this particular regression model. One is using a direct '<em>closed form</em>' equation that directly computes the model parameters that best fit the model to the training set. The other method uses an iterative optimization approach called Gradient Descent that gradually tweaks the model parameters to minimize the cost function over the training set.</p> <p>If we try to think of it in visual terms, our training data set is scattered on the $ x-y $ plane. We are trying to make straight line (defined by $ h_\theta(x) $ ) which passes through this scattered set of data. Our objective is to get the best possible line. The best possible line will be such so that the average squared vertical distances of the scattered points from the line will be the least. In the best case, the line should pass through all the points of our training data set. In such a case the value of $ J\left(\theta_0, \theta_1\right) $ will be 0. For this post we will focus on learning gradient descent as a method for finding the optimal model parameters.</p> <p><strong>Gradient Descent</strong></p> <p>Gradient Descent is a iterative optimization algorithm capable of finding optimal solutions to a wide range of machine learning problems. Gradient descent is an iterative approach for tweaking the model parameters to minimize the cost function over the training set. </p> <p>Let's understand how works intuitively.</p> <p>Suppose you are lost in the mountains in a dense fog, and you can only feel the slope of the ground below your feet. A good strategy to get to the bottom of the valley quickly is to go downhill in the direction of the steepest slope. This is exactly what Gradient Descent does: it measures the <strong>local gradient of the error function with regard to the parameter vector $ \theta $ </strong>and it goes in the direction of descending gradient. Once the gradient is zero, you have reached a minimum! Concretely, you start by filling (theta) with random values (also known as random initialisation). Then you improve it gradually, taking one baby step at a time, each step attempting to decrease the cost function (MSE) until the algorithm converges to a minimum.</p> <p><strong>Technical explanation:</strong></p> <p>Gradient descent can be used to find optimal parameters for linear and logistic regression, SVM and also neural networks which we consider later. The gradient descent algorithm can be utilized for the minimization of convex functions. Stationary points are required in order to minimize a convex function. A very simple approach for finding stationary points is to start at an arbitrary point, and move along the gradient at that point towards the next point, and repeat until converging to a stationary point. The way we do this is by taking the derivative (the tangential line to a function) of our cost function. The slope of the tangent is the derivative at that point and it will give us a direction to move towards. We make steps down the cost function in the direction with the steepest descent, and the size of each step is determined by the parameter $\alpha$, which is called the learning rate. i.e To find a local minimum of a function using gradient descent, one starts at some random point and takes steps proportional to the negative of the gradient (or approximate gradient) of the function at the current point.</p> <p>The gradient descent algorithm is:</p> <p>repeat until convergence:</p> <p>$$‌‌\theta_j:=\theta_j-\alpha \frac{\partial}{\partial \theta_j} J\left(\theta_0, \theta_1\right)‌‌$$</p> <p>where $ j=0,1 $ represents the feature index number.</p> <p>Intuitively, this could be thought of as:</p> <p>repeat until convergence:</p> <p>$$‌‌\theta_j:=\theta_j-\alpha \text { [Slope of tangent aka derivative in } \mathrm{j} \text { dimension] }‌‌$$‌‌</p> <p>‌ </p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-5.png" class="kg-image" alt="" loading="lazy" width="1024" height="645" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-5.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2023/03/image-5.png 1000w, https://asjadkhan.ghost.io/content/images/2023/03/image-5.png 1024w" sizes="(min-width: 720px) 720px"></figure> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-1.png" class="kg-image" alt="" loading="lazy" width="616" height="381" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-1.png 600w, https://asjadkhan.ghost.io/content/images/2023/03/image-1.png 616w"></figure> <p>Imagine that we graph our hypothesis function based on its fields $\theta_0$ and $ \theta_1 $ (actually we are graphing the cost function as a function of the parameter estimates). We put $ \theta_0 $ on the $ x $ axis and $ \theta_1 $ on the $ y $ axis, with the cost function on the vertical $z$ axis. This can be kind of confusing. Essentially, we are moving up to a higher level of abstraction. We are not graphing $ x $ and $ y $ itself, but the parameter range of our hypothesis function and the cost resulting from selecting a particular set of parameters.</p> <p>The points on our graph will be the result of the cost function using our hypothesis with those specific theta parameters. We will know that we have succeeded when our cost function is at the very bottom of the pits in our graph, i.e. when its value is the minimum.</p> <p><strong>Learning rate hyperparameter:</strong> An important parameter is Gradient Descent is the size of the steps, determined by the <em><u>learning rate</u></em> hyperparameter. If the learning rate is too small, then the algorithm will have to go through many iterations to converge, which will take a long time. On the other hand, if the learning rate it too high, you might jump across the valley and end up on the other side, possibly even higher up than you were before. Also note that not all cost functions look nice, regular bowls. There may be holes, ridges, plateaus, and all sorts of irregular terrains, making convergence to the minimum difficult. </p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-3.png" class="kg-image" alt="" loading="lazy" width="800" height="596" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-3.png 600w, https://asjadkhan.ghost.io/content/images/2023/03/image-3.png 800w" sizes="(min-width: 720px) 720px"></figure> <p>Fortunately, the MSE cost function for linear regression is a covex function. So this means there are no local minima, just one global minimum. If the features have different scales, it becomes a elongated scale. There many models, such as logistic regression or SVM, the optimization criterion is convex. Convex functions have only one minimum, which is global. Optimization criteria for neural networks are not convex, but in practice even finding a local minimum local minimum suffices.</p> <p>When specifically applied to the case of linear regression, a new form of the gradient descent equation can be derived. We can substitute our actual cost function and our actual hypothesis function and modify the equation to:</p> <p>repeat until convergence: {</p> <p>$$‌‌\begin{aligned} \theta_0 &amp; :=\theta_0-\alpha \frac{1}{m} \sum_{i=1}^m\left(h_\theta\left(x_i\right)-y_i\right) \\ \theta_1 &amp; :=\theta_1-\alpha \frac{1}{m} \sum_{i=1}^m\left(\left(h_\theta\left(x_i\right)-y_i\right) x_i\right) \\ &amp; \} \end{aligned}‌‌$$‌‌‌‌</p> <p>To summarise the story so far, while implementing a supervised learning ML solution we have a dataset consists of training examples, which are pairs of inputs and targets. Each input is a vector of features or attributes. A learning algorithm can be fully defined by a model class, objective and optimizer. A cost/loss function measures the model performance or accuracy (the proportion of examples for which the model produces the correct output) or error rate (the proportion of examples for which the model produces an incorrect output). And finally an optimisation procedure like gradient descent is used for training the model.The output of a supervised learning is a predictive model that maps inputs to targets.</p> <p><strong>Components of a Supervised Machine Learning Problem</strong></p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-4.png" class="kg-image" alt="" loading="lazy" width="1600" height="842" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-4.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2023/03/image-4.png 1000w, https://asjadkhan.ghost.io/content/images/2023/03/image-4.png 1600w" sizes="(min-width: 720px) 720px"></figure> <p>$ \underbrace{\text{Dataset}}_\text{Features, Attributes, Targets} + \underbrace{\text{Learning Algorithm}}_\text{Model Class + Objective + Optimizer } \to \text{Predictive Model} $</p> <p><strong>Example: </strong></p> <pre><code class="language-python">import numpy as np
+from sklearn.kernel_ridge import KernelRidge
+
+# We will load the dataset from the sklearn ML library
+
+from sklearn import datasets
+boston = datasets.load_boston()
+
+# Apply a supervised learning algorithm
+
+model = KernelRidge(alpha=1, kernel='poly')
+model.fit(boston.data[:,[12]], boston.target.flatten())
+predictions = model.predict(np.linspace(2, 35)[:, np.newaxis])
+
+# Visualize the results
+
+plt.scatter(boston.data[:,[12]], boston.target, alpha=0.25)
+plt.plot(np.linspace(2, 35), predictions, c='red')
+plt.ylabel("Median house price ($K)")
+plt.xlabel("% of adults in neighborhood that don't have a high school diploma")
+plt.title("House prices as a function of average neighborhood education level")</code></pre> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-7.png" class="kg-image" alt="" loading="lazy" width="717" height="278" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-7.png 600w, https://asjadkhan.ghost.io/content/images/2023/03/image-7.png 717w"></figure> <p></p> <p>This concludes our introduction for supervised learning. This is one kind of machine learning where we had labelled data available. <strong>Unsupervised learning</strong> attempts to extract information from data without labels, e.g., clustering and density estimation. For example, Visualization algorithms like T-SNE are good examples of unsupervised algorithms, you feed them a lot of complex unlabelled data, and they output a 2D or 3D representation of your data that can easily be plotted. These algorithms try to preserve as much structure as they can so that we can understand how the data is organized and perhaps identify unsuspected patterns.</p> <p>Lastly, <strong>Reinforcement learning</strong> is akin to optimal control, where the goal of the agent is to find the optimal sequence of actions that leads to the maximum reward. The agent acts in the world and receives feedback from the environment in the form of rewards or penalties based on its actions. The agent's goal is to learn a policy, or a mapping from states to actions, that maximizes the expected cumulative reward over time.</p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2023/03/image-6.png" class="kg-image" alt="" loading="lazy" width="617" height="291" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2023/03/image-6.png 600w, https://asjadkhan.ghost.io/content/images/2023/03/image-6.png 617w"></figure> <p>Applications of reinforcement learning include:</p> <ul> <li>Creating agents that play games such as Chess or Go.</li> <li>Controling the cooling systems of data-centers to use energy more efficiently.</li> <li>Designing new drug compounds.</li> </ul> <p><strong>Acknowledgement:</strong></p> <p>These notes have been adapted from the following resources:</p> <p>[1] <a href="https://jeremykun.com/2014/01/02/probably-approximately-correct-a-formal-theory-of-learning/" rel="external nofollow noopener" target="_blank">Probably Approximately Correct — a Formal Theory of Learning</a></p> <p>[2] [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition]</p> <p><a href="https://paper.dropbox.com/doc/0.-Long-List-of-Interesting-ExcerptsComments-Lessons-about-AI--Bz9xZ2TKr51aX7~5ZFrIlrqhAg-WQT8Jc1xLgnkmMpsGkQwt" rel="external nofollow noopener" target="_blank">[</a>3] <a href="https://cs229.stanford.edu/notes2022fall/main_notes.pdf" rel="external nofollow noopener" target="_blank"><strong>Andrew Ng - CS229 Lecture Notes</strong></a></p> <p>[4] <a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/" rel="external nofollow noopener" target="_blank">https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/</a></p> <p>[5] <a href="https://github.com/kuleshov/cornell-cs5785-2022-applied-ml/blob/main/slides/lecture1-introduction.ipynb" rel="external nofollow noopener" target="_blank">https://github.com/kuleshov/cornell-cs5785-2022-applied-ml/blob/main/slides/lecture1-introduction.ipynb</a></p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

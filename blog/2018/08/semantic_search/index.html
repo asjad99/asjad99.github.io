@@ -1,0 +1,883 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Building an Enterprise-Grade Patent Search System with Semantic Search | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2018/08/semantic_search/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Building an Enterprise-Grade Patent Search System with Semantic Search</h1> <p class="post-meta"> Created on August 28, 2018 </p> <p class="post-tags"> <a href="/blog/2018"> <i class="fa-solid fa-calendar fa-sm"></i> 2018 </a>   ·   <a href="/blog/tag/changelog"> <i class="fa-solid fa-hashtag fa-sm"></i> #changelog</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h2 id="introduction">Introduction: </h2> <p>Patents are issued by a specific government, granting exclusivity rights to the owner of an invention. This protects the inventor's intellectual property (IP) from being copied or stolen. Since many businesses today are built on novel technologies, it is useful to protect these "trade secrets" by filing a patent, supporting a multi-billion-dollar industry.</p> <p>Filing a patent is a complex process and requires a "prior art" search, where a patent officer looks for similar, previously filed patents to ensure that the invention is genuinely unique. The patent search process typically begins with a multi-page document describing the invention, and patent search professionals are skilled at creating extensive queries using both keywords and metadata. A patent examiner generally formulates a set of search queries for a new patent and reviews around 100 patents retrieved from approximately 15 different queries on average. This validation process takes about 12 hours to complete.</p> <p><strong>The Challenge: </strong></p> <p>Off-the-shelf search and indexing methods face significant challenges in processing patent documents due to the frequent use of neologisms (newly coined terms) and intentionally broad or vague language. Patent applicants often employ these tactics to claim a larger scope of innovation, ensuring their invention encompasses as much intellectual territory as possible. This results in text that is purposefully difficult to parse and interpret, as it is designed to be inclusive of various potential adaptations and applications of the invention.</p> <p>Such language makes traditional keyword-based search tools inadequate for patent analysis, as they may struggle to match synonyms, recognize emerging terms, or account for nuanced expressions. Consequently, these systems can miss critical information, fail to retrieve relevant patents, or generate irrelevant results, underscoring the need for more sophisticated, context-aware search techniques like semantic search. By interpreting the meaning behind words rather than relying solely on exact matches, semantic search can bridge the gap created by these unique linguistic challenges in patent documentation.</p> <p>Beyond patent filing, there are additional use cases, such as tracking new inventions or monitoring the development of specific technologies by business competitors. Historically, options for this research include using Google Patent Search or the United States Patent and Trademark Office (USPTO) database. However, keyword search has limitations here as well, and we are now interested in exploring approaches that go beyond keyword search to enhance analysis.</p> <h3 id="datasets">Datasets: </h3> <p> Patent data can be obtained directly from the patent offices, or from research collections. US patents corpus has 10 million documents which we can get from IFI Claims patent <a href="https://www.ificlaims.com/start.htm" rel="external nofollow noopener" target="_blank">database</a> or Google public patents data. USPTO has its full text database available online for manual search[11]. </p> <h3 id="pre-processing">Pre-Processing: </h3> <p><strong><em>‘A document is represented by the features extracted from it, not by its “surface” string form’</em></strong>. </p> <p>The patenting process requires documents to follow a specific structure, typically including an abstract, description, and claims. Building a search system involves creating a data pipeline to clean, transform, and model the data. We use Gensim and Spark to preprocess our data. Following standard preprocessing steps for text data, we perform the following tasks:</p> <ul> <li> <strong>Tokenization</strong>: The text is split into sentences, and each sentence is further split into words. Words are converted to lowercase, and punctuation is removed.</li> <li>Words with fewer than three characters are removed.</li> <li>All stopwords are removed.</li> <li> <strong>Lemmatization</strong>: Words are lemmatized, meaning words in the third person are converted to the first person, and verbs in past and future tenses are changed to the present tense.</li> <li> <strong>Stemming</strong>: Words are reduced to their root form.</li> </ul> <p>The aim of this pre-processing step is to preprocess the data by cleaning it, removing stop words, handling missing entries, and more. There are several ways to preprocess text data to develop the right set of features. We begin by parsing the XML content (stored in PostgreSQL) to extract the title, description, and claims text. These three sections can be combined to create a single text blob. For patent documents, the claims text can be separated to create a distinct claims index, which is often done to improve search accuracy.</p> <p>At the end of this process, we generate two different indexes: the <code>description_text</code> index, which comprises description text objects, and the <code>claim_text</code> index, which consists of claim text documents. Next, we apply a general document representation technique called Bag-of-Words (unigram) for each document, creating an unordered list of words as document features. We tokenize the documents by splitting on whitespace, resulting in a Python list of words. This approach mirrors the Deerwester experiment [1].</p> <p>Several other document representation strategies also exist and may yield better results. In this step, using the bag-of-words list as input, we create a sparse vector representation for each document. In this representation, each document is represented by a single vector, where each element is a (word, frequency) pair. It is advantageous to represent words only by their (integer) IDs. The mapping between words and IDs is called a dictionary in Gensim terminology, and Gensim provides a dictionary class to create this vector representation.</p> <p>At the end of this step, we have a sparse vector (a list of tuples, where each tuple is a word_id, frequency pair) representing each document in the corpus.</p> <p><strong><em>Transformations and modeling:</em> </strong> Given the bag of words extracted from the document, we create a feature vector where each feature represents a word (term) and the feature's value is a term weight. In our case, this term weight is a TF-IDF value. Thus, the entire document is represented as a feature vector, with each vector corresponding to a point in a vector space.</p> <p>The model for this vector space has an axis for every term in the vocabulary, making it V-dimensional, where V is the size of the vocabulary. Conceptually, the vector should also be V-dimensional, with a feature for every term in the vocabulary. However, because the vocabulary can be large (on the order of V = 100,000 terms), a document's feature vector typically includes only the terms that actually appear in that document, omitting terms that do not. This results in a feature vector that is considered sparse.</p> <h2 id="building-the-core-engine">Building the Core-Engine:</h2> <p>Off-the-shelf search and indexing methods face challenges due to neologisms and intentionally over-generalized expressions, because the applicant of the patent wants to claim a big chunk of innovation to their name. </p> <p><strong>Latent Semantic Indexing (LSI)</strong> is a machine learning technique that takes a collection of documents as input and produces a vector space representation of the documents and terms within that collection. The core feature of LSI is the use of Singular Value Decomposition (SVD), which enables large-scale dimensionality reduction to address the problem more effectively.</p> <p>LSI overcomes two major limitations of Boolean keyword queries: synonymy (multiple words with similar meanings) and polysemy (words with multiple meanings). Synonymy often leads to mismatches between the vocabulary used by document authors and that used by users of information retrieval systems. As a result, Boolean or keyword-based queries frequently return irrelevant results or miss information that is actually relevant.</p> <video id="mwe_player_0" poster="//upload.wikimedia.org/wikipedia/commons/thumb/7/70/Topic_model_scheme.webm/600px-seek%3D17.6-Topic_model_scheme.webm.jpg" controls="" preload="none" style="width:600px;height:547px" class="kskin" data-durationhint="18.6" data-startoffset="0" data-mwtitle="Topic_model_scheme.webm" data-mwprovider="wikimediacommons"><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.480p.vp9.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp9, opus"' data-title="SD VP9 (480P)" data-shorttitle="VP9 480P" data-transcodekey="480p.vp9.webm" data-width="526" data-height="480" data-bandwidth="159208" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/7/70/Topic_model_scheme.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp8"' data-title="Original WebM file, 600 × 547 (370 kbps)" data-shorttitle="WebM source" data-width="600" data-height="547" data-bandwidth="370370"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.480p.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp8, vorbis"' data-title="SD WebM (480P)" data-shorttitle="WebM 480P" data-transcodekey="480p.webm" data-width="526" data-height="480" data-bandwidth="766016" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.120p.vp9.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp9, opus"' data-title="Lowest bandwidth VP9 (120P)" data-shorttitle="VP9 120P" data-transcodekey="120p.vp9.webm" data-width="132" data-height="120" data-bandwidth="39560" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.160p.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp8, vorbis"' data-title="Low bandwidth WebM (160P)" data-shorttitle="WebM 160P" data-transcodekey="160p.webm" data-width="176" data-height="160" data-bandwidth="120352" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.180p.vp9.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp9, opus"' data-title="Low bandwidth VP9 (180P)" data-shorttitle="VP9 180P" data-transcodekey="180p.vp9.webm" data-width="198" data-height="180" data-bandwidth="58328" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.240p.vp9.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp9, opus"' data-title="Small VP9 (240P)" data-shorttitle="VP9 240P" data-transcodekey="240p.vp9.webm" data-width="264" data-height="240" data-bandwidth="75328" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.240p.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp8, vorbis"' data-title="Small WebM (240P)" data-shorttitle="WebM 240P" data-transcodekey="240p.webm" data-width="264" data-height="240" data-bandwidth="227712" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.360p.vp9.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp9, opus"' data-title="VP9 (360P)" data-shorttitle="VP9 360P" data-transcodekey="360p.vp9.webm" data-width="394" data-height="360" data-bandwidth="107280" data-framerate="0"></source><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Topic_model_scheme.webm/Topic_model_scheme.webm.360p.webm#t=00:00:01,00:00:17.600" type='video/webm; codecs="vp8, vorbis"' data-title="WebM (360P)" data-shorttitle="WebM 360P" data-transcodekey="360p.webm" data-width="394" data-height="360" data-bandwidth="456944" data-framerate="0"></source></video> <p>LSA assumes that words that are close in meaning will occur in similar pieces of text. A matrix containing word counts per paragraph (rows represent unique words and columns represent each paragraph) is constructed from a large piece of text and a mathematical technique which called singular value decomposition (SVD) is used to reduce the number of columns while preserving the similarity structure among rows. Words are then compared by taking the cosine of the angle between the two vectors formed by any two rows[4].</p> <h2 id="evaluation">Evaluation: </h2> <p>We need to assess the effectiveness of our semantic search system in terms of returning relevant documents that fulfill specific information needs. Evaluating real-world systems is challenging, especially when the user’s information needs are dynamic. In practice, to compare different retrieval modeling strategies, we aim for relative performance evaluation between systems. Establishing a baseline is beneficial, allowing us to use scores to rank modeling approaches (or IR systems) relative to one another. It is also crucial to understand the information needs of professional users of the patent search service, who generally have a lower tolerance for errors compared to typical web search users.</p> <blockquote>Trippe and Ruthven for instance, answer the very fundamental question of “What is success?” with risk minimization. The argument is that what the searcher is ultimately trying to achieve is to minimize the risk of having a patent application rejected, infringing on someone else’s in force patent, being excluded from a market because of a new patent, etc. They map the fundamental metrics of IR effectiveness, precision and recall, to the different search tasks and how they are ordered on the “risk scale.” They observe that precision is more appropriate as a match, insofar as it orders the tasks in the same way as the importance of risk minimization.<br> </blockquote> <p><em>Simulating user Information Needs: G</em>enerally speaking in a lab setting we follow the <a href="http://www.informationr.net/ir/18-2/paper582.html#.WHSxs7Z96QM" rel="external nofollow noopener" target="_blank">Cranfield approach</a> to measure the effectiveness of an IR retrieval strategy. This requires the use of test collections, which can be used to create an experimental setup where various modeling approaches can be benchmarked for comparison. A test collection consists of a document collection, a test suite of information needs (expressed as queries), and a set of relevance judgments, typically a binary assessment indicating whether each query-document pair is relevant or non-relevant [7]. The patent research community developed evaluation campaigns like CLEF, TREC, and NTCIR to support this need.</p> <h3 id="sanity-checks-when-test-collection-isnt-available">Sanity Checks (when test collection isn't available): </h3> <p><strong>About DeerWester collection: </strong>This is a tiny corpus of nine documents, each consisting of only a single sentence.</p> <pre><code>
+&gt;&gt;&gt; documents = ["Human machine interface for lab abc computer applications",
+&gt;&gt;&gt;              "A survey of user opinion of computer system response time",
+&gt;&gt;&gt;              "The EPS user interface management system",
+&gt;&gt;&gt;              "System and human system engineering testing of EPS",
+&gt;&gt;&gt;              "Relation of user perceived response time to error measurement",
+&gt;&gt;&gt;              "The generation of random binary unordered trees",
+&gt;&gt;&gt;              "The intersection graph of paths in trees",
+&gt;&gt;&gt;              "Graph minors IV Widths of trees and well quasi ordering",
+&gt;&gt;&gt;              "Graph minors A survey"]</code></pre> <p>We use LSI to extract two topics out of this corpus. After the model and index has been created on this dataset we perform the following query:</p> <p><strong>SearchQuery</strong>: "Human Computer Interaction"</p> <p><strong>Family members Test: </strong>Patents often have "family members" which share the same priority date, the same description text but have different claims text. While the claims are different between family member to family member, they are very likely to be very very semantically similar.For any size corpus, submit the full text of each patent document in the corpus.For each search identify what % of family members are returned in</p> <ul> <li>#1 search result</li> <li>Top 20 search result</li> <li>Top 21-100</li> <li>Not in top 100</li> </ul> <p><br><strong>Film Unit with lens:</strong><br> This test may lean more toward being a heuristic rather than a purely statistical test, but I believe it is an essential evaluation for any successful algorithm to pass. In this particular Chinese patent, when translated to English, the word "camera" appears only as an adjective or in combination with the more obscure term "camera obscura." The word "camera" is never used in the claims. Instead, the primary noun in the document is “film unit with lens,” which essentially describes a "camera" as we understand it but is never directly referred to as such in the claims set.</p> <ul><li><a href="https://patents.google.com/patent/CN1357791A/en" rel="noreferrer nofollow noopener" target="_blank">https://patents.google.com/patent/CN1357791A/en</a></li></ul> <p> What questions are you trying to answer? Here's the test:"Any successful semantic search engine should return "camera" patents when this chinese patent is used as a search seed." For example, it should return many patents owned by Kodak, Canon, Fuji Film, etc. Our current search engine does a good job of this.</p> <hr> <h2 id="performance-evaluation">Performance Evaluation: </h2> <p>Apart from search accuracy we have to do performance evaluation where we ask: How long does it take to train/model, index the data and secondly what is the Query performance(i.e how long does it take to process one or more queries)? Some of these can be seen as non-functional requirements. </p> <h3 id="basic-experiment">Basic Experiment: </h3> <p>To evaluate the performance of our system we replicated this experiment done by gensim authors : <a href="https://radimrehurek.com/gensim/wiki.html" rel="noreferrer nofollow noopener" target="_blank">https://radimrehurek.com/gensim/wiki.html</a>, where we’ll apply LSA to a corpus containing full set of articles contained in Wikipedia.</p> <p><strong>Differences in dataset:</strong></p> <ul> <li>Gensim Authors used a corpus that contains 3.9M documents, 100K features (distinct tokens) and 0.76G non-zero entries in the sparse TF-IDF matrix. The Wikipedia corpus contains about 2.24 billion tokens in total and the size is 8GB compressed.</li> <li>We used this dataset: <a href="https://dumps.wikimedia.org/enwiki/20170820/" rel="noreferrer nofollow noopener" target="_blank">https://dumps.wikimedia.org/enwiki/20170820/</a> which is about 5 Million documents and about 46 GB of raw text - For comparison, the size when compressed is 13 GB.</li> </ul> <p><strong>Parameters(same for both experiments):</strong></p> <ul><li>A LSI model was created with 400 topics with 2^17 vocabulary size</li></ul> <p><strong>Hardware Differences: </strong></p> <p><strong>Gensim Experiment - Hardware Details(2012):</strong></p> <ul> <li>MacBook Pro, Intel Core i7 2.3GHz, 16GB DDR3 RAM, OS X with libVec.</li> <li>In distributed mode - four workers (Linux, dual-core Xeons of 2Ghz, 4GB RAM with ATLAS)</li> </ul> <p><strong>Our Hardware Details:</strong></p> <ul> <li>Experiment was run on 5 instances of r<strong>4.4xlarge.</strong> </li> <li>They were using ATLAS (Designed for Matrix operation on large dataset) Our system supports ARPACK but we never used it in this evaluation. Using Arpack can lead to 2-3x performance gains at minimum.</li> </ul> <table style="width: 100%;border-spacing: 0;border: 1px solid #c1c7cd;word-break: break-word;" data-ace-table-col-widths="248;248;248"><tbody> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"><strong>Step </strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"><strong>Gensim </strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"><strong>Our Implemetation </strong></span></span></div></td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">Data Cleaning + PreProcessing</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z s-lparen"><strong> </strong></span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z h-lparen">(results</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"> in TF_IDF representation) </span> </div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">9 hrs</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z h-lparen">(Can</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"> only run on MacBook)</span> </div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">~30mins</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z h-lparen">(Spark)</span> </div></td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">Modeling</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">5.25h(on Macbook)</span><span class=" author-d-4z65zz66zl57z75zyiz66zfr2fz87zwz89znuiz88zldz78zz71zk37vnz65zz67zz68zw4tu7tz85zswz70zz68zz79z485h">  </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">or 1 hr 40 mins(on Cluster)</span> </div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">~ 2hrs</span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z h-lparen">(Spark)</span> </div></td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">Indexing</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">N/A</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"> <span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">~3hrs </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z s-lparen"> </span><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z h-lparen">(Gensim)</span> </div></td> </tr> <tr> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 0;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class="ace-all-bold-hthree"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z"><strong>Total</strong></span></span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">~14</span></div></td> <td style="border-color: #c1c7cd;border-style: solid;border-top-width: 1px;border-bottom-width: 0;border-right-width: 0;border-left-width: 1px;min-width: 50px;min-height: 20px;padding: 5px 8px;word-break: normal;vertical-align: top;width:248px;"><div dir="auto" style="" class="ace-line gutter-author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z ace-ltr"><span class=" author-d-iz88z86z86za0dz67zz78zz78zz74zz68zjz80zz71z9iz90z9z84zp2vt4i9ge0omg8gz85zz68zhz76zdoz68ztz82zz79znaz90zz74z">~5 hrs </span></div></td> </tr> </tbody></table> <h3 id="conclusion">Conclusion: </h3> <p> In this project we built a semantic search engine allows us to understand user's intent through contextual meaning. We started by discussing some of the specificities of the patent domain, its rules and customs, and learned how patents are formed as documents, pre-processed and modeled. The core technique behind LSA is singular-value decomposition in which we decompose a term document matrix into a set of orthogonal vectors. </p> <hr> <p><strong>References:</strong></p> <p>[1] <a href="http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf" rel="external nofollow noopener" target="_blank">http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf</a></p> <p>[2] <a href="https://lirias.kuleuven.be/bitstream/123456789/321960/1/MSI_1114.pdf" rel="external nofollow noopener" target="_blank">https://lirias.kuleuven.be/bitstream/123456789/321960/1/MSI_1114.pdf</a></p> <p>[3] <a href="http://pages.cs.wisc.edu/~jerryzhu/cs769/text_preprocessing.pdf" rel="external nofollow noopener" target="_blank">http://pages.cs.wisc.edu/~jerryzhu/cs769/text_preprocessing.pdf</a><br><br>[4] detailed discussion on advanced topics: Moens, M. F. (2006). Information extraction: Algorithms and prospects in a retrieval context (The Information Retrieval Series 21).</p> <p>[5] Paper: 'So many topics, so little time':<br><a href="http://sigir.org/files/forum/2009J/2009j-sigirforum-roda.pdf" rel="external nofollow noopener" target="_blank">http://sigir.org/files/forum/2009J/2009j-sigirforum-roda.pdf</a></p> <p>[6] Patent Information Retrieval: <a href="http://www.ir-facility.org/c/document_library/get_file?uuid=a176a998-bfc6-41a4-b0d2-852784e3e720&amp;groupId=10156" rel="external nofollow noopener" target="_blank">http://www.ir-facility.org/c/document_library/get_file?uuid=a176a998-bfc6-41a4-b0d2-852784e3e720&amp;groupId=10156</a></p> <p>[7] <a href="http://www.informationr.net/ir/18-2/paper582.html#.WHSxs7Z96QM" rel="external nofollow noopener" target="_blank">http://www.informationr.net/ir/18-2/paper582.html#.WHSxs7Z96QM</a></p> <p>[8] <a href="https://www.ccs.neu.edu/home/vip/teach/IRcourse/IR_surveys/fntir_2013.pdf" rel="external nofollow noopener" target="_blank">https://www.ccs.neu.edu/home/vip/teach/IRcourse/IR_surveys/fntir_2013.pdf</a></p> <p>[9] http://patft.uspto.gov/ </p> <hr> <p></p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>

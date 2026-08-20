@@ -1,0 +1,874 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Data-Driven Business Process Improvement | Asjad K. (PhD) </title> <meta name="author" content="Asjad K. Khan"> <meta name="description" content="Data scientist, researcher, and builder exploring how intelligent systems create value in the real world. "> <meta name="keywords" content="data science, artificial intelligence, machine learning, process mining, data engineering, research"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://asjad99.github.io/blog/2021/04/process-improvement/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Asjad K. (PhD) </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog-posts/index.html">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/primers/">Co-Learn Primers </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/news/">News and Events </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/my-research/">My Research 🔭 </a> </li> <li class="nav-item "> <a class="nav-link" href="/photography/">Photography </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Data-Driven Business Process Improvement</h1> <p class="post-meta"> Created on April 07, 2021 </p> <p class="post-tags"> <a href="/blog/2021"> <i class="fa-solid fa-calendar fa-sm"></i> 2021 </a>   ·   <a href="/blog/tag/process-improvement-and-decision-support"> <i class="fa-solid fa-hashtag fa-sm"></i> Process Improvement and Decision Support</a>   <a href="/blog/tag/docs"> <i class="fa-solid fa-hashtag fa-sm"></i> #docs</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>Process analytic approaches allow organizations to support the practice of Business Process Management and continuous improvement by leveraging all process-related data to identify performance bottlenecks, reduce costs, extract insights and optimize the utilisation of available resources. For a long time process analytics was an academic discipline built around the field of business process management(BPM). But now the industry is starting to take notice, tools are being built and process mining solutions are being deployed that leverage event logs generated by the organizations information systems in order to discover and improve processes that are being executed on the ground. </p> <p>Developing process analytic capabilities enable analytic-driven decision making and can support organizations in following ways:</p> <ol> <li>Assisting organizations in understanding process behaviour captured in process execution logs.</li> <li>Identification of performance bottlenecks, optimizing the utilization of resource allocation, and uncovering root-causes of undesired process behaviour/outcomes.</li> <li>Supporting process stakeholders and process users in the execution of processes by making accurate process behaviour forecasts for running cases</li> <li>Enabling organisations to take a analytic-driven decision making approach by providing decision support to process users and knowledge workers</li> <li>Supporting the practice of risk management by assisting in early identification and possible mitigation of undesired effects</li> </ol> <p>In this post, we will try to understand the fundamentals of process analytics. </p> <h3 id="event-logs">Event logs:</h3> <p>When a business process instance is executed, its execution trace is usually recorded as an event log by the information systems deployed inside an organization. An event log is a sequence of events, naturally ordered by the associating timestamps. It can be characterized by multiple descriptors, including an activity, a resource, and a timestamp. In most scenarios, we can assume that the activity is discrete and drawn from a finite set. Resources associated with an event can be either continuous (e.g., time to complete a sub-task), or discrete (e.g., type of skills needed). </p> <p>In order to develop process analytic capabilities for a given organization, it is crucial to collect relevant data in a manner that captures for each executed process instance, the ordering of activities (events), associated resources, and their outcomes. We can also view this past process execution data as representing either positive (value-adding) outcomes or negative (non-optimal) outcomes. This Process execution data once collected will contain hidden insights and actionable knowledge that are of considerable business value.</p> <blockquote>Given process logs as input, the process analytic machinery can be developed which will generate <em>predictive</em> (what is the likely outcome?), <em>prescriptive</em> (what should be done next?) and <em>diagnostic</em> (why did things turn out the way they did?) insights to support (and provide an evidence base for) effective decisions making.</blockquote> <h3 id="process-discovery">Process Discovery</h3> <p>Understanding the properties of ‘current deployed process’ (whose execution trace is available), is critical to knowing whether it is worth investing in improvements, where performance problems exist, and how much variation there is in the process across the instances and what are the root-causes. In order to develop process analytic capabilities for any organization, it is crucial to collect relevant data in a manner which captures the ordering of activities (events), associated resources and their associated outcomes . We can also view this past process execution data as representing either positive (value-adding) outcomes or negative (non-optimal) outcomes. This Process execution data once collected will contain hidden insights and actionable knowledge that are of considerable business value. Implementing a strategy that will allow any given organization to develop process analytics capabilities would also involve experimenting with various methods, tools and techniques. This will allow us as an organization to understand the behaviour of the deployed processes, monitor currently running process instances, predict the future behavior of those instances and provide better support for operational decision-making across the organization. Overall, Process analytics can also be viewed as an organisational capability that will enable organizations to stay competitive by better understanding its internal processes and identifying areas of improvement.</p> <p>Not long ago Davenport and <a href="https://hbr.org/search?term=andrew%20spanyi" rel="external nofollow noopener" target="_blank">Spanyi</a> wrote about <a href="https://hbr.org/2019/04/what-process-mining-is-and-why-companies-should-do-it" rel="external nofollow noopener" target="_blank">process mining</a> hailing it as a capability that can 'revitalize process management in firms'[1]. The first application of process mining is process discovery where given an event log a process mining algorithm will produce a process model (explaining the behavior recorded in the log) without utilizing any a-priori information.</p> <p>There exist various process discovery algorithms which can be employed to automatically learn process models from raw event data. The most popular algorithms used for process discovery are:</p> <ul> <li>Alpha Miner</li> <li>Alpha+, Alpha++, Alpha#</li> <li>Fuzzy miner</li> <li>Heuristic miner</li> <li>Multi-phase miner</li> <li>Genetic process mining</li> </ul> <p>Process Mining helps organizations to recognize and understand the ground realities of processes that are being followed inside an organization, thus giving them the opportunity to improve or redesign them. Process Mining is possible because organizations routinely log their data containing events that occurred during an execution of a process. Events may refer to any of the activities that are carried out by a typical organizations to realize their business goals. It does so by utilizing the event log which contains information about start and completion of various tasks executed by resources at a particular time, allowing organizations to correlate recorded event data and extract process models similar to the ones designed by business analysts. </p> <p> These algorithms and techniques allow us to go beyond the traditional analysis and approaches of process management. Overall, Process Mining deals with the problem of business process discovery, business process monitoring and identifying bottlenecks that allow organizations to streamline their existing processes. </p> <h3 id="process-conformance-and-enhancement">Process Conformance and Enhancement:</h3> <p>Process mining approaches can also be used to ensure conformance(which is useful during process audits) and detect deviations in past executions. Therefore, second type of process mining is conformance, used to check process conformance where we compare an existing process model with an event log of same process model. The idea here is to check if the actual process model(as recorded in the event log) aligns with the initially designed and deployed process model. The third type of process mining is enhancement, which is used to enhance or extend an existing process model by using information recorded in the event log. For example by using timestamps and frequencies, we can identify bottlenecks, diagnose performance related problems and analyze throughput times. This helps us explore different process redesign and control various strategies. </p> <h2 id="predictive-process-monitoring">Predictive Process Monitoring:</h2> <p>Apart from mining, event data can also be leveraged to build machine learning models that perform various process related predictions. Predictive Process Monitoring considers both past execution and current instance data to forecast the behaviour and various properties of process instances. It enables context-aware process execution by monitoring processes and predicting the likelihood of various process outcomes. Predictive Monitoring methods can provide run-time operational support by continuously monitoring a running case instance and presenting a real-time performance overview. Such techniques also allow early identification of process variants (from the desired process design/outcome), allowing the process users to course-correct by taking pre-emptive measures. </p> <p>Overall, predictive techniques are an effective decision support tool for continuously monitoring process progress and reducing the overall risk associated with negative outcomes.</p> <p>Predictive Monitoring methods can provide run-time operational support by continuously monitoring a running case instance and presenting a real-time performance overview. It allows early identification of process variants (from the desired process design/outcome), allowing the process users to course-correct by taking preemptive measures. Few examples of Predictive Monitoring tasks include: </p> <ul> <li>Develop predictive monitoring capabilities where for example we predict the future behavior of those instances and provide better support for operational decision-making across the organization. For example: <ul> <li>Predict the <strong>cycle time </strong>of a given process instance ?</li> <li>Predict the<strong> total remaining time</strong> to completion for a partially executed process instance? There are several Time-related Predictions †asks such as Predicting the remaining cycle time, completion time and experiment duration, predicting delayed process executions of running instances and so on.</li> <li>Estimate the <strong>likely cost</strong> that will be incurred in executing the remainder of the process?</li> </ul> </li> <li>Predict if the running process instance will meet all its performance targets? Predicting the performance outcome of an incomplete case, based on the given (partial) trace means going beyond just simple yield predictions and considering a number of other factors/KPIs that are of interest to us.</li> </ul> <p><strong>Variant Analysis: </strong></p> <p>Business process variant (also known as deviance analysis or drift detection) refers to process instances that maybe deviate from the desired course of execution, resulting in an unexpected or unplanned outcome. Variations may occur due to contextual/environmental factors, human factors or because of explicit decisions made by process participants. In a given process log, process variants are a subset of instances that violate the behavior prescribed by the model and can distinguished based on a certain characteristics they are correlated with. e.g. representing violation compliance rules or missing set performance targets. In deviance mining, we are interested in identifying various variants of the processes that may exist and diagnosing the root-causes of process variations by analyzing or comparing two or more event logs. i.e <em>Given a set of event logs of two or more process variants, how can we identify and explain the differences among these variants?</em>. Understanding the factors leading to variation can help managers make better decisions and improve overall process performance.</p> <p>Case variant/outcome prediction aims at predicting process instances that will end up in an undesirable state (measured as likelihood and severity of fault occurrence or violation of compliance rules). Before training, historic data instances can be labelled as normal or deviant and then process related risks can be classified using any of the traditional machine learning techniques. The case outcomes can be assessed primarily by first checking if the process has met its 'hard goals' and then soft goals (determined by KPIs such as time quality, cost etc.) </p> <p>Similarly, in compliance monitoring, techniques are aimed at preventing compliance violations by monitoring ongoing executions of a process and checking if they comply with respect to certain business constraints.</p> <h2 id="prescriptive-analytics">Prescriptive Analytics: </h2> <p><strong>Introduction</strong>: Flexible execution of business process instances entails multiple critical decisions, involving various actors and objects, taken to achieve better process outcomes. These decisions are of variable nature and context dependent. e.g resource allocation, selection of appropriate paths in Control-flow, and decisions embedded in process activities that have an affect Business processes outcomes. Sub-optimal decisions during process execution, such as picking the wrong execution path, can lead to cost overruns and missed deadlines. These decisions therefore require careful attention, with a view to maintaining and improving business process performance. The ability to guide and automate decision making, therefore, is crucial to maintaining and improving business process performance</p> <p>In Prescriptive Analytics we are interested in developing capabilities that allow Process Decision Support and Automated real-time Planning. Specifically, as part of decision-support tool we may solve one or more of the following problems, leveraging historic and current process data for providing intelligent assistance to process users, and in guiding process-related decisions</p> <ul> <li>Recommend the best suffix for a task sequence, which, if executed, will lead to a desired outcomes or desired performance characteristics? or identify a process path that would yield best performance at a given context.</li> <li>Provide support to assist process users and knowledge workers. e.g. by generating optimal action recommendations for a process instance. </li> <li>Provide support for Risk-aware Process Management. e.g. by early identification of process associated risks and generating recommendations for corrective actions that can help avoid a predicted metric deviation.</li> <li>Provide support for Resource Management. e.g. assess the suitability of a resource in executing a certain task and support resource allocation decisions by suggesting optimal work assignment policies. </li> <li>Provide strategic support for robust process execution and for developing robust strategic plans in adversarial settings.</li> </ul> <h3 id="implementation-strategy-and-first-steps"><strong>Implementation Strategy and First Steps </strong></h3> <p>A Process Management System (PMS) is a software system designed to coordinate business processes using explicit process representations known as process models. These models serve as the primary means of guiding process enactment within a PMS by providing a clear depiction of process knowledge. There are three key dimensions in the development of process models:</p> <ol> <li> <strong>Control-Flow Perspective:</strong> This dimension focuses on the structure of a process, delineating tasks (which are atomic work units representing activities) and their relationships. These relationships are typically depicted using routing constructs such as sequences, parallel branches, and alternative branches.</li> <li> <strong>Data Perspective:</strong> Here, the emphasis lies on describing the data elements involved in the process—those that are consumed, produced, and exchanged during its execution.</li> <li> <strong>Resource Perspective:</strong> This dimension pertains to the operational and organizational context necessary for process execution. It outlines the resources involved, including people, systems, and services capable of executing tasks. Additionally, it considers the capabilities of these resources, encompassing qualifications or skills relevant for task assignment and execution.</li> </ol> <p>By considering these dimensions, process modeling activities within a PMS provide a comprehensive framework for managing and optimizing business processes.</p> <p><strong>Business Process Management LifeCycle</strong></p> <figure class="kg-card kg-image-card"><img src="https://asjadkhan.ghost.io/content/images/2024/02/image.png" class="kg-image" alt="" loading="lazy" width="1134" height="788" srcset="https://asjadkhan.ghost.io/content/images/size/w600/2024/02/image.png 600w, https://asjadkhan.ghost.io/content/images/size/w1000/2024/02/image.png 1000w, https://asjadkhan.ghost.io/content/images/2024/02/image.png 1134w" sizes="(min-width: 720px) 720px"></figure> <p>BPM lifecycle can be defined as<em> "The entry point to the cycle is the design and analysis phase, where the business processes are identified and provided with a formal representation. Newly created models and models from past iterations are verified and validated against current process requirements. In the configuration phase, the systems to use are selected, and the business processes identified before are implemented, tested, and deployed. During the enactment<br>phase, the processes are operated, and the process execution is monitored and maintained. The resulting execution data is processed by the techniques of the evaluation phase, for example process mining. Using the knowledge gained from one iteration, the next iteration can be started by redesigning the business processes." </em></p> <p><strong>Process Identification/(Re)design:</strong> In process identification, after requirement analysis, process models are designed using a suitable modeling language. Existing models can be further refined/improved based on insights gathered in the previous cycle.</p> <p><strong>Process Analysis/diagnosis</strong>: In this step, process logs are typically analysed to diagnose problems and identify areas of potential improvement. Process Discovery methods are also useful here, allowing the analyst to reverse engineer the models from recorded process execution logs. </p> <p><strong>Process Implementation:</strong> In Process implementation (also known as process enactment), a process management engine is sometimes used to support the process enactment by instantiating a process instance where tasks are assigned to the relevant resources for execution. A PMS can also manage process routing (control-flow) by considering which tasks are enabled for execution.</p> <p><strong>Process Monitoring and Controlling: </strong>Organizational process are monitored by the various process support and management tools while executed tasks are tracked and recorded to generate execution traces for later analysis. </p> <h3 id="bpmn">BPMN:</h3> <p>BPMN is a popular modeling notation and is considered an industry standard for modeling Business Processes. The standards included in this notation were developed and agreed by various vendors that provide modeling tools in this space. BPMN provides an intuitive and rich graphical notation for representing business processes. Few key components of BPMN include:</p> <ul> <li> <em>Events</em> that are triggered by some conditions occurring in the process. Events can be further divided into various sub-types.</li> <li> <em>Activities</em> is a generic term used to represent a set of one or more tasks executed by the organizations, which usually results in an effect on the environment. It also includes Gateways which are used to represent the control flow. </li> <li>Lastly, we have sequence and message flows which are used to connect various components on the graph.</li> </ul> <figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1280/0*v0SEL-wvpcntlQ9W.png" class="kg-image" alt="" loading="lazy" width="1050" height="790"></figure> <p>Process analytic capabilities should be developed in various phases. The initial focus should be on mining the event logs and effects to better understand the process behaviour retrospectively. process execution data will contain interesting insights and actionable knowledge that are of considerable business value in terms of process improvement. These gather insights will provide greater visibility on the on-ground process(vs designed). </p> <p>In the next phase, organizations should develop predictive monitoring capabilities for monitoring existing deployed processes. Indicators available in event logs can be exploited to make predictions about time-related risks for example. Related Tasks such as predicting the remaining cycle time, completion time and case duration, predicting delayed process executions and deadline violations of running instances can be of considerable interest to many organizations.</p> <p>Remember, sometimes the data we need is not available. i.e In the short-term we face the problem of data-scarcity. An upfront investment and dedicated effort for data collection could prove to invaluable in the long run. Simulated data is also a good way to kick-start things. For example we can simulate these mined artefacts to obtain the data- streams that would normatively emerge if these artefacts were an accurate reflection of reality (the specific simulation strategy and the type of data obtained would vary depending on the type of artifact).</p> <p><strong>Conclusion and Summary</strong>: Adopting the Process analytics techniques means taking a data-driven approach for identifying performance bottlenecks, reducing costs, extracting insights and optimizing the utilization of available resources. Similarly, predictive techniques are an effective decision support tool for continuously monitoring process progress and reducing the overall risk associated with negative outcomes. Developing a process analytic capability will help in leveraging correlations between how process inputs were administered and the corresponding outcomes (both quantiative and qualitative). Given process logs as input, the process analytic machinery developed as part of the initiateve, will generate predictive (what is the likely outcome?), prescriptive (what should be done next?) and diagnostic (why did things turn out the way they did?) insights to support (and provide an evidence base for) farming decisions.</p> <hr> <p>[1] <a href="https://hbr.org/2019/04/what-process-mining-is-and-why-companies-should-do-it" rel="external nofollow noopener" target="_blank">https://hbr.org/2019/04/what-process-mining-is-and-why-companies-should-do-it</a></p> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="noopener noreferrer">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="noopener noreferrer">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/">Navigating Complexity: The GE-McKinsey Nine-Box Matrix</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/us-economy-and-why-nations-fail/">US Economy and Why Nations fail</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2026/04/accelerating-scientific-discovery-with-ai/">Accelerating Scientific Discovery with AI</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/12/design-thinking/">Apple's Approach to Design thinking</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/">The Cost of Chasing Unicorns: Lessons from the Product Bubble</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/">From Physics to Machine Learning: A Nobel Prize Worthy Journey</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/10/untitled-4/">Responsible AI: Adopting Microsoft's Framework for Ethical AI Use in Machine Learning Projects</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2024/02/process-mining-open-challenges/">Future of Data Driven Process Optimisation</a> </li> </ul> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Asjad K. Khan. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog-posts/index.html";
+          },
+        },{id: "nav-co-learn-primers",
+          title: "Co-Learn Primers",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/primers/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "Projects",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-news-and-events",
+          title: "News and Events",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Curriculum vitae and professional experience.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-my-research",
+          title: "My Research  🔭",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/my-research/";
+          },
+        },{id: "nav-photography",
+          title: "Photography",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/photography/";
+          },
+        },{id: "post-navigating-complexity-the-ge-mckinsey-nine-box-matrix",
+        
+          title: "Navigating Complexity: The GE-McKinsey Nine-Box Matrix",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/navigating-complexity-the-ge-mckinsey-nine-box-matrix-2/";
+          
+        },
+      },{id: "post-us-economy-and-why-nations-fail",
+        
+          title: "US Economy and Why Nations fail",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/us-economy-and-why-nations-fail/";
+          
+        },
+      },{id: "post-accelerating-scientific-discovery-with-ai",
+        
+          title: "Accelerating Scientific Discovery with AI",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/04/accelerating-scientific-discovery-with-ai/";
+          
+        },
+      },{id: "post-apple-39-s-approach-to-design-thinking",
+        
+          title: "Apple&#39;s Approach to Design thinking",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/12/design-thinking/";
+          
+        },
+      },{id: "post-the-cost-of-chasing-unicorns-lessons-from-the-product-bubble",
+        
+          title: "The Cost of Chasing Unicorns: Lessons from the Product Bubble",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/the-cost-of-chasing-unicorns-lessons-from-the-product-bubble/";
+          
+        },
+      },{id: "post-from-physics-to-machine-learning-a-nobel-prize-worthy-journey",
+        
+          title: "From Physics to Machine Learning: A Nobel Prize Worthy Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/from-physics-to-machine-learning-a-nobel-prize-worthy-journey/";
+          
+        },
+      },{id: "post-responsible-ai-adopting-microsoft-39-s-framework-for-ethical-ai-use-in-machine-learning-projects",
+        
+          title: "Responsible AI: Adopting Microsoft&#39;s Framework for Ethical AI Use in Machine Learning Projects...",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/10/untitled-4/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-future-of-data-driven-process-optimisation",
+        
+          title: "Future of Data Driven Process Optimisation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/02/process-mining-open-challenges/";
+          
+        },
+      },{id: "post-on-curse-of-dimensionality",
+        
+          title: "On Curse of Dimensionality",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/01/curse-of-dimensionality/";
+          
+        },
+      },{id: "post-generative-ai-and-future-of-healthcare",
+        
+          title: "Generative AI and Future of HealthCare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/05/future-of-healthcare/";
+          
+        },
+      },{id: "post-ai-ethics-and-augmented-intelligence",
+        
+          title: "AI Ethics and Augmented Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/view-on-ai/";
+          
+        },
+      },{id: "post-embarking-on-an-ai-transformation-journey",
+        
+          title: "Embarking on an AI transformation Journey",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/ai-transformation/";
+          
+        },
+      },{id: "post-data-strategy-for-building-defensible-moats",
+        
+          title: "Data Strategy for Building Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/data-strategy-for-enabling-data-centric-ai/";
+          
+        },
+      },{id: "post-navigating-the-ai-revolution-building-long-term-strategies-and-defensible-moats",
+        
+          title: "Navigating the AI Revolution: Building Long-term Strategies and Defensible Moats",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/12/competing-in-a-data-driven-wrld/";
+          
+        },
+      },{id: "post-managing-and-organising-ai-talent",
+        
+          title: "Managing and Organising AI Talent",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/ai-teams/";
+          
+        },
+      },{id: "post-how-innovation-works",
+        
+          title: "How Innovation works?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/11/mission-directed-ai/";
+          
+        },
+      },{id: "post-mlops-and-data-management",
+        
+          title: "MLOps and Data Management",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/data-engineering-being-smart-with-data-for-value-extraction/";
+          
+        },
+      },{id: "post-is-machine-learning-the-right-tool-for-your-problem",
+        
+          title: "Is Machine learning the right tool for your problem?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/10/machine-learning-executive/";
+          
+        },
+      },{id: "post-tools-for-building-strategic-resilience",
+        
+          title: "Tools for building Strategic Resilience",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/strategic_resilience/";
+          
+        },
+      },{id: "post-data-science-maturity-model-a-primer",
+        
+          title: "Data Science Maturity Model: A Primer",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/08/data-science-a-primer/";
+          
+        },
+      },{id: "post-beyond-simulation-applying-rl-in-real-world-challenges-and-opportunities",
+        
+          title: "Beyond simulation, applying RL in real world:  Challenges and Opportunities",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/05/real-world-rl/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-transfer-learning-in-nlp",
+        
+          title: "Transfer Learning in NLP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/04/transfer-learning-in-nlp/";
+          
+        },
+      },{id: "post-exploratory-data-analysis",
+        
+          title: "Exploratory Data Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/untitled-2/";
+          
+        },
+      },{id: "post-counterfactual-policy-evaluation",
+        
+          title: "Counterfactual policy evaluation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/03/counterfactual-policy-evaluation/";
+          
+        },
+      },{id: "post-understanding-explore-vs-exploit-dilemma-in-online-decision-making",
+        
+          title: "Understanding Explore vs Exploit Dilemma in Online decision-making",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/strategic-exploration-in-online-decision-making/";
+          
+        },
+      },{id: "post-understanding-alphago-fundamentals",
+        
+          title: "Understanding AlphaGo Fundamentals",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/minimax/";
+          
+        },
+      },{id: "post-getting-started-with-lisp",
+        
+          title: "Getting Started with LISP",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/getting-started-with-lisp/";
+          
+        },
+      },{id: "post-what-does-the-future-of-education-look-like",
+        
+          title: "What does  the future of Education look like?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/education/";
+          
+        },
+      },{id: "post-elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis",
+        
+          title: "Elaborating Scalability requirements of Large Scale Systems through Goal Obstacle Analysis",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/02/elaborating-scalability-requirements-of-large-scale-systems-through-goal-obstacle-analysis/";
+          
+        },
+      },{id: "post-an-introduction-to-federated-learning-of-privacy-preserving-machine-learning",
+        
+          title: "An introduction to Federated Learning of privacy-preserving Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/01/federated-machine-learning-with-differential-privacy/";
+          
+        },
+      },{id: "post-understanding-generalisation-in-machine-learning",
+        
+          title: "Understanding Generalisation in Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/11/generalization/";
+          
+        },
+      },{id: "post-explainable-ai-and-ai-alignment",
+        
+          title: "Explainable AI and AI-Alignment",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/09/ai-alignment/";
+          
+        },
+      },{id: "post-three-pillers-of-reinforcement-learning",
+        
+          title: "Three  Pillers of Reinforcement Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/07/rl-pillers/";
+          
+        },
+      },{id: "post-digital-tranformation-of-healthcare",
+        
+          title: "Digital Tranformation of Healthcare",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/ai-and-healthcare/";
+          
+        },
+      },{id: "post-chasing-artificial-intelligence",
+        
+          title: "Chasing Artificial Intelligence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/06/agi-are-we-there-yet/";
+          
+        },
+      },{id: "post-array-programming-with-numpy",
+        
+          title: "Array Programming with Numpy",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/05/numpy/";
+          
+        },
+      },{id: "post-data-driven-business-process-improvement",
+        
+          title: "Data-Driven Business Process Improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/process-improvement/";
+          
+        },
+      },{id: "post-strategies-for-preventing-model-overfitting",
+        
+          title: "Strategies for Preventing model overfitting",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/strategies-for-avoiding-overfitting/";
+          
+        },
+      },{id: "post-what-is-the-bias-variance-tradeoff",
+        
+          title: "What is the bias-variance tradeoff?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/04/what-is-the-bias-variance-tradeoff/";
+          
+        },
+      },{id: "post-a-long-introduction-to-machine-learning",
+        
+          title: "A long introduction to Machine Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/03/ml-models/";
+          
+        },
+      },{id: "post-four-useful-data-analysis-concepts",
+        
+          title: "Four useful data Analysis concepts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/4-common-mistakes/";
+          
+        },
+      },{id: "post-deeprl-based-clinical-decision-support-for-sepsis-treatment-in-emergency-room",
+        
+          title: "DeepRL based Clinical Decision Support for Sepsis treatment in emergency room",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/01/decision_support/";
+          
+        },
+      },{id: "post-on-software-engineering",
+        
+          title: "On Software Engineering",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/wisdom-of-software-engineering/";
+          
+        },
+      },{id: "post-optimising-healthcare-treatment-careflows-with-process-mining",
+        
+          title: "Optimising healthcare treatment careflows with Process Mining",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/11/improving-treatment-careflow-with-disco/";
+          
+        },
+      },{id: "post-competing-in-a-data-driven-world",
+        
+          title: "Competing in a Data-Driven World",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/09/generating-business-value-with-ai-an-executive-guide/";
+          
+        },
+      },{id: "post-latent-semantic-indexing-with-apache-spark-ml",
+        
+          title: "Latent Semantic Indexing with Apache Spark ML",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/singular/";
+          
+        },
+      },{id: "post-maze-solver-agent-in-prolog",
+        
+          title: "Maze Solver agent in Prolog",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/path-finding-in/";
+          
+        },
+      },{id: "post-solving-traveling-salesmen-with-genetic-algorithms",
+        
+          title: "Solving Traveling Salesmen with Genetic Algorithms",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/solving-genetic-algorithms-with/";
+          
+        },
+      },{id: "post-the-evolution-of-data-products",
+        
+          title: "The Evolution of Data Products",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data_products/";
+          
+        },
+      },{id: "post-stateful-dataflow-graphs-in-tensorflow",
+        
+          title: "Stateful dataflow graphs in tensorflow",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/basics-of-tensorflow/";
+          
+        },
+      },{id: "post-history-of-deep-learning",
+        
+          title: "History of Deep Learning",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/history-of-deep-learning/";
+          
+        },
+      },{id: "post-what-makes-a-great-hacker-maker",
+        
+          title: "What makes a Great Hacker(maker) ?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/what-makes-a-great-hacker-maker/";
+          
+        },
+      },{id: "post-business-process-analytics",
+        
+          title: "Business Process Analytics",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/business-process-analytics/";
+          
+        },
+      },{id: "post-getting-started-with-data-engineering-in-spark",
+        
+          title: "Getting started with Data Engineering in Spark",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/08/data-engineering-with-spark/";
+          
+        },
+      },{id: "post-collaborative-filtering-tutorial",
+        
+          title: "Collaborative Filtering Tutorial",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/04/collaborative-filtering-work/";
+          
+        },
+      },{id: "post-removing-image-compression-artifacts",
+        
+          title: "Removing Image Compression Artifacts",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2020/03/automated-image-segmentation/";
+          
+        },
+      },{id: "post-robotic-process-automation-from-process-analytics-perspective",
+        
+          title: "Robotic Process Automation from Process Analytics Perspective",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/11/rpa/";
+          
+        },
+      },{id: "post-building-an-enterprise-grade-patent-search-system-with-semantic-search",
+        
+          title: "Building an Enterprise-Grade Patent Search System with Semantic Search",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/08/semantic_search/";
+          
+        },
+      },{id: "post-notes-on-numpy-performance-improvement",
+        
+          title: "Notes on Numpy Performance improvement",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/02/speeding-up-numpy/";
+          
+        },
+      },{id: "post-exploring-data-via-command-line",
+        
+          title: "Exploring data via Command-Line",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/exploring-data-via-command-line/";
+          
+        },
+      },{id: "post-deepprocess-supporting-business-process-execution-using-a-mann-based-recommender-system",
+        
+          title: "DeepProcess: Supporting business process execution using a MANN-based recommender system",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2017/01/deepprocess/";
+          
+        },
+      },{id: "post-music-recommender-system-for-multi-lingual-users",
+        
+          title: "Music Recommender System for multi-lingual Users",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/12/music/";
+          
+        },
+      },{id: "post-people-process-and-products-can-software-be-engineered",
+        
+          title: "People, Process and Products: Can Software Be Engineered?",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/tips-on-becoming-a-better-programming/";
+          
+        },
+      },{id: "post-big-ideas-in-computer-science",
+        
+          title: "Big Ideas in Computer Science",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/05/why-philosophers-should-care-about-computational-complexity/";
+          
+        },
+      },{id: "post-geospatial-and-temporal-mobility-analysis-on-the-rome-taxi-data",
+        
+          title: "Geospatial and Temporal Mobility Analysis on the Rome Taxi data",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/";
+          
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/asjad99", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/asjad_99", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
