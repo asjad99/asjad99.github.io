@@ -8,8 +8,6 @@ profile:
   align: right
   image: my_photo.png
   image_circular: false
-  more_info: >
-    <p>Australia</p>
 
 selected_papers: false
 social: true
