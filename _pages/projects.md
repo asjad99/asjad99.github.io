@@ -1,9 +1,88 @@
 ---
 layout: page
-title: "Projects"
+title: Projects
 permalink: /projects/
 nav: true
 nav_order: 3
 ---
 
-<p>I am passionate about developing data products that incorporate emerging machine intelligence technologies. Over the past 10 years, I have worked with numerous researchers and high-growth startup teams to build solutions across domains such as Business Process Analytics, Semantic Search, and Natural Language Processing. Few examples include, using Memory Augmented Neural Networks for generating recommendations that provide operational support during business process execution. Another project was development of Clinical Decision Support System for Sepsis Management using Deep Reinforcement Learning. Lastly I have also explored techniques like Federated Learning and Differential Privacy to extract process models from distributed healthcare process logs.</p><p><strong>Data Products: </strong></p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/semantic_search/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Enterprise Information Retrieval using semantic search</div><div class="kg-bookmark-description">Latent Semantic Analysis (LSA) is the most popular technique of Corpus-Based similarity. One way to tackle this problem is to use Latent Semantic Analysis[1]. The technique was proposed by Deerwester et. al and takes advantage of the implicit higher-order structure in linking terms to documents. La…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/08/il_570xN.1239270569_b2bb.jpg" alt="" onerror="this.style.display = 'none'"></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/music/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Sequential Music Recommender System for multi-lingual Users</div><div class="kg-bookmark-description">Introduction: Recommender Systems solve an interesting problem of learning users’ preferences and behaviour from historical user data. Recommender Systems are used by internet companies to surface the right content. e.g e-commerce websites use them to suggest their products and services and social…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/12/Screen-Shot-2020-12-31-at-5.14.26-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h3 id="selected-research-projects">Selected Research Projects</h3><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/decision_support/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">DeepRL based Clinical Decision Support for Sepsis treatment in emergency room</div><div class="kg-bookmark-description">Business Processes assist organisations in organising activities that deliver business value, usually in the form of a product or a service. Over the last few years, some of the focus of BPM research has shifting to supporting knowledge-intensive processes. Such Processes are typically Complex, unp…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2021/01/IMG_0579.jpg" alt="" onerror="this.style.display = 'none'"></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/deepprocess/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Predictive Process Monitoring with Memory Augmented NNs</div><div class="kg-bookmark-description">Process analytics involves a sophisticated layer of data analytics built over the traditional notion of process mining. The flexible execution of business process instances involves multiple critical decisions including what task to perform next and what resources to allocate to a task. Past execut…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-01-at-5.50.52-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h3 id="insights">Insights</h3><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/revealing-taxi-drivers-mobility-intelligence-through-his-trace/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Geospatial and Temporal Mobility Analysis on the Rome Taxi data</div><div class="kg-bookmark-description">Trajectory data, which records locations of moving objects at certain moments is an interesting means of studying mobility behaviour. Trajectory data analysis is of significant practical value and there are numerous applications and services of trajectory data for the government, commercial organiza…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/08/Screen-Shot-2020-08-28-at-1.28.21-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h2 id=""></h2>
+<p class="projects-intro">Selected data, AI, and software projects spanning research and production systems.</p>
+
+<div class="projects-list">
+  {% for project in site.data.projects %}
+    <article class="project-card">
+      <a class="project-thumbnail" href="{{ project.url | relative_url }}">
+        <img src="{{ project.image | relative_url }}" alt="{{ project.title }} thumbnail" loading="lazy">
+      </a>
+      <div class="project-card-content">
+        <h2><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>
+        <p>{{ project.description }}</p>
+      </div>
+    </article>
+  {% endfor %}
+</div>
+
+<style>
+  .projects-intro {
+    margin: 1.5rem 0 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.25rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.9rem;
+    background: var(--global-bg-color);
+  }
+
+  .project-thumbnail {
+    display: block;
+    width: 13rem;
+    height: 10rem;
+    overflow: hidden;
+    border-radius: 0.6rem;
+  }
+
+  .project-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-card-content h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.45rem;
+  }
+
+  .project-card-content h2 a {
+    color: var(--global-text-color);
+  }
+
+  .project-card-content p {
+    margin: 0;
+    color: var(--global-text-color-light);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 576px) {
+    .project-card {
+      grid-template-columns: 1fr;
+    }
+
+    .project-thumbnail {
+      width: 100%;
+      height: 12rem;
+    }
+  }
+</style>
