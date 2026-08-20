@@ -69,6 +69,14 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
     font-size: 1.2rem;
   }
 
+  .client-logo {
+    display: block;
+    width: 5rem;
+    height: 3.5rem;
+    margin: 0 auto 1rem;
+    object-fit: contain;
+  }
+
   .client-card p {
     margin-bottom: 0.75rem;
     font-size: 0.95rem;
@@ -182,6 +190,7 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
   <div class="clients-grid">
     {% for client in site.data.clients %}
       <div class="client-card">
+        <img class="client-logo" src="{{ client.logo | relative_url }}" alt="{{ client.name }} logo" loading="lazy">
         <h3>{{ client.name }}</h3>
         <p><strong>{{ client.role }}</strong></p>
         <p>{{ client.description }}</p>
