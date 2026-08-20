@@ -29,4 +29,4 @@ I am Asjad Khan, a data scientist and researcher interested in the intersection 
 
 This site collects my research, projects, essays, tutorials, and notes. The archive includes work on process mining, machine learning, reinforcement learning, healthcare decision support, data products, and the broader implications of AI.
 
-For a current overview of my work and experience, see the [CV]({{ '/cv/' | relative_url }}), [research]({{ '/research/' | relative_url }}), and [projects]({{ '/projects/' | relative_url }}) pages.
+For a current overview of my work and experience, see the [CV]({{ '/cv/' | relative_url }}), [research]({{ '/my-research/' | relative_url }}), and [projects]({{ '/projects/' | relative_url }}) pages.
