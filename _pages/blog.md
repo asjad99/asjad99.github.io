@@ -1,12 +1,10 @@
 ---
 layout: page
 permalink: /blog-posts/
-title: "Notes by Asjad"
+title: "Blog"
 nav: true
 nav_order: 1
 ---
-
-<p class="blog-intro">Essays, tutorials, and working notes on data, AI, and software.</p>
 
 <div class="blog-index">
   <h2>Essays and Perspectives</h2>
@@ -19,11 +17,6 @@ nav_order: 1
 </div>
 
 <style>
-  .blog-intro {
-    font-size: 1.35rem;
-    margin: 2rem 0 3rem;
-  }
-
   .blog-index {
     border-top: 1px solid var(--global-divider-color);
     padding-top: 1.5rem;
