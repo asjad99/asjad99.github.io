@@ -1,65 +1,9 @@
 ---
 layout: page
-title: projects
+title: "Projects"
 permalink: /projects/
-description: A growing collection of your cool projects.
 nav: true
 nav_order: 3
-display_categories: [work, fun]
-horizontal: false
 ---
 
-<!-- pages/projects.md -->
-<div class="projects">
-{% if site.enable_project_categories and page.display_categories %}
-  <!-- Display categorized projects -->
-  {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
-    <h2 class="category">{{ category }}</h2>
-  </a>
-  {% assign categorized_projects = site.projects | where: "category", category %}
-  {% assign sorted_projects = categorized_projects | sort: "importance" %}
-  <!-- Generate cards for each project -->
-  {% if page.horizontal %}
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-  {% endfor %}
-
-{% else %}
-
-<!-- Display projects without categories -->
-
-{% assign sorted_projects = site.projects | sort: "importance" %}
-
-  <!-- Generate cards for each project -->
-
-{% if page.horizontal %}
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-{% endif %}
-</div>
+<p>I am passionate about developing data products that incorporate emerging machine intelligence technologies. Over the past 10 years, I have worked with numerous researchers and high-growth startup teams to build solutions across domains such as Business Process Analytics, Semantic Search, and Natural Language Processing. Few examples include, using Memory Augmented Neural Networks for generating recommendations that provide operational support during business process execution. Another project was development of Clinical Decision Support System for Sepsis Management using Deep Reinforcement Learning. Lastly I have also explored techniques like Federated Learning and Differential Privacy to extract process models from distributed healthcare process logs.</p><p><strong>Data Products: </strong></p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/semantic_search/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Enterprise Information Retrieval using semantic search</div><div class="kg-bookmark-description">Latent Semantic Analysis (LSA) is the most popular technique of Corpus-Based similarity. One way to tackle this problem is to use Latent Semantic Analysis[1]. The technique was proposed by Deerwester et. al and takes advantage of the implicit higher-order structure in linking terms to documents. La…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/08/il_570xN.1239270569_b2bb.jpg" alt="" onerror="this.style.display = 'none'"></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/music/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Sequential Music Recommender System for multi-lingual Users</div><div class="kg-bookmark-description">Introduction: Recommender Systems solve an interesting problem of learning users’ preferences and behaviour from historical user data. Recommender Systems are used by internet companies to surface the right content. e.g e-commerce websites use them to suggest their products and services and social…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/12/Screen-Shot-2020-12-31-at-5.14.26-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h3 id="selected-research-projects">Selected Research Projects</h3><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/decision_support/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">DeepRL based Clinical Decision Support for Sepsis treatment in emergency room</div><div class="kg-bookmark-description">Business Processes assist organisations in organising activities that deliver business value, usually in the form of a product or a service. Over the last few years, some of the focus of BPM research has shifting to supporting knowledge-intensive processes. Such Processes are typically Complex, unp…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2021/01/IMG_0579.jpg" alt="" onerror="this.style.display = 'none'"></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/deepprocess/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Predictive Process Monitoring with Memory Augmented NNs</div><div class="kg-bookmark-description">Process analytics involves a sophisticated layer of data analytics built over the traditional notion of process mining. The flexible execution of business process instances involves multiple critical decisions including what task to perform next and what resources to allocate to a task. Past execut…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2021/01/Screen-Shot-2021-01-01-at-5.50.52-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h3 id="insights">Insights</h3><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://asjadkhan.ghost.io/revealing-taxi-drivers-mobility-intelligence-through-his-trace/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Geospatial and Temporal Mobility Analysis on the Rome Taxi data</div><div class="kg-bookmark-description">Trajectory data, which records locations of moving objects at certain moments is an interesting means of studying mobility behaviour. Trajectory data analysis is of significant practical value and there are numerous applications and services of trajectory data for the government, commercial organiza…</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://asjadkhan.ghost.io/favicon.png" alt=""><span class="kg-bookmark-author">Asjad K.</span><span class="kg-bookmark-publisher">Asjad Khan</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://asjadkhan.ghost.io/content/images/2020/08/Screen-Shot-2020-08-28-at-1.28.21-pm.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><h2 id=""></h2>
