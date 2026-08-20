@@ -1,0 +1,24 @@
+- title: Enterprise Information Retrieval using Semantic Search
+  description: A scalable patent retrieval system using Latent Semantic Indexing, Latent Dirichlet Allocation, Apache Spark, and Gensim to improve search relevance across large patent collections.
+  image: /assets/img/projects/semantic-search.jpg
+  url: /blog/2018/08/semantic_search/
+
+- title: Sequential Music Recommender System for Multilingual Users
+  description: An LSTM-based recommendation system that models listening patterns to provide personalized recommendations across multiple languages and music genres.
+  image: /assets/img/projects/music.png
+  url: /blog/2016/12/music/
+
+- title: DeepRL-Based Clinical Decision Support
+  description: A deep reinforcement learning system for generating policy-driven recommendations to support decision-making in emergency-room sepsis treatment.
+  image: /assets/img/projects/clinical-decision-support.jpg
+  url: /blog/2021/01/decision_support/
+
+- title: Predictive Process Monitoring with Memory-Augmented Neural Networks
+  description: A process-aware recommender system using Memory-Augmented Neural Networks to provide real-time operational support during business process execution.
+  image: /assets/img/projects/deep-process.png
+  url: /blog/2017/01/deepprocess/
+
+- title: Geospatial and Temporal Mobility Analysis
+  description: An analysis of Rome taxi trajectories to uncover mobility patterns and demonstrate how location and time-series data can support practical urban insights.
+  image: /assets/img/projects/rome-taxi.png
+  url: /blog/2016/01/revealing-taxi-drivers-mobility-intelligence-through-his-trace/
