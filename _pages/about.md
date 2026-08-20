@@ -190,7 +190,9 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
   <div class="clients-grid">
     {% for client in site.data.clients %}
       <div class="client-card">
-        <img class="client-logo" src="{{ client.logo | relative_url }}" alt="{{ client.name }} logo" loading="lazy">
+        {% if client.logo %}
+          <img class="client-logo" src="{{ client.logo | relative_url }}" alt="{{ client.name }} logo" loading="lazy">
+        {% endif %}
         <h3>{{ client.name }}</h3>
         <p><strong>{{ client.role }}</strong></p>
         <p>{{ client.description }}</p>

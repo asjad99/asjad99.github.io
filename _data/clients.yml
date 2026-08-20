@@ -19,7 +19,6 @@
   description: Developed an LSTM-based multilingual music recommendation system with session-based modeling, embeddings, and production experimentation.
 
 - name: Redbrick Systems
-  logo: /assets/img/clients/redbrick.png
   role: Software Engineer
   description: Worked on blockchain identity systems, decentralized domain registration, profile search, Elasticsearch, MongoDB, and e-commerce web crawling.
 
@@ -34,6 +33,5 @@
   description: Worked on a customized web application solution for Bradford, a US-based insurance firm. Elixir Technologies is headquartered in Ojai, California.
 
 - name: Sydney Code Camp
-  logo: /assets/img/clients/sydney-code-camp.png
   role: Lead Instructor
   description: Delivered inclusive, project-based programming education to primary and secondary school students.
