@@ -119,46 +119,54 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
   }
 
   .service-card {
     box-sizing: border-box;
-    min-height: 18rem;
-    padding: 1.5rem;
+    min-height: 25rem;
+    padding: 2.5rem;
     overflow-wrap: anywhere;
     border: 1px solid var(--global-divider-color);
+    border-radius: 1.25rem;
+    background: var(--global-bg-color);
   }
 
   .service-card h3 {
-    margin: 0 0 1rem;
-    font-size: 1.35rem;
+    margin: 0 0 1.25rem;
+    color: var(--global-text-color);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.7rem;
   }
 
   .service-card p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--global-text-color-light);
+    font-size: 1.15rem;
+    line-height: 1.8;
   }
 
   .service-card ul {
     margin: 0;
     padding-left: 1.5rem;
+    color: var(--global-text-color-light);
+    font-size: 1.05rem;
   }
 
   .service-card li {
-    margin-bottom: 0.5rem;
-  }
-
-  .service-check {
-    color: #16a34a;
-    font-weight: 700;
+    margin-bottom: 0.75rem;
   }
 
   @media (max-width: 992px) {
     .clients-grid,
     .services-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .service-card {
+      padding: 1.75rem;
     }
   }
 
@@ -194,7 +202,7 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
         <p>{{ service.description }}</p>
         <ul>
           {% for offering in service.offerings %}
-            <li><span class="service-check" aria-hidden="true">&#10003;</span> {{ offering }}</li>
+            <li>{{ offering }}</li>
           {% endfor %}
         </ul>
       </div>

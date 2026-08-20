@@ -1,20 +1,26 @@
-- name: AI/ML Application Development
-  description: Applied AI solutions tailored to business needs, with a focus on full-stack integration and deployment.
+- name: Data Architecture & Engineering
+  description: Design and build modern data platforms that scale with your business - from lakehouse foundations to real-time streaming pipelines.
   offerings:
-    - LLM and NLP workflows
-    - Forecasting and classification models
-    - End-to-end evaluation-first AI pipelines
+    - Lakehouse design & implementation
+    - Data fabric architecture
+    - ETL/ELT pipeline engineering
+    - Real-time streaming & CDC
+    - Data modelling & schema design
 
-- name: Full-Stack Engineering
-  description: Robust and scalable web platforms engineered with modern technologies and a strong DevOps mindset.
+- name: AI & Intelligence Engineering
+  description: Build the intelligence layer on top of your data - production-grade ML systems, not just notebooks and prototypes.
   offerings:
-    - React, Vue, Quasar, and Next.js
-    - FastAPI, ASP.NET Core, and Node.js
-    - Dockerized systems and cloud deployments
+    - Intelligence engine design
+    - ML model development & deployment (MLOps)
+    - Decision intelligence systems
+    - Computational intelligence & optimisation
+    - AI readiness assessment
 
-- name: AI Strategy & Enablement
-  description: Strategic guidance and hands-on support to help teams adopt, deploy, and evaluate AI effectively.
+- name: Data Governance & Strategy
+  description: Establish the policies, processes, and tooling that make data trustworthy and compliant across your organisation.
   offerings:
-    - Technical evaluations and model benchmarking
-    - AI-driven product architecture
-    - Training and enablement
+    - Data governance frameworks
+    - Catalog & lineage implementation
+    - Data quality engineering
+    - Regulatory compliance (GDPR, SOX, etc.)
+    - Data strategy & roadmap consulting
