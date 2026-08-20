@@ -1,0 +1,39 @@
+- name: UNSW
+  role: Data Scientist, Education Innovation
+  description: Designed and delivered the Academic Success Monitor, an award-winning AI/ML platform for identifying academically at-risk students and supporting timely interventions.
+
+- name: InvertiGro
+  role: Lead Data Scientist
+  description: Developed AI strategy and predictive crop monitoring systems using IoT data, machine learning, Databricks, and MLOps practices.
+
+- name: Foretheta
+  role: Data Scientist, Semantic Search
+  description: Built a scalable patent retrieval system using semantic search, Apache Spark, LSI, LDA, Gensim, and distributed text processing.
+
+- name: Patari
+  role: Data Scientist, Recommender Systems
+  description: Developed an LSTM-based multilingual music recommendation system with session-based modeling, embeddings, and production experimentation.
+
+- name: Redbrick Systems
+  role: Software Engineer
+  description: Worked on blockchain identity systems, decentralized domain registration, profile search, Elasticsearch, MongoDB, and e-commerce web crawling.
+
+- name: Catalysr
+  role: Technical Consultant
+  description: Mentored startup founders and helped formulate product strategies and technical solutions for early-stage companies.
+
+- name: University of Wollongong
+  role: Researcher and Teaching Assistant
+  description: Conducted PhD research in applied machine learning, process mining, reinforcement learning, and clinical decision support while teaching software engineering.
+
+- name: GIKI
+  role: Teaching Assistant
+  description: Taught Unix, algorithm design, C, Python, and compiler construction through practical undergraduate computer science courses.
+
+- name: Sydney Code Camp
+  role: Lead Instructor
+  description: Delivered inclusive, project-based programming education to primary and secondary school students.
+
+- name: Service Science Society
+  role: Organizing Chair
+  description: Helped organize the 2016 Service Science Innovation Awards event in Australia.

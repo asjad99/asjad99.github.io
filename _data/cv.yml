@@ -1,189 +1,223 @@
 cv:
-  name: Albert Einstein
-  label: Scientist
-  email: einstein@example.com
-  location: Princeton, NJ
-  image: ""
-  summary: A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time
+  name: Asjad Khan
+  label: Data Scientist
+  email: asjad@outlook.com
+  phone: "+61493883978"
+  location: Sydney, Australia
+  url: https://www.asjadkhan.com
+  image: /assets/img/my_photo.png
+  summary: Data Scientist with a PhD at the intersection of Computer Science and Applied Machine Learning. My experience spans large-scale data-driven software, higher education, research-led problem solving, educational technology, and stakeholder engagement.
 
   social_networks:
-    - network: X
-      username: AlbertEinstein
     - network: GitHub
-      username: example
-    - network: LinkedIn
-      username: example
+      username: asjad99
+    - network: X
+      username: asjad_99
 
   address:
-    street: 2712 Broadway St
-    city: San Francisco
-    region: California
-    postalCode: CA 94115
-    countryCode: US
+    city: Sydney
+    region: New South Wales
+    countryCode: AU
 
   sections:
     Education:
-      - institution: University of Zurich
-        location: Zurich, Switzerland
-        url: https://www.uzh.ch/
-        area: Physics
-        studyType: PhD
-        start_date: 1900
-        end_date: 1905
-        score: ""
-        courses: "Theory of Relativity"
+      - institution: University of Wollongong
+        location: Wollongong, Australia
+        area: Computer Science and Applied Machine Learning
+        studyType: Ph.D.
+        start_date: 2018
+        end_date: 2022
         highlights:
-          - Description 1.
-          - Description 2.
+          - Decision Systems Lab
 
-      - institution: Eidgenössische Technische Hochschule
-        location: Zurich, Switzerland
-        area: Physics
-        studyType: Federal teaching diploma
-        start_date: 1896
-        end_date: 1900
-        highlights:
-          - Description 1.
-          - Description 2.
+      - institution: University of Wollongong
+        location: Wollongong, Australia
+        area: Software Engineering and Intelligent Systems
+        studyType: M.Sc.
+        start_date: 2014
+        end_date: 2016
 
     Experience:
-      - company: Institute for Advanced Study, Princeton University
-        position: Professor of Theoretical Physics
-        location: Princeton University, NJ
-        start_date: 1933
-        end_date: 1955
-        summary: Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.
+      - company: UNSW
+        position: Data Scientist - Education Innovation
+        location: Sydney, Australia
+        start_date: 2023-05
+        end_date: 2024-01
+        summary: Designed and delivered the Academic Success Monitor (ASM), an award-winning AI/ML platform for early identification of academically at-risk students and evidence-based interventions.
         highlights:
-          - Relativity
-          - Description 2.
+          - Achieved 78% student coverage and 67% course adoption across the university.
+          - Re-architected the ASM data lake by integrating Moodle, Echo360, ECOS, and SIMS into a unified AI/ML-ready platform.
+          - Established scalable MLOps and secure data governance with Databricks Unity Catalog.
+          - Designed, developed, and deployed more than 10 machine learning models, achieving 82% recall and 75% precision.
+          - Supported engagement across 136 academic staff and 1,283 students.
+          - The project won the Gartner Eye on Innovation Award for Education and the QS Reimagine Education Award, and was featured by UNESCO.
 
-      - company: California Institute of Technology
-        position: Visiting Professor
-        location: Pasadena, California, US
-        start_date: 1933
-        end_date: 1933
+      - company: InvertiGro
+        position: Lead Data Scientist
+        location: Sydney, Australia
+        start_date: 2023-05
+        end_date: 2023-05
         highlights:
-          - Description 1.
-          - Description 2.
+          - Developed an organizational AI strategy and action plan with project stakeholders.
+          - Designed machine learning models for predictive maintenance, crop yield prediction, and real-time plant stress detection using IoT sensor data.
+          - Managed model training and cloud infrastructure on Databricks.
+          - Worked with data engineers on CI/CD pipelines for ML models and training components.
 
-      - company: Kaiser Wilhelm Institute for Physics
-        position: Director
-        location: Berlin, Germany
-        start_date: 1917
-        end_date: 1933
-
-      - company: Karl-Ferdinand University
-        position: Professor of Theoretical Physics
-        location: Prague, Czechoslovakia
-        start_date: 1911
-        end_date: 1917
-
-      - company: University of Zurich
-        position: Associate Professor of Theoretical Physics
-        location: Zurich, Switzerland
-        start_date: 1909
-        end_date: 1911
-
-    Volunteer:
-      - company: People's Climate March
-        position: Lead Organizer
-        location: Zurich, Switzerland
-        start_date: 2014-04-01
-        end_date: 2015-07-01
-        summary: Lead organizer for the New York City branch of the People's Climate March, the largest climate march in history.
+      - company: Foretheta
+        position: Data Scientist - Semantic Search Engine
+        location: Spokane, Washington, USA
+        start_date: 2017-01
+        end_date: 2017-12
         highlights:
-          - "Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march."
-          - "Men of the year 2014 by Time magazine"
+          - Designed and implemented the scalable Traindex.io patent retrieval system while leading a remote engineering team.
+          - Applied Latent Semantic Indexing and Latent Dirichlet Allocation to improve search accuracy beyond keyword matching.
+          - Built Apache Spark MLlib and Gensim pipelines that reduced text processing time from approximately 9 hours to 30 minutes.
+          - Improved retrieval performance through TREC, CLEF, and NTCIR benchmarking.
+          - Worked with approximately 1 TB of patent text and reduced cloud training costs by around 30%.
 
-    Awards:
-      - title: Nobel Prize in Physics
-        authors:
-          - "Royal Swedish Academy of Sciences"
-        date: 1921-11-01
-        awarder: Royal Swedish Academy of Sciences
-        url: https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/
-        summary: The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'
+      - company: Patari
+        position: Data Scientist - Recommender System
+        location: Lahore, Pakistan
+        start_date: 2016-07
+        end_date: 2016-12
+        highlights:
+          - Designed and implemented an LSTM-based multilingual and multi-genre music recommender in TensorFlow.
+          - Developed scalable pipelines for implicit user interactions and session-based recommendations.
+          - Led A/B testing on live production traffic and evaluated retention, diversity, and novelty.
+          - Benchmarked the system against traditional collaborative filtering approaches.
 
-      - title: Max Planck Medal
-        authors:
-          - "German Physical Society"
-        date: 2029
-        awarder: German Physical Society
-        summary: Awarded for outstanding scientific achievement
+      - company: Redbrick Systems
+        position: Software Engineer - Blockchain Development
+        location: Islamabad, Pakistan
+        start_date: 2012-01
+        end_date: 2014-01
+        highlights:
+          - Contributed to the Onename identity system for secure, blockchain-tied user profiles.
+          - Built decentralized domain registration for the .id namespace on Blockstack.
+          - Developed profile search using Python, Flask, Elasticsearch, Memcached, and MongoDB.
+          - Built scalable e-commerce web crawlers to extract and index product data across marketplaces.
+
+    Teaching Experience:
+      - company: Sydney Code Camp
+        position: Lead Instructor
+        start_date: 2017
+        end_date: 2017
+        highlights:
+          - Taught programming to primary and secondary school students from diverse backgrounds.
+          - Delivered project-based activities that developed problem solving, computational thinking, and digital literacy.
+          - Guided students in building games and interactive digital projects.
+
+      - company: University of Wollongong
+        position: Teaching Assistant
+        location: Wollongong, Australia
+        start_date: 2016
+        end_date: 2016
+        highlights:
+          - Tutored more than 50 undergraduate and graduate students in Service-Oriented Software Engineering.
+          - Covered RESTful APIs, microservices, distributed systems, BPMN, TOGAF, and enterprise architecture.
+          - Facilitated code reviews, technical discussions, and collaborative problem-solving sessions.
+
+      - company: GIKI
+        position: Teaching Assistant
+        start_date: 2012
+        end_date: 2012
+        highlights:
+          - Taught Unix, algorithm design, C, Python, and compiler construction.
+          - Supervised teaching assistants and delivered programming practicals for groups of up to 30 students.
+          - Collaborated with course coordinators to improve teaching materials and laboratory delivery.
+
+    Research Projects:
+      - name: Predictive and Prescriptive Process Monitoring with Deep Learning
+        start_date: 2020
+        end_date: 2020
+        summary: Developed Memory Augmented Neural Network architectures for real-time operational support in business process execution in collaboration with the Applied Artificial Intelligence Institute at Deakin University and IBM Research India.
+        highlights:
+          - Developed a process-aware suffix recommender for prescriptive monitoring and operational decision support.
+          - Built datasets and conducted exploratory analysis, visualization, dimensionality reduction, and model evaluation.
+
+      - name: Clinical Decision Support System using Deep Reinforcement Learning
+        start_date: 2021
+        end_date: 2021
+        summary: Designed a deep reinforcement learning system to support decisions in knowledge-intensive medical processes.
+        highlights:
+          - Prepared the MIMIC critical care dataset using AWS compute services.
+          - Developed a proof-of-concept policy-driven recommendation system for emergency and critical care scenarios.
 
     Publications:
-      - title: Zur Elektrodynamik bewegter Körper
+      - title: Cross-Silo Process Mining with Federated Learning
         authors:
-          - Albert Einstein
-        publisher: Annalen der Physik
-        releaseDate: 1905-06-30
-        url: https://en.wikisource.org/wiki/Translation:On_the_Electrodynamics_of_Moving_Bodies
-        summary: It concerned an interpretation of the Michelson–Morley experiment and the properties of light and time. Special relativity incorporates the principle that the speed of light is the same for all inertial observers regardless of the state of motion of the source.
+          - Asjad Khan
+          - Aditya Ghose
+          - Hoa Dam
+        publisher: "Service-Oriented Computing: 19th International Conference (ICSOC)"
+        releaseDate: 2021
+        url: https://link.springer.com/chapter/10.1007/978-3-030-91431-8_38
 
-      - title: Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt
+      - title: "DeepProcess: Supporting Business Process Execution Using a MANN-Based Recommender System"
         authors:
-          - Albert Einstein
-        publisher: Annalen der Physik
-        releaseDate: 1905-03-18
-        url: https://de.wikisource.org/wiki/Über_einen_die_Erzeugung_und_Verwandlung_des_Lichtes_betreffenden_heuristischen_Gesichtspunkt
-        summary: In the second paper, he applied the quantum theory to light to explain the photoelectric effect. In particular, he used the idea of light quanta (photons) to explain experimental results, but stressed the importance of the experimental results. The importance of his work on the photoelectric effect earned him the Nobel Prize in Physics in 1921.
+          - Asjad Khan
+          - Hung Le
+          - Kien Do
+          - Truyen Tran
+          - Aditya Ghose
+          - Hoa Dam
+          - Renuka Sindhgatta
+        publisher: "Service-Oriented Computing: 19th International Conference (ICSOC)"
+        releaseDate: 2021
+        url: https://link.springer.com/chapter/10.1007/978-3-030-91431-8_2
 
-      - title: Die Grundlage der allgemeinen Relativitätstheorie
+      - title: Decision Support for Knowledge Intensive Processes Using RL Based Recommendations
         authors:
-          - Albert Einstein
-        publisher: Annalen der Physik
-        releaseDate: 1916-03-20
-        url: https://de.wikisource.org/wiki/Die_Grundlage_der_allgemeinen_Relativitätstheorie
-        summary: The publication of the theory of general relativity made him internationally famous. He was professor of physics at the universities of Zurich (1909–1911) and Prague (1911–1912), before he returned to ETH Zurich (1912–1914).
+          - Asjad Khan
+          - Aditya Ghose
+          - Hoa Dam
+        publisher: International Conference on Business Process Management
+        releaseDate: 2021
+        url: https://link.springer.com/chapter/10.1007/978-3-030-85440-9_15
+
+      - title: "Mining Goal Refinement Patterns: Distilling Know-How from Data"
+        authors:
+          - Santiputri M
+          - Deb N
+          - Asjad Khan
+          - A. Ghose
+          - H. Dam
+          - Chaki N
+        publisher: International Conference on Conceptual Modeling
+        releaseDate: 2017
+        url: https://link.springer.com/chapter/10.1007/978-3-319-69904-2_6
 
     Skills:
-      - name: Physics
-        level: Master
-        icon: fa-solid fa-hashtag
-        keywords: "Quantum Mechanics, Quantum Computing, Quantum Information, Quantum Cryptography, Quantum Communication, Quantum Teleportation"
-
-    Languages:
-      - name: German
-        summary: "Native speaker"
-
-      - name: English
-        summary: "Fluent"
-
-    Interests:
-      - name: Physics
-        icon: fa-solid fa-tag
-        keywords: "Quantum Mechanics, Quantum Computing, Quantum Information, Quantum Cryptography, Quantum Communication, Quantum Teleportation"
-
-    Certificates:
       - name: Machine Learning
-        date: 2018-01-01
-        issuer: Stanford University
-        icon: fa-solid fa-location-dot
+        level: Proficient
+        keywords: "Pandas, Scikit-learn, NumPy, Matplotlib"
+      - name: Python Programming
+        level: Proficient
+      - name: Cloud and Data Engineering
+        level: Intermediate
+        keywords: "Apache Spark, Databricks, MLflow, Delta Lake, Azure"
+      - name: Deep Learning
+        level: Intermediate
+        keywords: "Keras, TensorFlow, Intel Coach"
+      - name: Software Engineering
+        level: Intermediate
+        keywords: "SQL, Flask, Git, JIRA, CI/CD"
 
-      - name: Quantum Computing
-        date: 2018-01-01
-        issuer: Stanford University
-        icon: fa-solid fa-tag
+    Additional Experience:
+      - company: Catalysr
+        position: Technical Consultant
+        start_date: 2017
+        end_date: Present
+        summary: Mentored startup founders and helped formulate product execution strategies and technical solutions.
 
-      - name: Quantum Information
-        date: 2018-01-01
-        issuer: Stanford University
-        icon: fa-solid fa-envelope
+      - company: CafeDSL - University of Wollongong
+        position: AI Meetup Organizer and Speaker
+        start_date: 2018
+        end_date: 2022
+        summary: Organized and delivered talks on AI, big data tools, and large-scale machine learning.
 
-    Projects:
-      - name: Quantum Computing
-        summary: Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.
-        highlights:
-          - Quantum Teleportation
-          - Quantum Cryptography
-        start_date: 2018-01-01
-        end_date: 2018-01-01
-
-    References:
-      - name: Professor John Doe
-        icon: fa-solid fa-laptop
-        reference: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit.
-
-      - name: Professor Jane Smith
-        icon: fa-solid fa-thumbtack
-        reference: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit.
+      - company: Service Science Society Australia
+        position: Organizing Chair
+        start_date: 2016
+        end_date: 2016
+        summary: Helped organize the Annual Service Science Innovation Awards event.
