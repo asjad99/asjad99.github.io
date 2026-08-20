@@ -26,14 +26,6 @@
   role: Researcher and Teaching Assistant
   description: Conducted PhD research in applied machine learning, process mining, reinforcement learning, and clinical decision support while teaching software engineering.
 
-- name: GIKI
-  role: Teaching Assistant
-  description: Taught Unix, algorithm design, C, Python, and compiler construction through practical undergraduate computer science courses.
-
 - name: Sydney Code Camp
   role: Lead Instructor
   description: Delivered inclusive, project-based programming education to primary and secondary school students.
-
-- name: Service Science Society
-  role: Organizing Chair
-  description: Helped organize the 2016 Service Science Innovation Awards event in Australia.

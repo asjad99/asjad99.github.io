@@ -1,0 +1,20 @@
+- name: AI/ML Application Development
+  description: Applied AI solutions tailored to business needs, with a focus on full-stack integration and deployment.
+  offerings:
+    - LLM and NLP workflows
+    - Forecasting and classification models
+    - End-to-end evaluation-first AI pipelines
+
+- name: Full-Stack Engineering
+  description: Robust and scalable web platforms engineered with modern technologies and a strong DevOps mindset.
+  offerings:
+    - React, Vue, Quasar, and Next.js
+    - FastAPI, ASP.NET Core, and Node.js
+    - Dockerized systems and cloud deployments
+
+- name: AI Strategy & Enablement
+  description: Strategic guidance and hands-on support to help teams adopt, deploy, and evaluate AI effectively.
+  offerings:
+    - Technical evaluations and model benchmarking
+    - AI-driven product architecture
+    - Training and enablement

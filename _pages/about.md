@@ -64,14 +64,59 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
     font-size: 0.95rem;
   }
 
+  .services-section {
+    clear: both;
+    margin: 3rem 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .service-card {
+    box-sizing: border-box;
+    min-height: 18rem;
+    padding: 1.5rem;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--global-divider-color);
+  }
+
+  .service-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.35rem;
+  }
+
+  .service-card p {
+    margin-bottom: 1.25rem;
+  }
+
+  .service-card ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  .service-card li {
+    margin-bottom: 0.5rem;
+  }
+
+  .service-check {
+    color: #16a34a;
+    font-weight: 700;
+  }
+
   @media (max-width: 992px) {
-    .clients-grid {
+    .clients-grid,
+    .services-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 576px) {
-    .clients-grid {
+    .clients-grid,
+    .services-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -86,6 +131,24 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
         <h3>{{ client.name }}</h3>
         <p><strong>{{ client.role }}</strong></p>
         <p>{{ client.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="services-section">
+  <h2>Services</h2>
+  <p class="lead">Leveraging AI and web technologies to build innovative solutions that drive business value.</p>
+  <div class="services-grid">
+    {% for service in site.data.services %}
+      <div class="service-card">
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description }}</p>
+        <ul>
+          {% for offering in service.offerings %}
+            <li><span class="service-check" aria-hidden="true">&#10003;</span> {{ offering }}</li>
+          {% endfor %}
+        </ul>
       </div>
     {% endfor %}
   </div>
