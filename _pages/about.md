@@ -31,16 +31,62 @@ This site collects my research, projects, essays, tutorials, and notes. The arch
 
 For a current overview of my work and experience, see the [CV]({{ '/cv/' | relative_url }}), [research]({{ '/my-research/' | relative_url }}), and [projects]({{ '/projects/' | relative_url }}) pages.
 
-<section class="my-5">
+<style>
+  .clients-employment {
+    clear: both;
+    margin: 3rem 0;
+  }
+
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .client-card {
+    box-sizing: border-box;
+    min-height: 12rem;
+    padding: 1.5rem;
+    overflow-wrap: anywhere;
+    text-align: center;
+    background: var(--global-code-bg-color);
+    border-radius: 0.75rem;
+  }
+
+  .client-card h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.2rem;
+  }
+
+  .client-card p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 992px) {
+    .clients-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 576px) {
+    .clients-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<section class="clients-employment">
   <h2>Clients / Employment</h2>
   <p class="lead">I've had the pleasure of working with amazing companies and institutions across various industries.</p>
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="clients-grid">
     {% for client in site.data.clients %}
-      <article class="rounded-xl bg-gray-50 p-6 text-center shadow-sm dark:bg-gray-800">
-        <h3 class="mb-3 text-xl font-semibold">{{ client.name }}</h3>
-        <p class="mb-3 font-medium">{{ client.role }}</p>
-        <p class="mb-0">{{ client.description }}</p>
-      </article>
+      <div class="client-card">
+        <h3>{{ client.name }}</h3>
+        <p><strong>{{ client.role }}</strong></p>
+        <p>{{ client.description }}</p>
+      </div>
     {% endfor %}
   </div>
 </section>
