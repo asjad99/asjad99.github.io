@@ -31,6 +31,18 @@ This site collects my research, projects, essays, tutorials, and notes. The arch
 
 For a current overview of my work and experience, see the [CV]({{ '/cv/' | relative_url }}), [research]({{ '/my-research/' | relative_url }}), and [projects]({{ '/projects/' | relative_url }}) pages.
 
+<div class="about-actions" aria-label="Profile links">
+  <a class="about-action" href="https://github.com/asjad99" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+  </a>
+  <a class="about-action" href="https://x.com/asjad_99" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-x-twitter" aria-hidden="true"></i> Twitter
+  </a>
+  <a class="about-action about-action--resume" href="{{ '/assets/pdf/Asjad - Resume SE Role UNSW.pdf' | relative_url }}" download="Asjad - Resume SE Role UNSW.pdf">
+    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Resume
+  </a>
+</div>
+
 <style>
   .clients-employment {
     clear: both;
@@ -67,6 +79,42 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
   .services-section {
     clear: both;
     margin: 3rem 0;
+  }
+
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 2rem 0 3rem;
+  }
+
+  .about-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.75rem 1.35rem;
+    border: 2px solid var(--global-theme-color);
+    border-radius: 0.9rem;
+    color: var(--global-theme-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .about-action:hover {
+    color: var(--global-hover-color);
+    text-decoration: none;
+  }
+
+  .about-action--resume {
+    color: #fff;
+    background: var(--global-theme-color);
+  }
+
+  .about-action--resume:hover {
+    color: #fff;
+    background: var(--global-hover-color);
   }
 
   .services-grid {
