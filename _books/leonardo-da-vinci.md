@@ -2,7 +2,7 @@
 layout: book-review
 title: Leonardo da Vinci
 author: Walter Isaacson
-cover: leonardo-da-vinci.jpg
+cover: /assets/img/book_covers/leonardo-da-vinci.jpg
 planned_completion: 2026
 status: planned
 ---
