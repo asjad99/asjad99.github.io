@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "My Research  🔭"
+title: "My Research"
 permalink: /my-research/
 nav: true
 nav_order: 5

@@ -46,3 +46,10 @@ Other gates:
 ## Gem version pins
 
 `Gemfile` pins every `al-*` gem to an exact released version in `group :al_folio_plugins`, and `_config.yml` lists the same gems under `plugins:`. Read the current pins from the `Gemfile` rather than trusting any version quoted in prose — including here. To test a gem fix against this site, repoint the `Gemfile` at a sibling checkout (`path:`, `git:`, or `branch:`) and `bundle install`; see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#working-on-a-gem-alongside-the-starter). Revert the pin before committing.
+
+## Knowledge Base content
+
+New articles, essays, e-books and projects for the `/knowledge-base/` page follow the LLM knowledge-base workflow in
+[`_knowledge/README.md`](_knowledge/README.md): ingest sources into `_knowledge/raw/`, compile into `_knowledge/wiki/`,
+write outputs to `_knowledge/outputs/`, then publish as `_pages/knowledge-base-<slug>.md` and link it from
+`_pages/knowledge-base.md`. Read that file before writing any Knowledge Base content.

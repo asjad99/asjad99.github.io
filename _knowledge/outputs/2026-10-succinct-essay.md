@@ -1,13 +1,7 @@
----
-layout: page
-title: "The Receipt for a Computation"
-permalink: /ai-assisted/succinct/
-description: On the problem Succinct is solving.
----
 
 _October 2026_
 
-<p><em>Researched and drafted with AI assistance, then reviewed by me. <a href="/ai-assisted/">← Back to AI Assisted</a></em></p>
+<p><em>Researched and drafted with AI assistance, then reviewed by me. <a href="/knowledge-base/">← Back to Knowledge Base</a></em></p>
 
 When you show a driver's license at a bar, you prove you are over 21. But you also show your name, your birthday, and your home address. The bouncer needs one fact. You give him five.
 

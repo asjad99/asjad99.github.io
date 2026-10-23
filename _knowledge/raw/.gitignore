@@ -1,0 +1,6 @@
+# Public repo: do not commit full-text clips of other people's work.
+*
+!.gitignore
+!README.md
+!sources.md
+!notes-*.md
