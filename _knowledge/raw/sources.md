@@ -15,3 +15,10 @@
 | src-0011 | Washington Post: Inside the Silicon Valley push to breed super-babies | https://thenightly.com.au/society/health/the-washington-post-inside-the-silicon-valley-push-to-breed-super-babies-c-19445696 | 2026-10-23 | [[orchid]], [[polygenic-risk-scores]] |
 | src-0012 | Scimex: Genetic risk scores "basically worthless" for embryo selection (Namba, ESHG 2024) | https://www.scimex.org/newsfeed/genetic-risk-scores-may-be-basically-worthless-for-embryo-selection | 2026-10-23 | [[polygenic-risk-scores]] |
 | src-0013 | Exaudi: Scientific criticism of new embryo selection method | https://exaudi.org/scientific-criticism-of-new-method-of-embryo-selection/ | 2026-10-23 | [[polygenic-risk-scores]] |
+| src-0014 | Asjad's shell history (sanitised notes; secrets and client names removed) | — | 2026-10-23 | [[shell]], [[git]] |
+| src-0015 | Pro Git book | https://git-scm.com/book/en/v2 | 2026-10-23 | [[git]] |
+| src-0016 | Git reference docs | https://git-scm.com/docs | 2026-10-23 | [[git]] |
+| src-0017 | GitHub: Connecting with SSH | https://docs.github.com/en/authentication/connecting-to-github-with-ssh | 2026-10-23 | [[git]], [[ssh]] |
+| src-0018 | GitHub: Checking out pull requests locally | https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally | 2026-10-23 | [[git]] |
+| src-0019 | MIT: The Missing Semester of Your CS Education | https://missing.csail.mit.edu/ | 2026-10-23 | [[shell]], [[git]], [[missing-semester]] |
+| src-0020 | Homebrew, npm, uv docs | https://brew.sh/ · https://docs.npmjs.com/cli/commands/npm-run-script · https://docs.astral.sh/uv/ | 2026-10-23 | [[package-managers]] |
