@@ -5,7 +5,7 @@ permalink: /ai-assisted/succinct/
 description: On the problem Succinct is solving.
 ---
 
-_October 2026 · On the problem Succinct is solving_
+_October 2026_
 
 <p><em>Researched and drafted with AI assistance, then reviewed by me. <a href="/ai-assisted/">← Back to AI Assisted</a></em></p>
 

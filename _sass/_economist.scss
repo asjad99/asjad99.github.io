@@ -1,0 +1,238 @@
+/*******************************************************************************
+ * Economist-inspired look: serif text, red accents, hairlines, light only.
+ * Free fonts: Source Serif 4 (text, headlines) and Inter (navigation, labels).
+ ******************************************************************************/
+
+$econ-red: #e3120b;
+$econ-red-dark: #b10e08;
+$econ-ink: #0d0d0d;
+$econ-grey: #595959;
+$econ-rule: #d9d9d9;
+$econ-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+$econ-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+:root {
+  --global-bg-color: #ffffff;
+  --global-text-color: #{$econ-ink};
+  --global-text-color-light: #{$econ-grey};
+  --global-theme-color: #{$econ-red};
+  --global-hover-color: #{$econ-red-dark};
+  --global-hover-text-color: #ffffff;
+  --global-divider-color: #{$econ-rule};
+  --global-card-bg-color: #ffffff;
+  --global-code-bg-color: #f4f4f4;
+  --global-footer-bg-color: #{$econ-ink};
+  --global-footer-text-color: #b3b3b3;
+  --global-footer-link-color: #ffffff;
+}
+
+body {
+  font-family: $econ-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: $econ-ink;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $econ-serif;
+  font-weight: 700;
+  color: $econ-ink;
+  letter-spacing: -0.01em;
+}
+
+/* Red band on top of every page, like the masthead rule */
+.navbar {
+  border-top: 4px solid $econ-red;
+  border-bottom: 1px solid $econ-rule;
+  box-shadow: none;
+  font-family: $econ-sans;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar a {
+  font-family: $econ-sans;
+}
+
+.navbar .nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+}
+
+/* Page titles: large bold serif with a thin rule under them */
+.post-header {
+  border-bottom: 1px solid $econ-rule;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-title {
+  font-family: $econ-serif;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.15;
+}
+
+.post-header .desc,
+.post-description,
+.post-meta,
+.post-tags,
+time,
+small,
+figcaption,
+.badge,
+.btn,
+footer {
+  font-family: $econ-sans;
+}
+
+.post-header .desc,
+.post-description {
+  color: $econ-grey;
+  font-size: 1.05rem;
+}
+
+/* Section headings in page content: small red capitals (the "rubric") */
+article h2,
+.post h2 {
+  font-family: $econ-sans;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $econ-red;
+  border-top: 1px solid $econ-ink;
+  padding-top: 0.6rem;
+  margin-top: 2.25rem;
+}
+
+article h3,
+.post h3 {
+  font-size: 1.35rem;
+}
+
+/* Text links: ink with a red underline, red on hover */
+article p a,
+article li a,
+.post p a,
+.post li a {
+  color: $econ-ink;
+  text-decoration: underline;
+  text-decoration-color: $econ-red;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+article p a:hover,
+article li a:hover,
+.post p a:hover,
+.post li a:hover {
+  color: $econ-red;
+}
+
+hr {
+  border-color: $econ-rule;
+  opacity: 1;
+}
+
+blockquote {
+  border-left: 3px solid $econ-red;
+  color: $econ-ink;
+  font-style: italic;
+}
+
+/* Flat cards: no rounded corners, no shadows */
+.card,
+.btn,
+.badge,
+img.rounded,
+.z-depth-1,
+.z-depth-2 {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Index lists (add {: .econ-list} after a Markdown list): hairline rows */
+ul.econ-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.econ-list > li {
+  border-bottom: 1px solid $econ-rule;
+  padding: 0.7rem 0;
+}
+
+ul.econ-list > li:first-child {
+  border-top: 1px solid $econ-rule;
+}
+
+ul.econ-list > li > a:first-child {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+ul.econ-list > li > a:first-child:hover {
+  color: $econ-red;
+}
+
+footer.fixed-bottom,
+footer.sticky-bottom {
+  border-top: 4px solid $econ-red;
+}
+
+/* Page-specific inline styles (About, Blog) brought in line with the look */
+body .about-action {
+  font-family: $econ-sans;
+  font-size: 0.95rem;
+  border-radius: 0;
+  text-decoration: none;
+}
+
+body .client-card,
+body .service-card {
+  border-radius: 0;
+  box-shadow: none;
+  border: 1px solid $econ-rule;
+}
+
+body .blog-index {
+  border-top: 0;
+  padding-top: 0;
+}
+
+body .blog-index h2 {
+  font-size: 0.8rem;
+  margin: 0 0 0.25rem;
+}
+
+body .blog-index ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+body .blog-index li {
+  border-bottom: 1px solid $econ-rule;
+  padding: 0.6rem 0;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+body .blog-index a {
+  color: $econ-ink;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body .blog-index a:hover {
+  color: $econ-red;
+}
