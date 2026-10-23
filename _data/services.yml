@@ -1,11 +1,11 @@
-- name: Data Architecture & Engineering
-  description: Design and build modern data platforms that scale with your business - from lakehouse foundations to real-time streaming pipelines.
+- name: Data Platforms & Governance
+  description: Build data platforms that scale and data your organisation can trust.
   offerings:
-    - Lakehouse design & implementation
-    - Data fabric architecture
-    - ETL/ELT pipeline engineering
-    - Real-time streaming & CDC
-    - Data modelling & schema design
+    - Lakehouse & pipeline engineering (batch, streaming, CDC)
+    - Data modelling & architecture
+    - Governance, catalog & lineage
+    - Data quality & compliance (GDPR, SOX)
+    - Data strategy & roadmap
 
 - name: AI & Intelligence Engineering
   description: Build the intelligence layer on top of your data - production-grade ML systems, not just notebooks and prototypes.
@@ -15,12 +15,3 @@
     - Decision intelligence systems
     - Computational intelligence & optimisation
     - AI readiness assessment
-
-- name: Data Governance & Strategy
-  description: Establish the policies, processes, and tooling that make data trustworthy and compliant across your organisation.
-  offerings:
-    - Data governance frameworks
-    - Catalog & lineage implementation
-    - Data quality engineering
-    - Regulatory compliance (GDPR, SOX, etc.)
-    - Data strategy & roadmap consulting

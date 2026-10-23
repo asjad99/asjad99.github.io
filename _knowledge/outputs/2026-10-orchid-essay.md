@@ -1,13 +1,7 @@
----
-layout: page
-title: "Reading the Whole Letter"
-permalink: /ai-assisted/orchid/
-description: On the problem Orchid is solving.
----
 
 _October 2026_
 
-<p><em>Researched and drafted with AI assistance, then reviewed by me. <a href="/ai-assisted/">← Back to AI Assisted</a></em></p>
+<p><em>Researched and drafted with AI assistance, then reviewed by me. <a href="/knowledge-base/">← Back to Knowledge Base</a></em></p>
 
 Every child gets a long letter from each parent. The letter is written in DNA. It has about three billion letters, and it tells the body how to build itself. Most of the time the letter is fine. Sometimes one letter is wrong, and a child is born with a disease nobody saw coming.
 

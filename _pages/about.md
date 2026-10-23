@@ -27,7 +27,7 @@ I am Asjad Khan, a data scientist and researcher interested in the intersection 
 
 This site collects my research, projects, essays, tutorials, and notes. The archive includes work on process mining, machine learning, reinforcement learning, healthcare decision support, data products, and the broader implications of AI.
 
-For a current overview of my work and experience, see the [CV]({{ '/cv/' | relative_url }}), [research]({{ '/my-research/' | relative_url }}), and [projects]({{ '/projects/' | relative_url }}) pages.
+For a current overview of my work and experience, see the [research]({{ '/my-research/' | relative_url }}) and [projects]({{ '/projects/' | relative_url }}) pages.
 
 <div class="about-actions" aria-label="Profile links">
   <a class="about-action" href="https://github.com/asjad99" target="_blank" rel="noopener noreferrer">
@@ -35,9 +35,6 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
   </a>
   <a class="about-action" href="https://x.com/asjad_99" target="_blank" rel="noopener noreferrer">
     <i class="fa-brands fa-x-twitter" aria-hidden="true"></i> Twitter
-  </a>
-  <a class="about-action about-action--resume" href="{{ '/assets/pdf/Asjad - Resume SE Role UNSW.pdf' | relative_url }}" download="Asjad - Resume SE Role UNSW.pdf">
-    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Resume
   </a>
 </div>
 
@@ -113,15 +110,7 @@ For a current overview of my work and experience, see the [CV]({{ '/cv/' | relat
     text-decoration: none;
   }
 
-  .about-action--resume {
-    color: #fff;
-    background: var(--global-theme-color);
-  }
 
-  .about-action--resume:hover {
-    color: #fff;
-    background: var(--global-hover-color);
-  }
 
   .services-grid {
     display: grid;
