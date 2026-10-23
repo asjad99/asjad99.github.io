@@ -185,9 +185,9 @@ ul.econ-list > li > a:first-child:hover {
   color: $econ-red;
 }
 
-footer.fixed-bottom,
-footer.sticky-bottom {
-  border-top: 4px solid $econ-red;
+/* No footer: the copyright/credits bar is hidden site-wide */
+footer[role="contentinfo"] {
+  display: none !important;
 }
 
 /* Page-specific inline styles (About, Blog) brought in line with the look */
