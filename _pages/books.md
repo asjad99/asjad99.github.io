@@ -28,7 +28,6 @@ description: Books on my shelf, grouped by topic.
       <figcaption>
         <span class="shelf-title">{{ b.title }}</span>
         {% if b.author and b.author != "" %}<span class="shelf-author">{{ b.author }}</span>{% endif %}
-        {% if b.status == "planned" %}<span class="shelf-tag">Reading in 2026</span>{% endif %}
       </figcaption>
     </figure>
   {% endfor %}
@@ -77,16 +76,4 @@ description: Books on my shelf, grouped by topic.
     font-size: 0.9rem;
   }
   .shelf-author,
-  .shelf-tag {
-    display: block;
-    font-size: 0.78rem;
-    color: var(--global-text-color-light);
-  }
-  .shelf-tag {
-    color: var(--global-theme-color);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.68rem;
-    margin-top: 0.15rem;
-  }
 </style>
