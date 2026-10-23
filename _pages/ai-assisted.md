@@ -13,6 +13,7 @@ description: Writing, projects and e-books made with AI assistance.
 
 - [The Receipt for a Computation](/ai-assisted/succinct/): how Succinct makes zero-knowledge proofs practical, and why a "receipt" for a computation matters. _October 2026_
 - [Reading the Whole Letter](/ai-assisted/orchid/): what Orchid's whole-genome embryo screening can and can't tell parents. _October 2026_
+{: .econ-list}
 
 ## Projects
 
@@ -28,3 +29,4 @@ These are based on my old learning notes that I am slowly converting into mini-b
 - [Big Ideas in Deep Learning](https://asjad99.github.io/big-ideas-in-deep-learning/#relational-reasoning-and-graph-message-passing)
 - [Software Engineering](https://asjad99.github.io/software-engineering-handbook/)
 - [MLOps: Best practices for designing scalable and reliable machine learning systems](https://asjad99.github.io/mlops-handbook/)
+{: .econ-list}
