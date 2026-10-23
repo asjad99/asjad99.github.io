@@ -22,3 +22,10 @@
 | src-0018 | GitHub: Checking out pull requests locally | https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally | 2026-10-23 | [[git]] |
 | src-0019 | MIT: The Missing Semester of Your CS Education | https://missing.csail.mit.edu/ | 2026-10-23 | [[shell]], [[git]], [[missing-semester]] |
 | src-0020 | Homebrew, npm, uv docs | https://brew.sh/ · https://docs.npmjs.com/cli/commands/npm-run-script · https://docs.astral.sh/uv/ | 2026-10-23 | [[package-managers]] |
+| src-0021 | ModelCompare blog | https://www.modelcompare.ai/blog | 2026-10-24 | [[ai-leaderboards]], [[keeping-up-with-ai]] |
+| src-0022 | Deep Learning Weekly | https://www.deeplearningweekly.com/ | 2026-10-24 | [[keeping-up-with-ai]] |
+| src-0023 | Simon Willison's Weblog | https://simonwillison.net/ | 2026-10-24 | [[keeping-up-with-ai]] |
+| src-0024 | Epoch AI Benchmarking Hub | https://epoch.ai/benchmarks | 2026-10-24 | [[ai-leaderboards]] |
+| src-0025 | Contrary Research: LMArena | https://research.contrary.com/company/lmarena | 2026-10-24 | [[ai-leaderboards]] |
+| src-0026 | Fast.io: Best AI model comparison tools 2026 | https://www.fast.io/resources/best-ai-model-comparison-tools-2026/ | 2026-10-24 | [[ai-leaderboards]] |
+| src-0027 | Singh et al., The Leaderboard Illusion (arXiv 2504.20879, 2025) | https://arxiv.org/abs/2504.20879 | 2026-10-24 | [[ai-leaderboards]] |

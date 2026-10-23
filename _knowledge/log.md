@@ -8,3 +8,6 @@
 - 2026-10-23 · ingest · src-0014…src-0020 (shell history notes, Git/GitHub/MIT/tool docs). Compiled: git, shell, ssh, package-managers, missing-semester.
 - 2026-10-23 · output · "Top 10 Git Commands" and "Top 10 Terminal Commands" published under Missing Semester. Checked every command from the history notes is covered; no secrets or client names.
 - 2026-10-23 · lint · Security finding: API keys found in plain-text shell history → advised revoke/rotate; added .env guidance to shell article.
+- 2026-10-24 · ingest · src-0021…src-0027 (ModelCompare, Deep Learning Weekly, Simon Willison, Epoch AI, LMArena profile, comparison-tools roundup, Leaderboard Illusion). Compiled: ai-leaderboards, keeping-up-with-ai.
+- 2026-10-24 · output · "AI Capability Comparison" published under new section "Keeping up with AI Progress".
+- 2026-10-24 · lint · Not fetched directly: lmarena.ai, artificialanalysis.ai, metr.org (blocked/unfetched); descriptions rely on secondary sources. Recheck URLs next lint.

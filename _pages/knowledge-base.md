@@ -23,6 +23,11 @@ Practical tools that school rarely teaches, named after MIT's [Missing Semester]
 - [Top 10 Terminal Commands](/knowledge-base/terminal-commands/): move around, install tools, run projects, free stuck ports and keep secrets out of your history. _October 2026_
 {: .econ-list}
 
+## Keeping up with AI Progress
+
+- [AI Capability Comparison](/knowledge-base/ai-capability-comparison/): the leaderboards, people and newsletters I use to track new models, and how to read a leaderboard without being fooled. _October 2026_
+{: .econ-list}
+
 ## E-books
 
 ### Mini-Books

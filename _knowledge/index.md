@@ -3,6 +3,7 @@
 Every wiki article with a one-line summary. The LLM keeps this current after each compile.
 
 ## Topics
+- [[keeping-up-with-ai]] — how to follow AI progress; section on the site.
 - [[missing-semester]] — practical tools school skips; section on the site.
 - [[verification-and-trust]] — new tools that let people check instead of trust.
 
@@ -19,6 +20,8 @@ Every wiki article with a one-line summary. The LLM keeps this current after eac
 - [[ssh]] — key-based secure login to servers and GitHub.
 - [[package-managers]] — brew, npm/nvm/pnpm, pip/uv.
 
+- [[ai-leaderboards]] — what each AI leaderboard measures, and its blind spots.
+
 ## Entities
 - [[succinct]] — makers of the SP1 zkVM and prover network.
 - [[orchid]] — whole-genome embryo screening startup.
@@ -28,3 +31,4 @@ Every wiki article with a one-line summary. The LLM keeps this current after eac
 - outputs/2026-10-orchid-essay → /knowledge-base/orchid/
 - outputs/2026-10-git-commands → /knowledge-base/git-commands/
 - outputs/2026-10-terminal-commands → /knowledge-base/terminal-commands/
+- outputs/2026-10-ai-capability-comparison → /knowledge-base/ai-capability-comparison/
