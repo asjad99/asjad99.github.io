@@ -6,6 +6,8 @@ cover: assets/img/book_covers/maps-of-time.jpg
 categories: reading-list
 planned_completion: 2026
 status: planned
+shelf: history
+order: 41
 ---
 
 Planned reading for 2026.
