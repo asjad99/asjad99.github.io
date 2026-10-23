@@ -75,5 +75,9 @@ description: Books on my shelf, grouped by topic.
     font-weight: 600;
     font-size: 0.9rem;
   }
-  .shelf-author,
+  .shelf-author {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--global-text-color-light);
+  }
 </style>

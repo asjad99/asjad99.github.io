@@ -11,3 +11,6 @@
 - 2026-10-24 · ingest · src-0021…src-0027 (ModelCompare, Deep Learning Weekly, Simon Willison, Epoch AI, LMArena profile, comparison-tools roundup, Leaderboard Illusion). Compiled: ai-leaderboards, keeping-up-with-ai.
 - 2026-10-24 · output · "AI Capability Comparison" published under new section "Keeping up with AI Progress".
 - 2026-10-24 · lint · Not fetched directly: lmarena.ai, artificialanalysis.ai, metr.org (blocked/unfetched); descriptions rely on secondary sources. Recheck URLs next lint.
+- 2026-10-24 · ingest · src-0028…src-0030 (Zed key-binding docs; default and Sublime keymaps from GitHub). Compiled: code-editors; backlinks from shell, git, missing-semester.
+- 2026-10-24 · output · "Zed Editor Tips (Sublime Keys)" published under Missing Semester. Every shortcut checked against the keymap files; dropped ctrl-0 / ctrl-1… rows (layer conflict).
+- 2026-10-24 · fix · Bookshelf author-name style restored (lost when the 2026 tag was removed).

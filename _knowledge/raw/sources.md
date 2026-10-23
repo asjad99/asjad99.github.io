@@ -29,3 +29,6 @@
 | src-0025 | Contrary Research: LMArena | https://research.contrary.com/company/lmarena | 2026-10-24 | [[ai-leaderboards]] |
 | src-0026 | Fast.io: Best AI model comparison tools 2026 | https://www.fast.io/resources/best-ai-model-comparison-tools-2026/ | 2026-10-24 | [[ai-leaderboards]] |
 | src-0027 | Singh et al., The Leaderboard Illusion (arXiv 2504.20879, 2025) | https://arxiv.org/abs/2504.20879 | 2026-10-24 | [[ai-leaderboards]] |
+| src-0028 | Zed docs: Key bindings | https://zed.dev/docs/key-bindings | 2026-10-24 | [[code-editors]] |
+| src-0029 | Zed default macOS keymap (GitHub, main branch) | https://github.com/zed-industries/zed/blob/main/assets/keymaps/default-macos.json | 2026-10-24 | [[code-editors]] |
+| src-0030 | Zed Sublime Text keymap for macOS (GitHub, main branch) | https://github.com/zed-industries/zed/blob/main/assets/keymaps/macos/sublime_text.json | 2026-10-24 | [[code-editors]] |

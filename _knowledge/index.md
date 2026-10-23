@@ -18,6 +18,7 @@ Every wiki article with a one-line summary. The LLM keeps this current after eac
 - [[git]] — version history for folders; the ten everyday commands.
 - [[shell]] — the terminal: navigation, installs, env vars, processes.
 - [[ssh]] — key-based secure login to servers and GitHub.
+- [[code-editors]] — Zed with Sublime keys: the shortcuts that matter.
 - [[package-managers]] — brew, npm/nvm/pnpm, pip/uv.
 
 - [[ai-leaderboards]] — what each AI leaderboard measures, and its blind spots.
@@ -32,3 +33,4 @@ Every wiki article with a one-line summary. The LLM keeps this current after eac
 - outputs/2026-10-git-commands → /knowledge-base/git-commands/
 - outputs/2026-10-terminal-commands → /knowledge-base/terminal-commands/
 - outputs/2026-10-ai-capability-comparison → /knowledge-base/ai-capability-comparison/
+- outputs/2026-10-zed-editor-tips → /knowledge-base/zed-editor-tips/

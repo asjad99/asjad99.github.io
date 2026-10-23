@@ -9,10 +9,10 @@ Practical computing skills that courses skip: the [[shell]], [[git]], [[ssh]], [
 debugging. Named after MIT's course of the same name. Section on the Knowledge Base page.
 
 ## Related
-[[keeping-up-with-ai]]
+[[keeping-up-with-ai]] · [[code-editors]]
 
 ## Candidate next posts
-- Editors and keyboard shortcuts (VS Code / Vim basics)
+- ~~Editors and keyboard shortcuts~~ → done: Zed tips
 - Python virtual environments and `.env` secrets
 - Debugging and reading error messages
 - Shell scripting: writing your own `dev.sh`

@@ -15,7 +15,7 @@ permissions, and remote login ([[ssh]]).
 - Prefer `kill` before `kill -9`; prefer `python3 -m pip` over bare `pip`.
 
 ## Related
-[[git]] · [[ssh]] · [[package-managers]] · [[missing-semester]]
+[[git]] · [[ssh]] · [[package-managers]] · [[code-editors]] · [[missing-semester]]
 
 ## Published
 [Top 10 Terminal Commands](/knowledge-base/terminal-commands/)
