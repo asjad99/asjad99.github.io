@@ -4,10 +4,10 @@ title: "Knowledge Base"
 permalink: /knowledge-base/
 nav: true
 nav_order: 7
-description: Essays, projects and e-books built from my research notes with AI assistance.
+description: Essays, tutorials and e-books built from my research notes with AI assistance.
 ---
 
-<p><em>Everything here grows out of a personal research wiki that an AI helps me build and maintain: sources go in, the AI compiles linked notes, and the best answers become essays, projects and books. I review everything before it is published.</em></p>
+<p><em>Everything here grows out of a personal research wiki that an AI helps me build and maintain: sources go in, the AI compiles linked notes, and the best answers become essays, tutorials and books. I review everything before it is published.</em></p>
 
 ## Blog Posts
 
@@ -15,9 +15,13 @@ description: Essays, projects and e-books built from my research notes with AI a
 - [Reading the Whole Letter](/knowledge-base/orchid/): what Orchid's whole-genome embryo screening can and can't tell parents. _October 2026_
 {: .econ-list}
 
-## Projects
+## Missing Semester
 
-_Coming soon._
+Practical tools that school rarely teaches, named after MIT's [Missing Semester](https://missing.csail.mit.edu/) course.
+
+- [Top 10 Git Commands](/knowledge-base/git-commands/): save, share and undo your work with Git and GitHub, from first setup to testing a pull request. _October 2026_
+- [Top 10 Terminal Commands](/knowledge-base/terminal-commands/): move around, install tools, run projects, free stuck ports and keep secrets out of your history. _October 2026_
+{: .econ-list}
 
 ## E-books
 
