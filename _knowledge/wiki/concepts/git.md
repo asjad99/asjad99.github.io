@@ -15,7 +15,7 @@ about ten commands: config, clone, status, add, commit, push, pull, fetch, switc
 - Never commit secrets; check `git status` before `git add .`.
 
 ## Related
-[[shell]] · [[ssh]] · [[missing-semester]]
+[[shell]] · [[ssh]] · [[code-editors]] · [[missing-semester]]
 
 ## Published
 [Top 10 Git Commands](/knowledge-base/git-commands/)

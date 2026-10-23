@@ -21,6 +21,7 @@ Practical tools that school rarely teaches, named after MIT's [Missing Semester]
 
 - [Top 10 Git Commands](/knowledge-base/git-commands/): save, share and undo your work with Git and GitHub, from first setup to testing a pull request. _October 2026_
 - [Top 10 Terminal Commands](/knowledge-base/terminal-commands/): move around, install tools, run projects, free stuck ports and keep secrets out of your history. _October 2026_
+- [Zed Editor Tips (Sublime Keys)](/knowledge-base/zed-editor-tips/): the shortcuts and habits that make Zed fast, using Sublime Text key bindings: multiple cursors, search, navigation, panels and Git. _October 2026_
 {: .econ-list}
 
 ## Keeping up with AI Progress
