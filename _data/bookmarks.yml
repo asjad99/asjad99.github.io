@@ -1,0 +1,22 @@
+# Bookmarks: newest first. Summaries are my own words. See knowledge-base-writer skill.
+- url: https://www.decodingai.com/p/learning-harness-engineering-by-building
+  title: "Learning Harness Engineering by Building a Coding Agent From Scratch"
+  site: decodingai.com
+  image: "https://substackcdn.com/image/fetch/w_1200,h_600,c_fill,f_jpg,q_auto:good,g_auto/https%3A%2F%2Fsubstack-video.s3.amazonaws.com%2Fvideo_upload%2Fpost%2F219448314%2Fcad4acd1-965a-43c7-809e-9bc61994da33%2Ftranscoded-00001.png"
+  summary: "Paul Iusztin's 90-minute webinar on the system around a model that turns it into a coding agent, built from first principles. Paid."
+  tags: [ai, agents]
+  added: 2026-10-24
+- url: https://claude-code-from-source.com
+  title: "Claude Code from Source: Architecture, Patterns & Internals"
+  site: claude-code-from-source.com
+  image: "https://claude-code-from-source.com/og-image.jpg"
+  summary: "An unofficial 18-chapter book, written by AI agents, on how Claude Code is built and which design patterns carry over to other agents."
+  tags: [ai, agents, claude-code]
+  added: 2026-10-24
+- url: https://ccunpacked.dev
+  title: "Claude Code Unpacked"
+  site: ccunpacked.dev
+  image: "https://ccunpacked.dev/og-image.png"
+  summary: "An unofficial visual map of Claude Code's internals: the agent loop, built-in tools, slash commands and features not yet shipped."
+  tags: [ai, agents, claude-code]
+  added: 2026-10-24
