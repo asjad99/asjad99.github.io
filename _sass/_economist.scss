@@ -238,21 +238,121 @@ body .blog-index a:hover {
 }
 
 /* Bookmarks: Pocket-style cards */
-.bm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
-.bm-card { display: flex; flex-direction: column; border: 1px solid $econ-rule; background: #fff; color: $econ-ink; text-decoration: none !important; overflow: hidden; transition: border-color 0.15s; }
-.bm-card:hover { border-color: $econ-red; }
-.bm-card[hidden] { display: none; }
-.bm-thumb { position: relative; aspect-ratio: 16 / 9; background: #f4f4f4; display: flex; align-items: center; justify-content: center; }
-.bm-thumb span { font-family: $econ-serif; font-size: 2.2rem; font-weight: 700; color: $econ-red; }
-.bm-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.bm-body { padding: 0.7rem 0.8rem 0.8rem; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
-.bm-site, .bm-meta { font-family: $econ-sans; font-size: 0.72rem; color: $econ-grey; text-transform: uppercase; letter-spacing: 0.04em; }
-.bm-title { font-family: $econ-serif; font-weight: 700; font-size: 1rem; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.bm-card:hover .bm-title { color: $econ-red; }
-.bm-summary { font-size: 0.85rem; line-height: 1.35; color: $econ-grey; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.bm-meta { text-transform: none; letter-spacing: 0; margin-top: auto; padding-top: 0.3rem; }
-.bm-tools { display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
-#bm-q { font-family: $econ-sans; padding: 0.45rem 0.6rem; border: 1px solid $econ-rule; max-width: 360px; }
-.bm-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.bm-chip { font-family: $econ-sans; font-size: 0.78rem; border: 1px solid $econ-rule; background: #fff; color: $econ-ink; padding: 0.2rem 0.6rem; cursor: pointer; }
-.bm-chip.is-on, .bm-chip:hover { border-color: $econ-red; color: $econ-red; }
+.bm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+.bm-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $econ-rule;
+  background: #fff;
+  color: $econ-ink;
+  text-decoration: none !important;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.bm-card:hover {
+  border-color: $econ-red;
+}
+.bm-card[hidden] {
+  display: none;
+}
+.bm-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bm-thumb span {
+  font-family: $econ-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $econ-red;
+}
+.bm-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bm-body {
+  padding: 0.7rem 0.8rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+.bm-site,
+.bm-meta {
+  font-family: $econ-sans;
+  font-size: 0.72rem;
+  color: $econ-grey;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.bm-title {
+  font-family: $econ-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bm-card:hover .bm-title {
+  color: $econ-red;
+}
+.bm-summary {
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: $econ-grey;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bm-meta {
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: auto;
+  padding-top: 0.3rem;
+}
+.bm-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+#bm-q {
+  font-family: $econ-sans;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid $econ-rule;
+  max-width: 360px;
+}
+.bm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.bm-chip {
+  font-family: $econ-sans;
+  font-size: 0.78rem;
+  border: 1px solid $econ-rule;
+  background: #fff;
+  color: $econ-ink;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+}
+.bm-chip.is-on,
+.bm-chip:hover {
+  border-color: $econ-red;
+  color: $econ-red;
+}
