@@ -1,4 +1,11 @@
 # Bookmarks: newest first. Summaries are my own words. See knowledge-base-writer skill.
+- url: https://www.dwarkesh.com/p/intel-tour
+  title: "What will computer chips look like in 2045?"
+  site: dwarkesh.com
+  image: "https://substackcdn.com/image/fetch/$s_!mlvv!,w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-video.s3.amazonaws.com%2Fvideo_upload%2Fpost%2F221632772%2F51a555ac-448e-4e23-94ac-38f1bfc72bb4%2Ftranscoded-1792678792.png"
+  summary: "Dwarkesh Patel tours an Intel fab and talks to its engineers about the next 20 years of chipmaking, and why factories may not keep up with AI's demand for compute."
+  tags: [ai, chips]
+  added: 2026-10-24
 - url: https://www.decodingai.com/p/learning-harness-engineering-by-building
   title: "Learning Harness Engineering by Building a Coding Agent From Scratch"
   site: decodingai.com
