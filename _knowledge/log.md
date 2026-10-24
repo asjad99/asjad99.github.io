@@ -14,3 +14,7 @@
 - 2026-10-24 · ingest · src-0028…src-0030 (Zed key-binding docs; default and Sublime keymaps from GitHub). Compiled: code-editors; backlinks from shell, git, missing-semester.
 - 2026-10-24 · output · "Zed Editor Tips (Sublime Keys)" published under Missing Semester. Every shortcut checked against the keymap files; dropped ctrl-0 / ctrl-1… rows (layer conflict).
 - 2026-10-24 · fix · Bookshelf author-name style restored (lost when the 2026 tag was removed).
+- 2026-10-24 · setup · Bookmarks added: `_data/bookmarks.yml`, newest-6 cards on /knowledge-base/, full page /knowledge-base/bookmarks/ (search + tag filter), card styles in `_economist.scss`.
+- 2026-10-24 · bookmark · Claude Code Unpacked (ccunpacked.dev).
+- 2026-10-24 · bookmark · Claude Code from Source (claude-code-from-source.com).
+- 2026-10-24 · bookmark · Learning Harness Engineering by Building a Coding Agent From Scratch (decodingai.com).

@@ -9,6 +9,20 @@ description: Essays, tutorials and e-books built from my research notes with AI 
 
 <p><em>Everything here grows out of a personal research wiki that an AI helps me build and maintain: sources go in, the AI compiles linked notes, and the best answers become essays, tutorials and books. I review everything before it is published.</em></p>
 
+## Bookmarks
+
+Links I want to keep and come back to. [See all bookmarks →](/knowledge-base/bookmarks/)
+
+<div class="bm-grid">
+{%- assign bms = site.data.bookmarks -%}
+{%- for b in bms limit: 6 -%}
+<a class="bm-card" href="{{ b.url }}" target="_blank" rel="noopener">
+  <div class="bm-thumb">{%- if b.image and b.image != "" -%}<img src="{{ b.image }}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">{%- endif -%}<span>{{ b.site | slice: 0 | upcase }}</span></div>
+  <div class="bm-body"><div class="bm-site">{{ b.site }}</div><div class="bm-title">{{ b.title }}</div><p class="bm-summary">{{ b.summary }}</p><div class="bm-meta">{{ b.added | date: "%-d %b %Y" }}</div></div>
+</a>
+{%- endfor -%}
+</div>
+
 ## Blog Posts
 
 - [The Receipt for a Computation](/knowledge-base/succinct/): how Succinct makes zero-knowledge proofs practical, and why a "receipt" for a computation matters. _October 2026_
