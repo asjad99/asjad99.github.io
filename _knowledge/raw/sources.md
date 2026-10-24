@@ -32,3 +32,4 @@
 | src-0028 | Zed docs: Key bindings | https://zed.dev/docs/key-bindings | 2026-10-24 | [[code-editors]] |
 | src-0029 | Zed default macOS keymap (GitHub, main branch) | https://github.com/zed-industries/zed/blob/main/assets/keymaps/default-macos.json | 2026-10-24 | [[code-editors]] |
 | src-0030 | Zed Sublime Text keymap for macOS (GitHub, main branch) | https://github.com/zed-industries/zed/blob/main/assets/keymaps/macos/sublime_text.json | 2026-10-24 | [[code-editors]] |
+| src-0031 | Terminal-Bench 4.0 release notes (Stanford, Harbor, Laude Institute) | https://www.tbench.ai/news/terminal-bench-4-0 | 2026-10-24 | [[ai-leaderboards]] |

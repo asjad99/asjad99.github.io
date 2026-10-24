@@ -14,3 +14,4 @@
 - 2026-10-24 · ingest · src-0028…src-0030 (Zed key-binding docs; default and Sublime keymaps from GitHub). Compiled: code-editors; backlinks from shell, git, missing-semester.
 - 2026-10-24 · output · "Zed Editor Tips (Sublime Keys)" published under Missing Semester. Every shortcut checked against the keymap files; dropped ctrl-0 / ctrl-1… rows (layer conflict).
 - 2026-10-24 · fix · Bookshelf author-name style restored (lost when the 2026 tag was removed).
+- 2026-10-24 · ingest · src-0031 (Terminal-Bench 4.0). Compiled: ai-leaderboards. Output: added to "AI Capability Comparison". Deep Learning Weekly already listed; rechecked (244k subscribers still correct).
