@@ -1,4 +1,11 @@
 # Bookmarks: newest first. Summaries are my own words. See knowledge-base-writer skill.
+- url: https://minimaxir.com/2025/06/movie-embeddings/
+  title: "Predicting Average IMDb Movie Ratings Using Text Embeddings of Movie Metadata"
+  site: minimaxir.com
+  image: "https://minimaxir.com/2025/06/movie-embeddings/featured.webp"
+  summary: "Max Woolf turns each movie's metadata into JSON, embeds it, and tests which models predict IMDb ratings best. A small LLM trained from scratch wins, but only by a small margin over an MLP and an SVM."
+  tags: [ai, data-science]
+  added: 2026-10-26
 - url: https://asteriskmag.com/issues/15/after-work-we-ll-have-each-other
   title: "After Work, We'll Have Each Other"
   site: asteriskmag.com
