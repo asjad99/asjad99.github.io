@@ -20,3 +20,4 @@
 - 2026-10-24 · bookmark · Learning Harness Engineering by Building a Coding Agent From Scratch (decodingai.com).
 - 2026-10-24 · ingest · src-0031 (Terminal-Bench 4.0). Compiled: ai-leaderboards. Output: added to "AI Capability Comparison". Deep Learning Weekly already listed; rechecked (244k subscribers still correct).
 - 2026-10-24 · bookmark · What will computer chips look like in 2045? (dwarkesh.com, Intel fab tour).
+- 2026-10-26 · bookmark · After Work, We'll Have Each Other (asteriskmag.com, Clara Collier).
